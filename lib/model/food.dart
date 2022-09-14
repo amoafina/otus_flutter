@@ -11,11 +11,15 @@ class Food {
       required this.imgLocalSource});
 
   String getTimeValue() {
-    if (time > 60) {
+    if (time >= 60) {
       int hours = Duration(minutes: time).inHours;
       int minutes = time - Duration(hours: hours).inMinutes;
       if (hours < 21) {
-        return "$hours ${_formatHours(hours)} $minutes ${_formatMinutes(minutes)}";
+        String str = "$hours ${_formatHours(hours)}";
+        if (minutes > 0) {
+          str += " $minutes ${_formatMinutes(minutes)}";
+        }
+        return str;
       } else {
         return "Более 20 часов";
       }
