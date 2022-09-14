@@ -76,14 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     List<Food> foods = _generateFoods();
     return Scaffold(
-      backgroundColor: '#ECECEC'.toColor(),
-      body: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, position) {
-          return ItemFoodWidget(foods[position]);
-        },
-        itemCount: foods.length,
-      ),
-    );
+        backgroundColor: '#ECECEC'.toColor(),
+        body: SafeArea(
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, position) {
+              return ItemFoodWidget(foods[position]);
+            },
+            itemCount: foods.length,
+          ),
+        ));
   }
 }
