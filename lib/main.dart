@@ -34,16 +34,41 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Food> _generateFoods() {
     List<Food> foods = [];
-    foods.add(Food("Лосось в соусе терияки", 45, 1, "photo_first_recipe.png"));
-    foods.add(Food("Поке боул с сыром тофу", 30, 2, "photo_second_recipe.png"));
-    foods.add(Food("Стейк из говядины по-грузински с кукурузой", 75, 3,
-        "photo_third_recipe.png"));
-    foods.add(
-        Food("Тосты с голубикой и бананом", 45, 4, "photo_four_recipe.png"));
-    foods.add(Food("Паста с морепродуктами", 25, 5, "photo_five_recipe.png"));
-    foods.add(Food("Бургер с двумя котлетами", 60, 6, "photo_six_recipe.png"));
-    foods
-        .add(Food("Пицца Маргарита домашняя", 25, 7, "photo_seven_recipe.png"));
+    foods.add(Food(
+        title: "Лосось в соусе терияки",
+        time: 45,
+        id: 1,
+        imgLocalSource: "photo_first_recipe.png"));
+    foods.add(Food(
+        title: "Поке боул с сыром тофу",
+        time: 30,
+        id: 2,
+        imgLocalSource: "photo_second_recipe.png"));
+    foods.add(Food(
+        title: "Стейк из говядины по-грузински с кукурузой",
+        time: 75,
+        id: 3,
+        imgLocalSource: "photo_third_recipe.png"));
+    foods.add(Food(
+        title: "Тосты с голубикой и бананом",
+        time: 45,
+        id: 4,
+        imgLocalSource: "photo_four_recipe.png"));
+    foods.add(Food(
+        title: "Паста с морепродуктами",
+        time: 25,
+        id: 5,
+        imgLocalSource: "photo_five_recipe.png"));
+    foods.add(Food(
+        title: "Бургер с двумя котлетами",
+        time: 60,
+        id: 6,
+        imgLocalSource: "photo_six_recipe.png"));
+    foods.add(Food(
+        title: "Пицца Маргарита домашняя",
+        time: 25,
+        id: 7,
+        imgLocalSource: "photo_seven_recipe.png"));
     return foods;
   }
 

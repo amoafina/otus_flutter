@@ -19,11 +19,11 @@ class ItemFoodWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Flexible(flex: 1, child: Image.asset(food.getLocalPath())),
+          Flexible(flex: 2, child: Image.asset(food.getLocalPath())),
           Flexible(
-            flex: 2,
-            child: Container(
-              margin: const EdgeInsets.only(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.only(
                 left: 16.0,
                 right: 23.0,
               ),
@@ -40,8 +40,8 @@ class ItemFoodWidget extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 12.0),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -50,8 +50,8 @@ class ItemFoodWidget extends StatelessWidget {
                           size: 16.0,
                           color: Colors.black,
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 11.0),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 11.0),
                           child: Text(
                             food.getTimeValue(),
                             style: TextStyle(
