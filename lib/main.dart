@@ -78,12 +78,20 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         backgroundColor: '#ECECEC'.toColor(),
         body: SafeArea(
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, position) {
-              return ItemFoodWidget(foods[position]);
-            },
-            itemCount: foods.length,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
+            child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, position) {
+                return ItemFoodWidget(foods[position]);
+              },
+              itemCount: foods.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  Container(height: 24),
+            ),
           ),
         ));
   }
