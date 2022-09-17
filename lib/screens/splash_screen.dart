@@ -1,11 +1,23 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:otusfood/utils/utils.dart';
 
+import 'main_screen.dart';
+
 class SplashScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Timer(
+      Duration(seconds: 2),
+      () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (builder) => MainScreen(title: 'Otus Food',),
+          )),
+    );
+
     return Scaffold(
       body: Stack(
         children: [
@@ -13,14 +25,8 @@ class SplashScreenWidget extends StatelessWidget {
             child: CustomPaint(
               painter: _GradientStartPainter(),
             ),
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
           ),
           Center(
             child: SizedBox(
@@ -56,4 +62,3 @@ class _GradientStartPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-

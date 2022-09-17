@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../model/food_step.dart' as stp;
+
 class StepWidget extends StatelessWidget {
+  final stp.FoodStep step;
+
+  StepWidget({
+    required this.step,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -9,7 +17,7 @@ class StepWidget extends StatelessWidget {
       child: Center(
         child: ListTile(
           leading: Text(
-            '1',
+            step.numberStep.toString(),
             style: TextStyle(
               fontSize: 40.0,
               fontWeight: FontWeight.w900,
@@ -17,7 +25,7 @@ class StepWidget extends StatelessWidget {
             ),
           ),
           title: Text(
-            'В маленькой кастрюле соедините соевый соус, 6 столовых ложек воды, мёд, сахар, измельчённый чеснок, имбирь и лимонный сок.',
+            '${step.description}',
             style: TextStyle(
               color: Color(0XFF797676),
               fontWeight: FontWeight.w400,
@@ -41,7 +49,7 @@ class StepWidget extends StatelessWidget {
                 onChanged: (isChecked) {},
               ),
               Text(
-                '06:00',
+                '${step.getTimeMinute()}',
                 style: TextStyle(
                   color: Color(0XFF797676),
                   fontSize: 13.0,

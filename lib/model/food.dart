@@ -1,14 +1,23 @@
+import 'package:otusfood/model/food_step.dart';
+
+import 'food_ingredient.dart';
+
 class Food {
   String title;
   int time;
   int id;
   String imgLocalSource;
+  List<FoodStep> steps;
+  List<FoodIngredient> ingredients;
 
-  Food(
-      {required this.title,
-      required this.time,
-      required this.id,
-      required this.imgLocalSource});
+  Food({
+    required this.title,
+    required this.time,
+    required this.id,
+    required this.imgLocalSource,
+    required this.steps,
+    required this.ingredients,
+  });
 
   String getTimeValue() {
     if (time >= 60) {

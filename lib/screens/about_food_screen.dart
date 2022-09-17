@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/food.dart';
-import 'package:otusfood/utils/utils.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
+import 'package:otusfood/widgets/ingredient_widget.dart';
 import 'package:otusfood/widgets/step_widget.dart';
 
 class AboutFoodScreen extends StatefulWidget {
-  final Food food = Food(
-      title: "Стейк из говядины по-грузински с кукурузой",
-      time: 75,
-      id: 3,
-      imgLocalSource: "photo_third_recipe.png");
+  final Food food;
+
+  AboutFoodScreen({
+    required this.food,
+  });
 
   @override
   State<AboutFoodScreen> createState() {
@@ -25,7 +25,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
       appBar: AppBar(
         leading: IconButton(
           color: Colors.black,
-          onPressed: () {},
+          onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back,
           ),
@@ -34,7 +34,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
           'Рецепт',
           style: TextStyle(
               fontSize: 20.0,
-              color: '#165932'.toColor(),
+              color: Color(0XFF165932),
               fontWeight: FontWeight.w400),
         ),
         centerTitle: true,
@@ -79,9 +79,9 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
                         widget.food.getLocalPath(),
-                        height: 220.0,
+                        height: (MediaQuery.of(context).size.width - 32) / 1.79,
                         fit: BoxFit.fill,
-                        width: 396.0,
+                        width: MediaQuery.of(context).size.width - 32,
                       ),
                     )),
                 Padding(
@@ -110,34 +110,18 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                   child: ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 7,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 15.0,
+                      ),
+                      itemCount: widget.food.ingredients.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'title',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                              Align(
-                                child: Text(
-                                  '2312',
-                                  style: TextStyle(
-                                    color: Color(0XFF797676),
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                            ],
+                          padding: EdgeInsets.only(
+                            top: index==0?0.0:8.0,
+                          ),
+                          child: IngredientWidget(
+                            foodIngredient: widget.food.ingredients[index],
                           ),
                         );
                       }),
@@ -157,11 +141,13 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                   child: ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 7,
+                      itemCount: widget.food.steps.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: StepWidget(),
+                          child: StepWidget(
+                            step: widget.food.steps[index],
+                          ),
                         );
                       }),
                 ),

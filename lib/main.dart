@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otusfood/item_food_widget.dart';
-import 'package:otusfood/model/food.dart';
 import 'package:otusfood/screens/about_food_screen.dart';
-import 'package:otusfood/utils/utils.dart';
 import 'package:otusfood/screens/splash_screen.dart';
 
 void main() {
@@ -16,77 +13,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      routes: {
+        '/': (context) => SplashScreenWidget(),
+      },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AboutFoodScreen(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  List<Food> _generateFoods() {
-    List<Food> foods = [];
-    foods.add(Food(
-        title: "Лосось в соусе терияки",
-        time: 45,
-        id: 1,
-        imgLocalSource: "photo_first_recipe.png"));
-    foods.add(Food(
-        title: "Поке боул с сыром тофу",
-        time: 30,
-        id: 2,
-        imgLocalSource: "photo_second_recipe.png"));
-    foods.add(Food(
-        title: "Стейк из говядины по-грузински с кукурузой",
-        time: 75,
-        id: 3,
-        imgLocalSource: "photo_third_recipe.png"));
-    foods.add(Food(
-        title: "Тосты с голубикой и бананом",
-        time: 45,
-        id: 4,
-        imgLocalSource: "photo_four_recipe.png"));
-    foods.add(Food(
-        title: "Паста с морепродуктами",
-        time: 25,
-        id: 5,
-        imgLocalSource: "photo_five_recipe.png"));
-    foods.add(Food(
-        title: "Бургер с двумя котлетами",
-        time: 60,
-        id: 6,
-        imgLocalSource: "photo_six_recipe.png"));
-    foods.add(Food(
-        title: "Пицца Маргарита домашняя",
-        time: 25,
-        id: 7,
-        imgLocalSource: "photo_seven_recipe.png"));
-    return foods;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Food> foods = _generateFoods();
-    return Scaffold(
-        backgroundColor: '#ECECEC'.toColor(),
-        body: SafeArea(
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, position) {
-              return ItemFoodWidget(foods[position]);
-            },
-            itemCount: foods.length,
-          ),
-        ));
   }
 }
