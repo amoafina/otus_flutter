@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/item_food_widget.dart';
 import 'package:otusfood/model/food.dart';
+import 'package:otusfood/screens/about_food_screen.dart';
 import 'package:otusfood/utils/utils.dart';
+import 'package:otusfood/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: AboutFoodScreen(),
     );
   }
 }
