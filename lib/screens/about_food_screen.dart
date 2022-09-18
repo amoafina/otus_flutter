@@ -20,6 +20,7 @@ class AboutFoodScreen extends StatefulWidget {
 
 class _AboutFoodScreenState extends State<AboutFoodScreen> {
   bool _isProcessingCooking = false;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +84,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _scrollController,
           physics: ScrollPhysics(),
           child: Container(
             margin: const EdgeInsets.only(left: 17.0, right: 17.0),
@@ -219,6 +221,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                     child: StartFinishCookingButton(
                       onPressedButton: () {
                         setState(() {
+                          _scrollController.jumpTo(0);
                           _isProcessingCooking = !_isProcessingCooking;
                         });
                       },
