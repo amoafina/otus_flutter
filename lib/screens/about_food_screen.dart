@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/food.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
 import 'package:otusfood/widgets/ingredient_widget.dart';
+import 'package:otusfood/widgets/start_finish_cooking_button.dart';
 import 'package:otusfood/widgets/step_widget.dart';
 
 class AboutFoodScreen extends StatefulWidget {
@@ -19,6 +19,8 @@ class AboutFoodScreen extends StatefulWidget {
 }
 
 class _AboutFoodScreenState extends State<AboutFoodScreen> {
+  bool _isProcessingCooking = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +39,39 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
               color: Color(0XFF165932),
               fontWeight: FontWeight.w400),
         ),
+        bottom: _isProcessingCooking
+            ? PreferredSize(
+                child: Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'Таймер',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '38:59',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 24.0,
+                        ),
+                      )
+                    ],
+                  ),
+                  height: 59.0,
+                ),
+                preferredSize: Size.fromHeight(59),
+              )
+            : null,
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor:
+            _isProcessingCooking ? Color(0XFF2ECC71) : Colors.white,
         actions: [
           IconButton(
             color: Colors.black,
@@ -58,13 +91,38 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 27.6),
-                  child: Text(
-                    widget.food.title,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 24.0,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.food.title,
+                          maxLines: 4,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 24.0,
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: true,
+                        child: IconButton(
+                          iconSize: 30.0,
+                          icon: Icon(
+                            Icons.favorite_outlined,
+                            color: widget.food.isFavorite
+                                ? Colors.red
+                                : Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              widget.food.isFavorite = !widget.food.isFavorite;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
@@ -118,7 +176,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: EdgeInsets.only(
-                            top: index==0?0.0:8.0,
+                            top: index == 0 ? 0.0 : 8.0,
                           ),
                           child: IngredientWidget(
                             foodIngredient: widget.food.ingredients[index],
@@ -147,6 +205,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: StepWidget(
                             step: widget.food.steps[index],
+                            isProcessingCooking: _isProcessingCooking,
                           ),
                         );
                       }),
@@ -157,22 +216,13 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                     bottom: 81.0,
                   ),
                   child: Center(
-                    child: MaterialButton(
-                      minWidth: 232.0,
-                      height: 48.0,
-                      child: Text(
-                        'Начать готовить',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      color: Color(0XFF165932),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      onPressed: () {},
+                    child: StartFinishCookingButton(
+                      onPressedButton: () {
+                        setState(() {
+                          _isProcessingCooking = !_isProcessingCooking;
+                        });
+                      },
+                      isProcessingCooking: _isProcessingCooking,
                     ),
                   ),
                 )

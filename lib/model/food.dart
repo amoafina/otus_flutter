@@ -10,6 +10,8 @@ class Food {
   List<FoodStep> steps;
   List<FoodIngredient> ingredients;
 
+  bool isFavorite = false;
+
   Food({
     required this.title,
     required this.time,

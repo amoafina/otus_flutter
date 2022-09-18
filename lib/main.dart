@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:otusfood/screens/about_food_screen.dart';
 import 'package:otusfood/screens/splash_screen.dart';
 
 void main() {
@@ -12,11 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      routes: {
-        '/': (context) => SplashScreenWidget(),
-      },
+      title: 'Otus Food',
       debugShowCheckedModeBanner: false,
+      home: SplashScreenWidget(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

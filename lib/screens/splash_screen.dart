@@ -11,10 +11,12 @@ class SplashScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(
       Duration(seconds: 2),
-      () => Navigator.push(
+      () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (builder) => MainScreen(title: 'Otus Food',),
+            builder: (builder) => MainScreen(
+              title: 'Otus Food',
+            ),
           )),
     );
 

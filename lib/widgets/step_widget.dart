@@ -4,9 +4,11 @@ import '../model/food_step.dart' as stp;
 
 class StepWidget extends StatelessWidget {
   final stp.FoodStep step;
+  final bool isProcessingCooking;
 
   StepWidget({
     required this.step,
+    required this.isProcessingCooking,
   });
 
   @override
@@ -46,7 +48,7 @@ class StepWidget extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                onChanged: (isChecked) {},
+                onChanged: isProcessingCooking ? (isChecked) {} : null,
               ),
               Text(
                 '${step.getTimeMinute()}',
