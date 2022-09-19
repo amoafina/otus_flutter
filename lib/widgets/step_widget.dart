@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:otusfood/model/food_step.dart';
 import 'package:otusfood/utils/app_colors.dart';
-
-import '../model/food_step.dart';
 
 class StepWidget extends StatefulWidget {
   final FoodStep step;
@@ -17,10 +16,6 @@ class StepWidget extends StatefulWidget {
 }
 
 class _StepWidgetState extends State<StepWidget> {
-  List<CrossAxisAlignment> getValues() {
-    return [CrossAxisAlignment.start, CrossAxisAlignment.center];
-  }
-
   _createWidget() {
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -28,7 +23,7 @@ class _StepWidgetState extends State<StepWidget> {
       children: [
         Flexible(
           child: Text(
-            widget.step.numberStep.toString(),
+            widget.step.stepNumber.toString(),
             style: TextStyle(
               fontSize: 40.0,
               fontWeight: FontWeight.w900,
@@ -54,7 +49,7 @@ class _StepWidgetState extends State<StepWidget> {
               Transform.scale(
                 child: Checkbox(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  value: widget.step.isSuccessful,
+                  value: widget.step.isSuccess,
                   checkColor: AppColors.textSecondary,
                   fillColor: MaterialStateProperty.resolveWith(_getColor),
                   side: BorderSide(
@@ -67,7 +62,7 @@ class _StepWidgetState extends State<StepWidget> {
                   onChanged: widget.isProcessingCooking
                       ? (isChecked) {
                           setState(() {
-                            widget.step.isSuccessful = !widget.step.isSuccessful;
+                            widget.step.isSuccess = !widget.step.isSuccess;
                           });
                         }
                       : null,
@@ -105,19 +100,19 @@ class _StepWidgetState extends State<StepWidget> {
   }
 
   _getBackgroundColor() =>
-      widget.isProcessingCooking ? AppColors.mainLighter : AppColors.background;
+      widget.isProcessingCooking ? AppColors.mainAccentTransparent : AppColors.background;
 
   _getTextColorForDescription() =>
       widget.isProcessingCooking ? AppColors.textCookingDescription : AppColors.inactive;
 
   _getTextColorForNumberStep() =>
-      widget.isProcessingCooking ? AppColors.main : AppColors.inactive;
+      widget.isProcessingCooking ? AppColors.mainAccent : AppColors.inactive;
 
   _getTextColorForTime() =>
-      widget.isProcessingCooking ? AppColors.mainDarker : AppColors.border;
+      widget.isProcessingCooking ? AppColors.main : AppColors.border;
 
   _getColorForCheckBoxBorder() =>
-      widget.isProcessingCooking ? AppColors.mainDarker : AppColors.border;
+      widget.isProcessingCooking ? AppColors.main : AppColors.border;
 
   Color _getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -126,8 +121,8 @@ class _StepWidgetState extends State<StepWidget> {
       MaterialState.focused,
     };
     if (states.any(interactiveStates.contains)) {
-      return AppColors.mainDarker;
+      return AppColors.main;
     }
-    return AppColors.mainDarker;
+    return AppColors.main;
   }
 }

@@ -3,16 +3,16 @@ class FoodStep {
   int id;
   int timeSec;
   int foodId;
-  int numberStep;
-  bool isSuccessful;
+  int stepNumber;
+  bool isSuccess;
 
   FoodStep({
     required this.description,
     required this.id,
     required this.foodId,
     required this.timeSec,
-    required this.numberStep,
-    required this.isSuccessful,
+    required this.stepNumber,
+    required this.isSuccess,
   });
 
   getTimeMinute() {

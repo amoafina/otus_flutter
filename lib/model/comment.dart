@@ -6,7 +6,6 @@ class Comment {
   final int date;
   final String userImg;
   final String photo;
-
   final String description;
 
   Comment({

@@ -20,7 +20,7 @@ class CookingTimeInfoWidget extends StatelessWidget {
           child: Text(
             cookingTime,
             style: TextStyle(
-              color: AppColors.main,
+              color: AppColors.mainAccent,
               fontWeight: FontWeight.w400,
             ),
           ),

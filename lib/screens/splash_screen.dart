@@ -50,8 +50,8 @@ class _GradientStartPainter extends CustomPainter {
         Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
+          AppColors.mainAccent,
           AppColors.main,
-          AppColors.mainDarker,
         ],
         [0.19, 1],
       );

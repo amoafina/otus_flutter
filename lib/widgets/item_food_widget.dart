@@ -51,7 +51,7 @@ class ItemFoodWidget extends StatelessWidget {
                           child: Text(
                             food.getTimeValue(),
                             style: TextStyle(
-                              color: AppColors.main,
+                              color: AppColors.mainAccent,
                               fontWeight: FontWeight.w400,
                             ),
                           ),

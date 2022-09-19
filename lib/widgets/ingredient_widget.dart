@@ -21,7 +21,7 @@ class IngredientWidget extends StatelessWidget {
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.w500,
-            fontSize: 16.0,
+            fontSize: 14.0,
           ),
         ),
         Align(

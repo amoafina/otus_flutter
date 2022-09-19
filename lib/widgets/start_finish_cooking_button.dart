@@ -35,13 +35,13 @@ class StartFinishCookingButton extends StatelessWidget {
       isProcessingCooking ? "Закончить готовить" : "Начать готовить";
 
   Color _getTextColorForButton() =>
-      isProcessingCooking ? AppColors.mainDarker : AppColors.textSecondary;
+      isProcessingCooking ? AppColors.main : AppColors.textSecondary;
 
   ShapeBorder _getShapeForButton() => isProcessingCooking
       ? RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25.0),
           side: BorderSide(
-            color: AppColors.mainDarker,
+            color: AppColors.main,
             width: 2.0,
           ))
       : RoundedRectangleBorder(
@@ -49,5 +49,5 @@ class StartFinishCookingButton extends StatelessWidget {
         );
 
   Color _getColorForButton() =>
-      isProcessingCooking ? AppColors.textSecondary : AppColors.mainDarker;
+      isProcessingCooking ? AppColors.textSecondary : AppColors.main;
 }

@@ -39,7 +39,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
           'Рецепт',
           style: TextStyle(
               fontSize: 20.0,
-              color: AppColors.mainDarker,
+              color: AppColors.main,
               fontWeight: FontWeight.w400),
         ),
         bottom: _isProcessingCooking
@@ -74,7 +74,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
             : null,
         centerTitle: true,
         backgroundColor:
-            _isProcessingCooking ? AppColors.main : AppColors.textSecondary,
+            _isProcessingCooking ? AppColors.mainAccent : AppColors.textSecondary,
         actions: [
           IconButton(
             color: AppColors.textPrimary,
@@ -153,7 +153,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                   child: Text(
                     'Ингредиенты',
                     style: TextStyle(
-                      color: AppColors.mainDarker,
+                      color: AppColors.main,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),
@@ -193,7 +193,8 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                   child: Text(
                     'Шаги приготовления',
                     style: TextStyle(
-                      color: AppColors.mainDarker,
+                      color: AppColors.main,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -225,7 +226,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                           _scrollController.jumpTo(0);
                           if (!_isProcessingCooking) {
                             widget.food.steps.forEach((element) {
-                              element.isSuccessful = false;
+                              element.isSuccess = false;
                             });
                           }
                           _isProcessingCooking = !_isProcessingCooking;

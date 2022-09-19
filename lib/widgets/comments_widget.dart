@@ -59,13 +59,13 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: AppColors.mainDarker,
+                      color: AppColors.main,
                       width: 2.0,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: AppColors.mainDarker,
+                      color: AppColors.main,
                       width: 2.0,
                     ),
                   ),
@@ -77,7 +77,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                   onPressed: () {},
                   icon: Icon(
                     Icons.image_rounded,
-                    color: AppColors.mainDarker,
+                    color: AppColors.main,
                   ),
                 ),
                 alignment: Alignment.topRight,
@@ -118,7 +118,7 @@ class _ItemCommentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundColor: AppColors.mainDarker,
+            backgroundColor: AppColors.main,
             backgroundImage: NetworkImage(
               'https://freepngimg.com/thumb/face/97737-grumpy-face-cat-free-png-hq.png',
             ),
@@ -138,7 +138,7 @@ class _ItemCommentWidget extends StatelessWidget {
                       Text(
                         comment.userLogin,
                         style: TextStyle(
-                          color: AppColors.main,
+                          color: AppColors.mainAccent,
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
                         ),

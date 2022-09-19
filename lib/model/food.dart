@@ -1,7 +1,6 @@
 import 'package:otusfood/model/comment.dart';
+import 'package:otusfood/model/food_ingredient.dart';
 import 'package:otusfood/model/food_step.dart';
-
-import 'food_ingredient.dart';
 
 class Food {
   String title;
