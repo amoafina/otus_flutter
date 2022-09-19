@@ -193,13 +193,16 @@ class _MainScreenState extends State<MainScreen> {
     return ingredients;
   }
 
+
   @override
   Widget build(BuildContext context) {
     List<Food> foods = _generateFoods();
     return Scaffold(
         backgroundColor: '#ECECEC'.toColor(),
         body: SafeArea(
-          child: ListView.builder(
+          child: ListView.separated(
+            separatorBuilder: (BuildContext context, int index) =>
+                Container(height: 24),
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, position) {
               var food = foods[position];
@@ -221,4 +224,6 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ));
   }
+
+
 }

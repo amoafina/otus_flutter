@@ -85,7 +85,6 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          reverse: true,
           controller: _scrollController,
           physics: ScrollPhysics(),
           child: Container(
