@@ -10,18 +10,14 @@ class ItemFoodWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 12.0,
-      ),
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Flexible(flex: 2, child: Image.asset(food.getLocalPath())),
+          Image.asset(food.getLocalPath(), width: 149,),
           Flexible(
-            flex: 3,
+            flex: 1,
             child: Padding(
               padding: const EdgeInsets.only(
                 left: 16.0,
