@@ -1,3 +1,4 @@
+import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/food_step.dart';
 
 import 'food_ingredient.dart';
@@ -9,6 +10,7 @@ class Food {
   String imgLocalSource;
   List<FoodStep> steps;
   List<FoodIngredient> ingredients;
+  List<Comment> comments = [];
 
   bool isFavorite = false;
 
@@ -59,5 +61,9 @@ class Food {
     } else {
       return "минут";
     }
+  }
+
+  void addComment(Comment comment) {
+    comments.add(comment);
   }
 }

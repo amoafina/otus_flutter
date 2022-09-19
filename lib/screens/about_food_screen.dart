@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/food.dart';
+import 'package:otusfood/widgets/comments_widget.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
 import 'package:otusfood/widgets/ingredient_widget.dart';
 import 'package:otusfood/widgets/start_finish_cooking_button.dart';
@@ -84,6 +85,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
+          reverse: true,
           controller: _scrollController,
           physics: ScrollPhysics(),
           child: Container(
@@ -215,20 +217,33 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 27.0,
-                    bottom: 81.0,
                   ),
                   child: Center(
                     child: StartFinishCookingButton(
                       onPressedButton: () {
                         setState(() {
                           _scrollController.jumpTo(0);
+                          if (!_isProcessingCooking) {
+                            widget.food.steps.forEach((element) {
+                              element.isSuccessful = false;
+                            });
+                          }
                           _isProcessingCooking = !_isProcessingCooking;
                         });
                       },
                       isProcessingCooking: _isProcessingCooking,
                     ),
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 4,
+                    bottom: 37.0,
+                  ),
+                  child: CommentsWidget(
+                    food: widget.food,
+                  ),
+                ),
               ],
             ),
           ),
