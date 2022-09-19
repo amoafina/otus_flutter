@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:otusfood/utils/utils.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
 class CookingTimeInfoWidget extends StatelessWidget {
-  String cookingTime;
+  final String cookingTime;
 
   CookingTimeInfoWidget({required this.cookingTime});
 
@@ -21,7 +20,7 @@ class CookingTimeInfoWidget extends StatelessWidget {
           child: Text(
             cookingTime,
             style: TextStyle(
-              color: '#2ECC71'.toColor(),
+              color: AppColors.main,
               fontWeight: FontWeight.w400,
             ),
           ),

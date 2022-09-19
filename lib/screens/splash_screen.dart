@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:otusfood/utils/utils.dart';
-
+import 'package:otusfood/utils/app_colors.dart';
 import 'main_screen.dart';
 
 class SplashScreenWidget extends StatelessWidget {
@@ -52,8 +50,8 @@ class _GradientStartPainter extends CustomPainter {
         Offset(0.0, 0.0),
         Offset(size.width, size.height),
         [
-          '#2ECC71'.toColor(),
-          '#165932'.toColor(),
+          AppColors.main,
+          AppColors.mainDarker,
         ],
         [0.19, 1],
       );

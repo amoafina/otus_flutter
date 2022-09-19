@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
 class StartFinishCookingButton extends StatelessWidget {
   final bool isProcessingCooking;
@@ -34,13 +35,13 @@ class StartFinishCookingButton extends StatelessWidget {
       isProcessingCooking ? "Закончить готовить" : "Начать готовить";
 
   Color _getTextColorForButton() =>
-      isProcessingCooking ? Color(0XFF165932) : Colors.white;
+      isProcessingCooking ? AppColors.mainDarker : AppColors.textSecondary;
 
   ShapeBorder _getShapeForButton() => isProcessingCooking
       ? RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25.0),
           side: BorderSide(
-            color: Color(0XFF165932),
+            color: AppColors.mainDarker,
             width: 2.0,
           ))
       : RoundedRectangleBorder(
@@ -48,5 +49,5 @@ class StartFinishCookingButton extends StatelessWidget {
         );
 
   Color _getColorForButton() =>
-      isProcessingCooking ? Colors.white : Color(0XFF165932);
+      isProcessingCooking ? AppColors.textSecondary : AppColors.mainDarker;
 }

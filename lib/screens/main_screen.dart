@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/food_step.dart';
 import 'package:otusfood/screens/about_food_screen.dart';
+import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/utils/utils.dart';
 
 import '../model/food.dart';
@@ -193,37 +194,38 @@ class _MainScreenState extends State<MainScreen> {
     return ingredients;
   }
 
-
   @override
   Widget build(BuildContext context) {
     List<Food> foods = _generateFoods();
     return Scaffold(
-        backgroundColor: '#ECECEC'.toColor(),
+        backgroundColor: AppColors.background,
         body: SafeArea(
-          child: ListView.separated(
-            separatorBuilder: (BuildContext context, int index) =>
-                Container(height: 24),
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, position) {
-              var food = foods[position];
-              return GestureDetector(
-                child: ItemFoodWidget(food),
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    getRoute(
-                      AboutFoodScreen(
-                        food: food,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            child: ListView.separated(
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(height: 24),
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, position) {
+                var food = foods[position];
+                return GestureDetector(
+                  child: ItemFoodWidget(food),
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      getRoute(
+                        AboutFoodScreen(
+                          food: food,
+                        ),
                       ),
-                    ),
-                  )
-                },
-              );
-            },
-            itemCount: foods.length,
+                    )
+                  },
+                );
+              },
+              itemCount: foods.length,
+            ),
           ),
         ));
   }
-
-
 }

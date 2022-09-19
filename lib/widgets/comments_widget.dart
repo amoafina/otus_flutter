@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/food.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
 class CommentsWidget extends StatefulWidget {
   final Food food;
@@ -23,7 +23,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Divider(
-          color: Color(0XFF797676),
+          color: AppColors.border,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 4.0),
@@ -59,13 +59,13 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0XFF165932),
+                      color: AppColors.mainDarker,
                       width: 2.0,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0XFF165932),
+                      color: AppColors.mainDarker,
                       width: 2.0,
                     ),
                   ),
@@ -77,7 +77,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                   onPressed: () {},
                   icon: Icon(
                     Icons.image_rounded,
-                    color: Color(0XFF165932),
+                    color: AppColors.mainDarker,
                   ),
                 ),
                 alignment: Alignment.topRight,
@@ -118,7 +118,7 @@ class _ItemCommentWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundColor: Color(0XFF165932),
+            backgroundColor: AppColors.mainDarker,
             backgroundImage: NetworkImage(
               'https://freepngimg.com/thumb/face/97737-grumpy-face-cat-free-png-hq.png',
             ),
@@ -138,7 +138,7 @@ class _ItemCommentWidget extends StatelessWidget {
                       Text(
                         comment.userLogin,
                         style: TextStyle(
-                          color: Color(0XFF2ECC71),
+                          color: AppColors.main,
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -146,7 +146,7 @@ class _ItemCommentWidget extends StatelessWidget {
                       Text(
                         comment.getFormattedDate(),
                         style: TextStyle(
-                          color: Color(0XFFC2C2C2),
+                          color: AppColors.inactive,
                           fontWeight: FontWeight.w400,
                           fontSize: 14.0,
                         ),

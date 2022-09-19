@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/food.dart';
-import 'package:otusfood/utils/utils.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
 class ItemFoodWidget extends StatelessWidget {
   final Food food;
@@ -10,7 +10,7 @@ class ItemFoodWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: AppColors.textSecondary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -51,7 +51,7 @@ class ItemFoodWidget extends StatelessWidget {
                           child: Text(
                             food.getTimeValue(),
                             style: TextStyle(
-                              color: '#2ECC71'.toColor(),
+                              color: AppColors.main,
                               fontWeight: FontWeight.w400,
                             ),
                           ),

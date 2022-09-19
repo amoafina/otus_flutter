@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/screens/splash_screen.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreenWidget(),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: AppColors.themeColor,
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
 import '../model/food_step.dart';
 
@@ -54,7 +55,7 @@ class _StepWidgetState extends State<StepWidget> {
                 child: Checkbox(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   value: widget.step.isSuccessful,
-                  checkColor: Colors.white,
+                  checkColor: AppColors.textSecondary,
                   fillColor: MaterialStateProperty.resolveWith(_getColor),
                   side: BorderSide(
                     color: _getColorForCheckBoxBorder(),
@@ -104,19 +105,19 @@ class _StepWidgetState extends State<StepWidget> {
   }
 
   _getBackgroundColor() =>
-      widget.isProcessingCooking ? Color(0x262ECC71) : Color(0XFFECECEC);
+      widget.isProcessingCooking ? AppColors.mainLighter : AppColors.background;
 
   _getTextColorForDescription() =>
-      widget.isProcessingCooking ? Color(0xFF2D490C) : Color(0XFF797676);
+      widget.isProcessingCooking ? AppColors.textCookingDescription : AppColors.inactive;
 
   _getTextColorForNumberStep() =>
-      widget.isProcessingCooking ? Color(0xFF2ECC71) : Color(0XFFC2C2C2);
+      widget.isProcessingCooking ? AppColors.main : AppColors.inactive;
 
   _getTextColorForTime() =>
-      widget.isProcessingCooking ? Color(0xFF165932) : Color(0XFF797676);
+      widget.isProcessingCooking ? AppColors.mainDarker : AppColors.border;
 
   _getColorForCheckBoxBorder() =>
-      widget.isProcessingCooking ? Color(0xFF165932) : Color(0XFF797676);
+      widget.isProcessingCooking ? AppColors.mainDarker : AppColors.border;
 
   Color _getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -125,8 +126,8 @@ class _StepWidgetState extends State<StepWidget> {
       MaterialState.focused,
     };
     if (states.any(interactiveStates.contains)) {
-      return Color(0xFF165932);
+      return AppColors.mainDarker;
     }
-    return Color(0xFF165932);
+    return AppColors.mainDarker;
   }
 }

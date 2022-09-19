@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/food_ingredient.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
 class IngredientWidget extends StatelessWidget {
   final FoodIngredient foodIngredient;
@@ -18,7 +19,7 @@ class IngredientWidget extends StatelessWidget {
         Text(
           '\u2022 ${foodIngredient.description}',
           style: TextStyle(
-            color: Colors.black,
+            color: AppColors.textPrimary,
             fontWeight: FontWeight.w500,
             fontSize: 16.0,
           ),
@@ -27,7 +28,7 @@ class IngredientWidget extends StatelessWidget {
           child: Text(
             foodIngredient.measurement,
             style: TextStyle(
-              color: Color(0XFF797676),
+              color: AppColors.inactive,
               fontSize: 13.0,
               fontWeight: FontWeight.w400,
             ),

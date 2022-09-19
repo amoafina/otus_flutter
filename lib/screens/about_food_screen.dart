@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/food.dart';
+import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/comments_widget.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
 import 'package:otusfood/widgets/ingredient_widget.dart';
@@ -28,7 +29,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          color: Colors.black,
+          color: AppColors.textPrimary,
           onPressed: () => Navigator.pop(context),
           icon: Icon(
             Icons.arrow_back,
@@ -38,7 +39,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
           'Рецепт',
           style: TextStyle(
               fontSize: 20.0,
-              color: Color(0XFF165932),
+              color: AppColors.mainDarker,
               fontWeight: FontWeight.w400),
         ),
         bottom: _isProcessingCooking
@@ -51,7 +52,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                       Text(
                         'Таймер',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textSecondary,
                           fontSize: 15.0,
                           fontWeight: FontWeight.w500,
                         ),
@@ -59,7 +60,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                       Text(
                         '38:59',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w900,
                           fontSize: 24.0,
                         ),
@@ -73,16 +74,16 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
             : null,
         centerTitle: true,
         backgroundColor:
-            _isProcessingCooking ? Color(0XFF2ECC71) : Colors.white,
+            _isProcessingCooking ? AppColors.main : AppColors.textSecondary,
         actions: [
           IconButton(
-            color: Colors.black,
+            color: AppColors.textPrimary,
             onPressed: () {},
             icon: Image.asset('assets/images/ic_megafon.png'),
           )
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.textSecondary,
       body: SafeArea(
         child: SingleChildScrollView(
           controller: _scrollController,
@@ -102,7 +103,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                           widget.food.title,
                           maxLines: 4,
                           style: TextStyle(
-                            color: Colors.black,
+                            color: AppColors.textPrimary,
                             fontWeight: FontWeight.w500,
                             fontSize: 24.0,
                           ),
@@ -115,8 +116,8 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                           icon: Icon(
                             Icons.favorite_outlined,
                             color: widget.food.isFavorite
-                                ? Colors.red
-                                : Colors.grey,
+                                ? AppColors.active
+                                : AppColors.inactive,
                           ),
                           onPressed: () {
                             setState(() {
@@ -152,7 +153,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                   child: Text(
                     'Ингредиенты',
                     style: TextStyle(
-                      color: Color(0Xff165932),
+                      color: AppColors.mainDarker,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),
@@ -163,7 +164,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                   margin: const EdgeInsets.only(top: 18.0),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xFF797676),
+                      color: AppColors.border,
                       width: 3.0,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -192,7 +193,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                   child: Text(
                     'Шаги приготовления',
                     style: TextStyle(
-                      color: Color(0Xff165932),
+                      color: AppColors.mainDarker,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
