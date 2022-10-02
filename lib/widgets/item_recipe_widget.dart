@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:otusfood/model/food.dart';
+import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
-class ItemFoodWidget extends StatelessWidget {
-  final Food food;
+class ItemRecipeWidget extends StatelessWidget {
+  final Recipe recipe;
 
-  const ItemFoodWidget(this.food, {Key? key}) : super(key: key);
+  const ItemRecipeWidget(this.recipe, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ItemFoodWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Image.asset(food.getLocalPath(), width: 149,),
+          Image.asset(recipe.getLocalPath(), width: 149,),
           Flexible(
             flex: 1,
             child: Padding(
@@ -28,7 +28,7 @@ class ItemFoodWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    food.title,
+                    recipe.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -49,7 +49,7 @@ class ItemFoodWidget extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 11.0),
                           child: Text(
-                            food.getTimeValue(),
+                            recipe.getTimeValue(),
                             style: TextStyle(
                               color: AppColors.mainAccent,
                               fontWeight: FontWeight.w400,

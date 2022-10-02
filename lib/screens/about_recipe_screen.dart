@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:otusfood/model/food.dart';
+import 'package:otusfood/model/comment.dart';
+import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/comments_widget.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
@@ -8,10 +9,12 @@ import 'package:otusfood/widgets/start_finish_cooking_button.dart';
 import 'package:otusfood/widgets/step_widget.dart';
 
 class AboutFoodScreen extends StatefulWidget {
-  final Food food;
+  final Recipe recipe;
+  final List<Comment> comments;
 
   AboutFoodScreen({
-    required this.food,
+    required this.recipe,
+    required this.comments,
   });
 
   @override
@@ -100,7 +103,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.food.title,
+                          widget.recipe.name,
                           maxLines: 4,
                           style: TextStyle(
                             color: AppColors.textPrimary,
@@ -115,13 +118,16 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                           iconSize: 30.0,
                           icon: Icon(
                             Icons.favorite_outlined,
-                            color: widget.food.isFavorite
-                                ? AppColors.active
-                                : AppColors.inactive,
+                            // TODO: isFavorite
+                            // color: widget.recipe.isFavorite
+                            //     ? AppColors.active
+                            //     : AppColors.inactive,
+                            color: AppColors.inactive
                           ),
                           onPressed: () {
                             setState(() {
-                              widget.food.isFavorite = !widget.food.isFavorite;
+                              // TODO: isFavorite
+                              // widget.recipe.isFavorite = !widget.recipe.isFavorite;
                             });
                           },
                         ),
@@ -132,7 +138,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 12.0),
                   child: CookingTimeInfoWidget(
-                    cookingTime: widget.food.getTimeValue(),
+                    cookingTime: widget.recipe.getTimeValue(),
                   ),
                 ),
                 Padding(
@@ -140,7 +146,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
-                        widget.food.getLocalPath(),
+                        widget.recipe.getLocalPath(),
                         height: (MediaQuery.of(context).size.width - 32) / 1.79,
                         fit: BoxFit.fill,
                         width: MediaQuery.of(context).size.width - 32,
@@ -176,14 +182,14 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                         horizontal: 8.0,
                         vertical: 15.0,
                       ),
-                      itemCount: widget.food.ingredients.length,
+                      itemCount: widget.recipe.recipeIngredients.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: EdgeInsets.only(
                             top: index == 0 ? 0.0 : 8.0,
                           ),
                           child: IngredientWidget(
-                            foodIngredient: widget.food.ingredients[index],
+                            recipeIngredient: widget.recipe.recipeIngredients[index],
                           ),
                         );
                       }),
@@ -199,50 +205,51 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 19.0),
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: widget.food.steps.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: StepWidget(
-                            step: widget.food.steps[index],
-                            isProcessingCooking: _isProcessingCooking,
-                          ),
-                        );
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 27.0,
-                  ),
-                  child: Center(
-                    child: StartFinishCookingButton(
-                      onPressedButton: () {
-                        setState(() {
-                          _scrollController.jumpTo(0);
-                          if (!_isProcessingCooking) {
-                            widget.food.steps.forEach((element) {
-                              element.isSuccess = false;
-                            });
-                          }
-                          _isProcessingCooking = !_isProcessingCooking;
-                        });
-                      },
-                      isProcessingCooking: _isProcessingCooking,
-                    ),
-                  ),
-                ),
+                // TODO: widget.recipe.steps => RecipeStepLink
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 19.0),
+                //   child: ListView.builder(
+                //       physics: NeverScrollableScrollPhysics(),
+                //       shrinkWrap: true,
+                //       itemCount: widget.recipe.steps.length,
+                //       itemBuilder: (context, index) {
+                //         return Padding(
+                //           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                //           child: StepWidget(
+                //             step: widget.recipe.steps[index],
+                //             isProcessingCooking: _isProcessingCooking,
+                //           ),
+                //         );
+                //       }),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //     top: 27.0,
+                //   ),
+                //   child: Center(
+                //     child: StartFinishCookingButton(
+                //       onPressedButton: () {
+                //         setState(() {
+                //           _scrollController.jumpTo(0);
+                //           if (!_isProcessingCooking) {
+                //             widget.recipe.steps.forEach((element) {
+                //               element.isSuccess = false;
+                //             });
+                //           }
+                //           _isProcessingCooking = !_isProcessingCooking;
+                //         });
+                //       },
+                //       isProcessingCooking: _isProcessingCooking,
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 4,
                     bottom: 37.0,
                   ),
                   child: CommentsWidget(
-                    food: widget.food,
+                    comments: widget.comments,
                   ),
                 ),
               ],

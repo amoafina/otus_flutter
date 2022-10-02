@@ -1,4 +1,3 @@
-import 'package:otusfood/model/food.dart';
 import 'package:test/test.dart';
 
 void main() {

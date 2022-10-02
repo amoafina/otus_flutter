@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:otusfood/model/food_step.dart';
+import 'package:otusfood/model/recipe_step.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
 class StepWidget extends StatefulWidget {
-  final FoodStep step;
+  final RecipeStep step;
   final bool isProcessingCooking;
 
   StepWidget({
@@ -23,7 +23,9 @@ class _StepWidgetState extends State<StepWidget> {
       children: [
         Flexible(
           child: Text(
-            widget.step.stepNumber.toString(),
+            // TODO: widget.step.stepNumber => recipeStepLink.number
+            // widget.step.stepNumber.toString(),
+            '',
             style: TextStyle(
               fontSize: 40.0,
               fontWeight: FontWeight.w900,
@@ -34,7 +36,7 @@ class _StepWidgetState extends State<StepWidget> {
         Expanded(
           flex: 3,
           child: Text(
-            '${widget.step.description}',
+            '${widget.step.name}',
             style: TextStyle(
               color: _getTextColorForDescription(),
               fontWeight: FontWeight.w400,
@@ -46,29 +48,30 @@ class _StepWidgetState extends State<StepWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Transform.scale(
-                child: Checkbox(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  value: widget.step.isSuccess,
-                  checkColor: AppColors.textSecondary,
-                  fillColor: MaterialStateProperty.resolveWith(_getColor),
-                  side: BorderSide(
-                    color: _getColorForCheckBoxBorder(),
-                    width: 2.5,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(3.125),
-                  ),
-                  onChanged: widget.isProcessingCooking
-                      ? (isChecked) {
-                          setState(() {
-                            widget.step.isSuccess = !widget.step.isSuccess;
-                          });
-                        }
-                      : null,
-                ),
-                scale: 1.6,
-              ),
+              // TODO: isSuccess
+              // Transform.scale(
+              //   child: Checkbox(
+              //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              //     value: widget.step.isSuccess,
+              //     checkColor: AppColors.textSecondary,
+              //     fillColor: MaterialStateProperty.resolveWith(_getColor),
+              //     side: BorderSide(
+              //       color: _getColorForCheckBoxBorder(),
+              //       width: 2.5,
+              //     ),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(3.125),
+              //     ),
+              //     onChanged: widget.isProcessingCooking
+              //         ? (isChecked) {
+              //             setState(() {
+              //               widget.step.isSuccess = !widget.step.isSuccess;
+              //             });
+              //           }
+              //         : null,
+              //   ),
+              //   scale: 1.6,
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(

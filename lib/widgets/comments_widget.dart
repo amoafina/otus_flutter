@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/comment.dart';
-import 'package:otusfood/model/food.dart';
+import 'package:otusfood/model/entity_link.dart';
+import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
 class CommentsWidget extends StatefulWidget {
-  final Food food;
+  final List<Comment> comments;
 
   CommentsWidget({
-    required this.food,
+    required this.comments,
   });
 
   @override
@@ -30,12 +31,12 @@ class _CommentsWidgetState extends State<CommentsWidget> {
           child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: widget.food.comments.length,
+              itemCount: widget.comments.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                   child: _ItemCommentWidget(
-                    comment: widget.food.comments[index],
+                    comment: widget.comments[index],
                   ),
                 );
               }),
@@ -89,17 +90,16 @@ class _CommentsWidgetState extends State<CommentsWidget> {
     );
   }
 
-  int _getCurrentDate() => DateTime.now().millisecondsSinceEpoch;
+  String _getCurrentDate() => DateTime.now().toIso8601String();
 
-  void _addComment(String description) {
+  void _addComment(String text) {
     Comment comment = Comment(
-        userId: 1,
-        userLogin: 'user_login',
-        date: _getCurrentDate(),
-        userImg: "",
-        description: description,
-        photo: "");
-    widget.food.comments.add(comment);
+        id: 1,
+        datetime: _getCurrentDate(),
+        text: text,
+        photo: "",
+        user: EntityLink(id: 1));
+    widget.comments.add(comment);
   }
 }
 
@@ -136,7 +136,7 @@ class _ItemCommentWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        comment.userLogin,
+                        "login", // TODO: user login
                         style: TextStyle(
                           color: AppColors.mainAccent,
                           fontSize: 16.0,
@@ -144,7 +144,7 @@ class _ItemCommentWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        comment.getFormattedDate(),
+                        comment.datetime,
                         style: TextStyle(
                           color: AppColors.inactive,
                           fontWeight: FontWeight.w400,
@@ -158,7 +158,7 @@ class _ItemCommentWidget extends StatelessWidget {
                       top: 12.0,
                     ),
                     child: Text(
-                      comment.description,
+                      comment.text,
                     ),
                   ),
                   Padding(

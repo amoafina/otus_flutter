@@ -1,22 +1,35 @@
-import 'package:intl/intl.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:otusfood/model/entity_link.dart';
 
+part 'comment.g.dart';
+
+@JsonSerializable()
 class Comment {
-  final int userId;
-  final String userLogin;
-  final int date;
-  final String userImg;
-  final String photo;
-  final String description;
-
   Comment({
-    required this.userId,
-    required this.userLogin,
-    required this.date,
-    required this.userImg,
-    required this.description,
+    required this.id,
+    required this.text,
     required this.photo,
+    required this.datetime,
+    required this.user,
   });
 
-  String getFormattedDate() => DateFormat('dd.MM.yyyy')
-      .format(DateTime.fromMillisecondsSinceEpoch(date));
+  @JsonKey(name: 'id')
+  int id;
+
+  @JsonKey(name: 'text')
+  String text;
+
+  @JsonKey(name: 'photo')
+  String photo;
+
+  @JsonKey(name: 'datetime')
+  String datetime;
+
+  @JsonKey(name: 'user')
+  EntityLink user;
+
+  factory Comment.fromJson(Map<String, dynamic> json) =>
+      _$CommentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CommentToJson(this);
 }
