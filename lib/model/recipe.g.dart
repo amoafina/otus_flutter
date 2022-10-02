@@ -3,6 +3,62 @@
 part of 'recipe.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class RecipeAdapter extends TypeAdapter<Recipe> {
+  @override
+  final int typeId = 9;
+
+  @override
+  Recipe read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Recipe(
+      id: fields[0] as int,
+      name: fields[1] as String,
+      duration: fields[2] as int,
+      photo: fields[3] as String,
+      recipeIngredients: (fields[4] as List).cast<RecipeIngredient>(),
+      recipeStepLinks: (fields[5] as List).cast<RecipeStepLink>(),
+      favoriteRecipes: (fields[6] as List).cast<Favorite>(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Recipe obj) {
+    writer
+      ..writeByte(7)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.duration)
+      ..writeByte(3)
+      ..write(obj.photo)
+      ..writeByte(4)
+      ..write(obj.recipeIngredients)
+      ..writeByte(5)
+      ..write(obj.recipeStepLinks)
+      ..writeByte(6)
+      ..write(obj.favoriteRecipes);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RecipeAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 

@@ -3,6 +3,53 @@
 part of 'freezer.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class FreezerAdapter extends TypeAdapter<Freezer> {
+  @override
+  final int typeId = 3;
+
+  @override
+  Freezer read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Freezer(
+      id: fields[0] as int,
+      count: fields[1] as int,
+      user: fields[2] as EntityLink,
+      ingredient: fields[3] as EntityLink,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Freezer obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.count)
+      ..writeByte(2)
+      ..write(obj.user)
+      ..writeByte(3)
+      ..write(obj.ingredient);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is FreezerAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 

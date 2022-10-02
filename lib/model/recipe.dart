@@ -1,10 +1,13 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:otusfood/hive/hive_types.dart';
 import 'package:otusfood/model/favorite.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
 
 part 'recipe.g.dart';
 
+@HiveType(typeId: HiveTypeId.recipe)
 @JsonSerializable()
 class Recipe {
   Recipe({
@@ -17,24 +20,31 @@ class Recipe {
     required this.favoriteRecipes,
   });
 
+  @HiveField(0)
   @JsonKey(name: 'id')
   int id;
 
+  @HiveField(1)
   @JsonKey(name: 'name')
   String name;
 
+  @HiveField(2)
   @JsonKey(name: 'duration')
   int duration;
 
+  @HiveField(3)
   @JsonKey(name: 'photo')
   String photo;
 
+  @HiveField(4)
   @JsonKey(name: 'recipeIngredients')
   List<RecipeIngredient> recipeIngredients;
 
+  @HiveField(5)
   @JsonKey(name: 'recipeStepLinks')
   List<RecipeStepLink> recipeStepLinks;
 
+  @HiveField(6)
   @JsonKey(name: 'favoriteRecipes')
   List<Favorite> favoriteRecipes;
 
