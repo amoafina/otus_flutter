@@ -1,61 +1,69 @@
+import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
 import 'package:otusfood/model/recipe_step.dart';
 
 class FoodApi {
-  List<Recipe> getRecipes() {
+  Future<List<Recipe>> getRecipes() async {
     List<Recipe> foods = [];
-    // foods.add(
-    //   Recipe(
-    //       name: "Лосось в соусе терияки",
-    //       duration: 45,
-    //       id: 1,
-    //       recipeStepLinks: _getSteps(1),
-    //       recipeIngredients: _getIngredients(1),
-    //       photo: "photo_first_recipe.png"),
-    // );
-    // foods.add(Recipe(
-    //     name: "Поке боул с сыром тофу",
-    //     duration: 30,
-    //     id: 2,
-    //     recipeStepLinks: List.empty(),
-    //     recipeIngredients: List.empty(),
-    //     photo: "photo_second_recipe.png"));
-    // foods.add(Recipe(
-    //     name: "Стейк из говядины по-грузински с кукурузой",
-    //     duration: 75,
-    //     id: 3,
-    //     recipeIngredients: List.empty(),
-    //     recipeStepLinks: List.empty(),
-    //     photo: "photo_third_recipe.png"));
-    // foods.add(Recipe(
-    //     name: "Тосты с голубикой и бананом",
-    //     duration: 45,
-    //     id: 4,
-    //     recipeStepLinks: List.empty(),
-    //     recipeIngredients: List.empty(),
-    //     photo: "photo_four_recipe.png"));
-    // foods.add(Recipe(
-    //     name: "Паста с морепродуктами",
-    //     duration: 25,
-    //     id: 5,
-    //     recipeIngredients: List.empty(),
-    //     recipeStepLinks: List.empty(),
-    //     photo: "photo_five_recipe.png"));
-    // foods.add(Recipe(
-    //     name: "Бургер с двумя котлетами",
-    //     duration: 60,
-    //     id: 6,
-    //     recipeIngredients: List.empty(),
-    //     recipeStepLinks: List.empty(),
-    //     photo: "photo_six_recipe.png"));
-    // foods.add(Recipe(
-    //     name: "Пицца Маргарита домашняя",
-    //     duration: 25,
-    //     id: 7,
-    //     recipeIngredients: List.empty(),
-    //     recipeStepLinks: List.empty(),
-    //     photo: "photo_seven_recipe.png"));
+    foods.add(
+      Recipe(
+          name: "Лосось в соусе терияки",
+          duration: 45,
+          id: 1,
+          recipeStepLinks: List.empty(),
+          recipeIngredients: List.empty(),
+          photo: "photo_first_recipe.png",
+          favoriteRecipes: []),
+    );
+    foods.add(Recipe(
+        name: "Поке боул с сыром тофу",
+        duration: 30,
+        id: 2,
+        recipeStepLinks: List.empty(),
+        recipeIngredients: List.empty(),
+        photo: "photo_second_recipe.png",
+        favoriteRecipes: []));
+    foods.add(Recipe(
+        name: "Стейк из говядины по-грузински с кукурузой",
+        duration: 75,
+        id: 3,
+        recipeIngredients: List.empty(),
+        recipeStepLinks: List.empty(),
+        photo: "photo_third_recipe.png",
+        favoriteRecipes: []));
+    foods.add(Recipe(
+        name: "Тосты с голубикой и бананом",
+        duration: 45,
+        id: 4,
+        recipeStepLinks: List.empty(),
+        recipeIngredients: List.empty(),
+        photo: "photo_four_recipe.png",
+        favoriteRecipes: []));
+    foods.add(Recipe(
+        name: "Паста с морепродуктами",
+        duration: 25,
+        id: 5,
+        recipeIngredients: List.empty(),
+        recipeStepLinks: List.empty(),
+        photo: "photo_five_recipe.png",
+        favoriteRecipes: []));
+    foods.add(Recipe(
+        name: "Бургер с двумя котлетами",
+        duration: 60,
+        id: 6,
+        recipeIngredients: List.empty(),
+        recipeStepLinks: List.empty(),
+        photo: "photo_six_recipe.png",
+        favoriteRecipes: []));
+    foods.add(Recipe(
+        name: "Пицца Маргарита домашняя",
+        duration: 25,
+        id: 7,
+        recipeIngredients: List.empty(),
+        recipeStepLinks: List.empty(),
+        photo: "photo_seven_recipe.png",
+        favoriteRecipes: []));
     return foods;
   }
 
@@ -126,8 +134,8 @@ class FoodApi {
     return recipeStepLinks;
   }
 
-  List<RecipeIngredient> _getIngredients(int foodId) {
-    List<RecipeIngredient> ingredients = [];
+  Future<List<Ingredient>> getIngredients(int foodId) async {
+    List<Ingredient> ingredients = [];
     // ingredients.add(RecipeIngredient(
     //     id: 1,
     //     foodId: foodId,

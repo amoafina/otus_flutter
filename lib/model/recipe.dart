@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:otusfood/hive/hive_types.dart';
+import 'package:otusfood/model/base_module.dart';
 import 'package:otusfood/model/favorite.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
@@ -9,7 +10,7 @@ part 'recipe.g.dart';
 
 @HiveType(typeId: HiveTypeId.recipe)
 @JsonSerializable()
-class Recipe {
+class Recipe extends BaseModel<Recipe> {
   Recipe({
     required this.id,
     required this.name,
@@ -90,5 +91,21 @@ class Recipe {
     } else {
       return "минут";
     }
+  }
+
+  @override
+  List<Recipe> parseBox(Box<Recipe> box) {
+    return box.values
+        .map(
+          (item) => Recipe(
+              id: item.id,
+              name: item.name,
+              duration: item.duration,
+              photo: item.photo,
+              recipeIngredients: item.recipeIngredients,
+              recipeStepLinks: item.recipeStepLinks,
+              favoriteRecipes: item.favoriteRecipes),
+        )
+        .toList();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:otusfood/hive/hive_types.dart';
+import 'package:otusfood/model/base_module.dart';
 import 'package:otusfood/model/entity_link.dart';
 import 'package:otusfood/model/freezer.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
@@ -9,7 +10,7 @@ part 'ingredient.g.dart';
 
 @HiveType(typeId: HiveTypeId.ingredient)
 @JsonSerializable()
-class Ingredient {
+class Ingredient extends BaseModel<Ingredient> {
   Ingredient(
       {required this.id,
       required this.name,
@@ -41,4 +42,9 @@ class Ingredient {
       _$IngredientFromJson(json);
 
   Map<String, dynamic> toJson() => _$IngredientToJson(this);
+
+  @override
+  List<Ingredient> parseBox(Box<Ingredient> box) {
+    return [];
+  }
 }
