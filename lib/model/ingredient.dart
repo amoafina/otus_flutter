@@ -44,7 +44,7 @@ class Ingredient extends BaseModel<Ingredient> {
   Map<String, dynamic> toJson() => _$IngredientToJson(this);
 
   @override
-  List<Ingredient> parseBox(Box<Ingredient> box) {
+  List<Ingredient> parseBox<Ingredient>(Box<Ingredient> box) {
     return [];
   }
 }

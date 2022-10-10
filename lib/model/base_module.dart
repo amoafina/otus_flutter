@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
 
-abstract class BaseModel<T> {
-  List<T> parseBox(Box<T> box);
+class BaseModel {
+  List<T> parseBox<T>(Box<T> box) {
+    return List.empty();
+  }
 }

@@ -118,7 +118,26 @@ class _AuthWidgetState extends State<AuthWidget> {
                   ],
                 ),
               ),
-            )
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 26.0,
+                ),
+                child: TextButton(
+                  child: Text(
+                    'Зарегистрироваться',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ),
           ],
           mainAxisSize: MainAxisSize.max,
         ),
@@ -128,7 +147,6 @@ class _AuthWidgetState extends State<AuthWidget> {
   }
 
   void _logIn() {
-    print('login');
     var login = _loginController.text;
     var password = _passwordController.text;
     if (login.isEmpty && password.isEmpty) {

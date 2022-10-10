@@ -5,70 +5,77 @@ import 'package:otusfood/presenters/recipes_presenter.dart';
 import 'package:otusfood/screens/about_recipe_screen.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/utils/utils.dart';
+import 'package:otusfood/widgets/auth_widget.dart';
 import 'package:otusfood/widgets/item_recipe_widget.dart';
+import 'package:otusfood/widgets/list_recipes_widget.dart';
+
+import '../data/recipe_box.dart';
+import '../repositories/recipes_repository.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
-    Key? key,
     required this.title,
-    required this.recipePresenter,
-  }) : super(key: key);
+  });
 
   final String title;
-  final RecipePresenter recipePresenter;
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<Recipe> _recipes = [];
-
-  _updateRecipe(List<Recipe> recipes) {
-    setState(() {
-      _recipes.addAll(recipes);
-    });
-  }
+  int currentIndex = 0;
 
   @override
   void initState() {
-    widget.recipePresenter.getRecipes().then((value) => _updateRecipe(value));
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.background,
-        body: SafeArea(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-            child: ListView.separated(
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(height: 24),
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, position) {
-                var recipe = _recipes[position];
-                return GestureDetector(
-                  child: ItemRecipeWidget(recipe),
-                  onTap: () => {
-                    Navigator.push(
-                      context,
-                      getRoute(
-                        AboutFoodScreen(
-                          recipe: recipe,
-                          comments: [],
-                        ),
-                      ),
-                    )
-                  },
-                );
-              },
-              itemCount: _recipes.length,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        selectedItemColor: AppColors.greenBg,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/images/icon_pizza.png"),
             ),
+            label: 'Рецепты',
           ),
-        ));
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+            ),
+            label: 'Вход',
+          ),
+        ],
+      ),
+      backgroundColor: AppColors.background,
+      body: _getBodyWidget(),
+    );
+  }
+
+  Widget _getBodyWidget() {
+    switch (currentIndex) {
+      case 0:
+        return ListRecipesWidget(
+          recipePresenter: new RecipePresenter(
+              recipeRepository: new RecipeRepository(
+            foodApi: new FoodApi(),
+            recipeBox: new RecipeBox(),
+          )),
+        );
+      case 1:
+        return AuthWidget();
+      default:
+        return Container();
+    }
   }
 }

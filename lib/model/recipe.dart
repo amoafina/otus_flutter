@@ -94,10 +94,10 @@ class Recipe extends BaseModel<Recipe> {
   }
 
   @override
-  List<Recipe> parseBox(Box<Recipe> box) {
-    return box.values
+  List<Recipe> parseBox<Recipe>(Box<Recipe> box) {
+    return (box.values
         .map(
-          (item) => Recipe(
+          (item) => new Recipe(
               id: item.id,
               name: item.name,
               duration: item.duration,
@@ -106,6 +106,6 @@ class Recipe extends BaseModel<Recipe> {
               recipeStepLinks: item.recipeStepLinks,
               favoriteRecipes: item.favoriteRecipes),
         )
-        .toList();
+        .toList() as List<Recipe>);
   }
 }

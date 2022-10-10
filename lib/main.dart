@@ -5,6 +5,7 @@ import 'package:otusfood/model/favorite.dart';
 import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
+import 'package:otusfood/screens/splash_screen.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/auth_widget.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Otus Food',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: AuthWidget(),
+        body: SplashScreenWidget(),
       ),
       theme: ThemeData(
         primarySwatch: AppColors.themeColor,
