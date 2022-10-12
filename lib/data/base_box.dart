@@ -1,17 +1,30 @@
 import 'package:hive/hive.dart';
 import 'package:otusfood/model/base_module.dart';
-import 'package:otusfood/model/recipe.dart';
 
-abstract class BaseBox {
-  Box? _baseBox;
+class BaseBox<E extends BaseModel> {
+  Box<E>? baseBox;
 
-  Future<List<T>> getListData<T>(String boxName) async {
-    _baseBox = await Hive.openBox<T>(boxName);
-    return (T as BaseModel).parseBox<Recipe>(_baseBox! as Box<T>);
+  Future<List<E>> getListData(String boxName) async {
+    if (baseBox == null) {
+      baseBox = await Hive.openBox<E>(boxName);
+      if (baseBox == null) return List.empty();
+    }
+    List<E> list = baseBox!.values.toList();
+    return list;
   }
 
-  Future<Iterable<int>> saveListData<T>(List<BaseModel> list, String boxName) async {
-    _baseBox = await Hive.openBox<T>(boxName);
-    return await _baseBox?.addAll(list) ?? [];
+  Future<Iterable<int>> saveListData(List<E> list, String boxName) async {
+    if (baseBox == null) {
+      baseBox = await Hive.openBox<E>(boxName);
+      if (baseBox == null) return List.empty();
+    }
+    for (E item in list) {
+      baseBox!.add(item);
+    }
+    return List.empty();
+  }
+
+  Future<Box<T>> initBox<T>(String boxName) async {
+    return await Hive.openBox<T>(boxName);
   }
 }

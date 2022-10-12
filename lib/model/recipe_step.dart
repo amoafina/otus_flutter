@@ -1,18 +1,20 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:otusfood/hive/hive_types.dart';
+import 'package:otusfood/model/base_module.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
 
 part 'recipe_step.g.dart';
 
 @HiveType(typeId: HiveTypeId.recipeStep)
 @JsonSerializable()
-class RecipeStep {
-  RecipeStep(
-      {required this.id,
-      required this.name,
-      required this.duration,
-      required this.recipeStepLinks});
+class RecipeStep extends BaseModel {
+  RecipeStep({
+    required this.id,
+    required this.name,
+    required this.duration,
+    required this.recipeStepLinks,
+  });
 
   @HiveField(0)
   @JsonKey(name: 'id')
@@ -30,11 +32,13 @@ class RecipeStep {
   @JsonKey(name: 'recipeStepLinks')
   List<RecipeStepLink> recipeStepLinks;
 
+  bool isSuccess = false;
+
   factory RecipeStep.fromJson(Map<String, dynamic> json) =>
       _$RecipeStepFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecipeStepToJson(this);
-  
+
   getTimeMinute() {
     int minute = duration ~/ 60;
     int sec = duration % 60;

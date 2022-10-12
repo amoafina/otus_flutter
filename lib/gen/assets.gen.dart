@@ -20,6 +20,10 @@ class $AssetsImagesGen {
   AssetGenImage get icMegafon =>
       const AssetGenImage('assets/images/ic_megafon.png');
 
+  /// File path: assets/images/icon_pizza.png
+  AssetGenImage get iconPizza =>
+      const AssetGenImage('assets/images/icon_pizza.png');
+
   /// File path: assets/images/photo_first_recipe.png
   AssetGenImage get photoFirstRecipe =>
       const AssetGenImage('assets/images/photo_first_recipe.png');
@@ -52,6 +56,7 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         backImg,
         icMegafon,
+        iconPizza,
         photoFirstRecipe,
         photoFiveRecipe,
         photoFourRecipe,

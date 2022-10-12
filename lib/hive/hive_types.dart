@@ -9,4 +9,5 @@ class HiveTypeId {
   static const recipeStep = 8;
   static const recipe = 9;
   static const user = 10;
+  static const entityLink = 11;
 }

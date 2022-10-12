@@ -23,9 +23,7 @@ class _StepWidgetState extends State<StepWidget> {
       children: [
         Flexible(
           child: Text(
-            // TODO: widget.step.stepNumber => recipeStepLink.number
-            // widget.step.stepNumber.toString(),
-            '',
+            '${widget.step.recipeStepLinks.first.number}',
             style: TextStyle(
               fontSize: 40.0,
               fontWeight: FontWeight.w900,
@@ -48,30 +46,29 @@ class _StepWidgetState extends State<StepWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // TODO: isSuccess
-              // Transform.scale(
-              //   child: Checkbox(
-              //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              //     value: widget.step.isSuccess,
-              //     checkColor: AppColors.textSecondary,
-              //     fillColor: MaterialStateProperty.resolveWith(_getColor),
-              //     side: BorderSide(
-              //       color: _getColorForCheckBoxBorder(),
-              //       width: 2.5,
-              //     ),
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(3.125),
-              //     ),
-              //     onChanged: widget.isProcessingCooking
-              //         ? (isChecked) {
-              //             setState(() {
-              //               widget.step.isSuccess = !widget.step.isSuccess;
-              //             });
-              //           }
-              //         : null,
-              //   ),
-              //   scale: 1.6,
-              // ),
+              Transform.scale(
+                child: Checkbox(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  value: widget.step.isSuccess,
+                  checkColor: AppColors.textSecondary,
+                  fillColor: MaterialStateProperty.resolveWith(_getColor),
+                  side: BorderSide(
+                    color: _getColorForCheckBoxBorder(),
+                    width: 2.5,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3.125),
+                  ),
+                  onChanged: widget.isProcessingCooking
+                      ? (isChecked) {
+                          setState(() {
+                            widget.step.isSuccess = !widget.step.isSuccess;
+                          });
+                        }
+                      : null,
+                ),
+                scale: 1.6,
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
@@ -102,11 +99,13 @@ class _StepWidgetState extends State<StepWidget> {
     );
   }
 
-  _getBackgroundColor() =>
-      widget.isProcessingCooking ? AppColors.mainAccentTransparent : AppColors.background;
+  _getBackgroundColor() => widget.isProcessingCooking
+      ? AppColors.mainAccentTransparent
+      : AppColors.background;
 
-  _getTextColorForDescription() =>
-      widget.isProcessingCooking ? AppColors.textCookingDescription : AppColors.inactive;
+  _getTextColorForDescription() => widget.isProcessingCooking
+      ? AppColors.textCookingDescription
+      : AppColors.inactive;
 
   _getTextColorForNumberStep() =>
       widget.isProcessingCooking ? AppColors.mainAccent : AppColors.inactive;

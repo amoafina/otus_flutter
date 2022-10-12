@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:otusfood/model/entity_link.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
 import 'package:otusfood/model/recipe_step.dart';
+import 'package:otusfood/model/recipe_step_link.dart';
 
 class FoodApi {
   Future<List<Recipe>> getRecipes() async {
@@ -67,75 +70,166 @@ class FoodApi {
     return foods;
   }
 
-  List<RecipeStep> _getSteps(int foodId) {
+  List<RecipeStep> getSteps(int recipeId) {
     List<RecipeStep> recipeStepLinks = [];
-    // steps.add(FoodStep(
-    //   description:
-    //       'В маленькой кастрюле соедините соевый соус, 6 столовых ложек воды, мёд, сахар, измельчённый чеснок, имбирь и лимонный сок.',
-    //   id: 1,
-    //   foodId: foodId,
-    //   timeSec: 330,
-    //   stepNumber: 1,
-    //   isSuccess: false,
-    // ));
-    // steps.add(FoodStep(
-    //   description:
-    //       'Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.',
-    //   id: foodId,
-    //   foodId: 2,
-    //   timeSec: 420,
-    //   stepNumber: 2,
-    //   isSuccess: false,
-    // ));
-    // steps.add(FoodStep(
-    //   description:
-    //       'Смешайте оставшуюся воду с крахмалом. Добавьте в кастрюлю и перемешайте.',
-    //   id: 3,
-    //   foodId: foodId,
-    //   timeSec: 360,
-    //   stepNumber: 3,
-    //   isSuccess: false,
-    // ));
-    // steps.add(FoodStep(
-    //   description:
-    //       'Готовьте, непрерывно помешивая венчиком, 1 минуту. Снимите с огня и немного остудите.',
-    //   id: 4,
-    //   foodId: foodId,
-    //   timeSec: 90,
-    //   stepNumber: 4,
-    //   isSuccess: false,
-    // ));
-    // steps.add(FoodStep(
-    //   description:
-    //       'Смажьте форму маслом и выложите туда рыбу. Полейте её соусом.',
-    //   id: 5,
-    //   foodId: foodId,
-    //   timeSec: 360,
-    //   stepNumber: 5,
-    //   isSuccess: false,
-    // ));
-    // steps.add(FoodStep(
-    //   description:
-    //       'Поставьте в разогретую до 200 °C духовку примерно на 15 минут.',
-    //   id: 6,
-    //   foodId: foodId,
-    //   timeSec: 900,
-    //   stepNumber: 6,
-    //   isSuccess: false,
-    // ));
-    // steps.add(FoodStep(
-    //   description: 'Перед подачей полейте соусом из формы и посыпьте кунжутом.',
-    //   id: 7,
-    //   foodId: foodId,
-    //   timeSec: 240,
-    //   stepNumber: 7,
-    //   isSuccess: false,
-    // ));
+    recipeStepLinks.add(
+      new RecipeStep(
+        id: 1,
+        name:
+            'В маленькой кастрюле соедините соевый соус, 6 столовых ложек воды, мёд, сахар, измельчённый чеснок, имбирь и лимонный сок.',
+        duration: 330,
+        recipeStepLinks: [
+          new RecipeStepLink(
+            id: 1,
+            number: 1,
+            recipe: new EntityLink(id: 1),
+            step: new EntityLink(id: 1),
+          ),
+        ],
+      ),
+    );
+    recipeStepLinks.add(
+      new RecipeStep(
+        id: 2,
+        name:
+            'Поставьте на средний огонь и, помешивая, доведите до лёгкого кипения.',
+        duration: 420,
+        recipeStepLinks: [
+          new RecipeStepLink(
+            id: 2,
+            number: 2,
+            recipe: new EntityLink(id: 1),
+            step: new EntityLink(id: 2),
+          ),
+        ],
+      ),
+    );
+    recipeStepLinks.add(
+      new RecipeStep(
+        id: 3,
+        name:
+            'Смешайте оставшуюся воду с крахмалом. Добавьте в кастрюлю и перемешайте.',
+        duration: 360,
+        recipeStepLinks: [
+          new RecipeStepLink(
+            id: 3,
+            number: 3,
+            recipe: new EntityLink(id: 1),
+            step: new EntityLink(id: 3),
+          ),
+        ],
+      ),
+    );
+
+    recipeStepLinks.add(
+      new RecipeStep(
+        id: 4,
+        name:
+            'Готовьте, непрерывно помешивая венчиком, 1 минуту. Снимите с огня и немного остудите.',
+        duration: 90,
+        recipeStepLinks: [
+          new RecipeStepLink(
+            id: 4,
+            number: 4,
+            recipe: new EntityLink(id: 1),
+            step: new EntityLink(id: 4),
+          ),
+        ],
+      ),
+    );
+
+    recipeStepLinks.add(
+      new RecipeStep(
+        id: 5,
+        name: 'Смажьте форму маслом и выложите туда рыбу. Полейте её соусом.',
+        duration: 360,
+        recipeStepLinks: [
+          new RecipeStepLink(
+            id: 5,
+            number: 5,
+            recipe: new EntityLink(id: 1),
+            step: new EntityLink(id: 5),
+          ),
+        ],
+      ),
+    );
+
+    recipeStepLinks.add(
+      new RecipeStep(
+        id: 6,
+        name: 'Поставьте в разогретую до 200 °C духовку примерно на 15 минут.',
+        duration: 900,
+        recipeStepLinks: [
+          new RecipeStepLink(
+            id: 6,
+            number: 6,
+            recipe: new EntityLink(id: 1),
+            step: new EntityLink(id: 6),
+          ),
+        ],
+      ),
+    );
+
+    recipeStepLinks.add(
+      new RecipeStep(
+        id: 7,
+        name: 'Перед подачей полейте соусом из формы и посыпьте кунжутом.',
+        duration: 240,
+        recipeStepLinks: [
+          new RecipeStepLink(
+            id: 7,
+            number: 7,
+            recipe: new EntityLink(id: 1),
+            step: new EntityLink(id: 7),
+          ),
+        ],
+      ),
+    );
     return recipeStepLinks;
   }
 
   Future<List<Ingredient>> getIngredients(int foodId) async {
     List<Ingredient> ingredients = [];
+    ingredients.add(new Ingredient(
+      id: 1,
+      name: 'Соевый соус',
+      measureUnit: new EntityLink(id: 1),
+      recipeIngredients: [
+        new RecipeIngredient(
+          id: 1,
+          count: 1,
+          ingredient: new EntityLink(id: 1),
+          recipe: new EntityLink(id: 1),
+        ),
+        new RecipeIngredient(
+          id: 1,
+          count: 1,
+          ingredient: new EntityLink(id: 1),
+          recipe: new EntityLink(id: 2),
+        ),
+      ],
+      ingredientFreezer: List.empty(),
+    ));
+    ingredients.add(new Ingredient(
+      id: 1,
+      name: 'Вода',
+      measureUnit: new EntityLink(id: 1),
+      recipeIngredients: [
+        new RecipeIngredient(
+          id: 1,
+          count: 1,
+          ingredient: new EntityLink(id: 4),
+          recipe: new EntityLink(id: 1),
+        ),
+        new RecipeIngredient(
+          id: 1,
+          count: 1,
+          ingredient: new EntityLink(id: 1),
+          recipe: new EntityLink(id: 5),
+        ),
+      ],
+      ingredientFreezer: List.empty(),
+    ));
     // ingredients.add(RecipeIngredient(
     //     id: 1,
     //     foodId: foodId,

@@ -10,7 +10,7 @@ part 'ingredient.g.dart';
 
 @HiveType(typeId: HiveTypeId.ingredient)
 @JsonSerializable()
-class Ingredient extends BaseModel<Ingredient> {
+class Ingredient extends BaseModel {
   Ingredient(
       {required this.id,
       required this.name,
@@ -43,8 +43,8 @@ class Ingredient extends BaseModel<Ingredient> {
 
   Map<String, dynamic> toJson() => _$IngredientToJson(this);
 
-  @override
+ @override
   List<Ingredient> parseBox<Ingredient>(Box<Ingredient> box) {
-    return [];
+    return List.empty();
   }
 }

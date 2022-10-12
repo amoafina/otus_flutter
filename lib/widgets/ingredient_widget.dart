@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:otusfood/model/recipe_ingredient.dart';
+import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
 class IngredientWidget extends StatelessWidget {
-  final RecipeIngredient recipeIngredient;
+  final Ingredient ingredient;
 
   IngredientWidget({
-    required this.recipeIngredient,
+    required this.ingredient,
   });
 
   @override
@@ -17,9 +17,7 @@ class IngredientWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          // TODO recipeIngredient.description => Ingredient.name
-          // '\u2022 ${recipeIngredient.description}',
-          '',
+          '\u2022 ${ingredient.name}',
           style: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.w500,
@@ -42,5 +40,4 @@ class IngredientWidget extends StatelessWidget {
       ],
     );
   }
-
 }

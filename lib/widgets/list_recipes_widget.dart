@@ -1,4 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:otusfood/api/food_api.dart';
+import 'package:otusfood/data/ingredients_box.dart';
+import 'package:otusfood/data/recipe_step_box.dart';
+import 'package:otusfood/repositories/ingredients_repository.dart';
+import 'package:otusfood/repositories/recipe_step_repository.dart';
 
 import '../model/recipe.dart';
 import '../presenters/recipes_presenter.dart';
@@ -50,8 +55,16 @@ class _ListRecipesState extends State<ListRecipesWidget> {
                   context,
                   getRoute(
                     AboutFoodScreen(
+                      recipeStepRepository: new RecipeStepRepository(
+                        foodApi: new FoodApi(),
+                        baseBox: new RecipeStepBox(),
+                      ),
                       recipe: recipe,
                       comments: [],
+                      ingredientRepository: new IngredientsRepository(
+                        foodApi: new FoodApi(),
+                        ingredientsBox: new IngredientsBox(),
+                      ),
                     ),
                   ),
                 )

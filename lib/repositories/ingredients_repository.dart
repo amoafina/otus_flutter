@@ -15,16 +15,16 @@ class IngredientsRepository {
 
   Future<List<Ingredient>> getIngredients(int recipeId) async {
     var localIngredients =
-        await _ingredientsBox.getListData<Ingredient>(HiveBoxes.ingredientsBox);
+        await _ingredientsBox.getIngredientsForRecipe(recipeId);
     if (localIngredients.isEmpty) {
       var remoteList = await _foodApi.getIngredients(recipeId);
       if (remoteList.isEmpty) {
         return List.empty();
       }
-      await _ingredientsBox.saveListData<Ingredient>(remoteList, HiveBoxes.ingredientsBox);
-      return await _ingredientsBox.getListData<Ingredient>(HiveBoxes.ingredientsBox);
+      await _ingredientsBox.saveListData(remoteList, HiveBoxes.ingredientsBox);
+      return await _ingredientsBox.getIngredientsForRecipe(recipeId);
     }
 
-    return List.empty();
+    return localIngredients;
   }
 }

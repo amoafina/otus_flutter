@@ -8,11 +8,12 @@ part 'recipe_step_link.g.dart';
 @HiveType(typeId: HiveTypeId.recipeStepLink)
 @JsonSerializable()
 class RecipeStepLink {
-  RecipeStepLink(
-      {required this.id,
-      required this.number,
-      required this.recipe,
-      required this.step});
+  RecipeStepLink({
+    required this.id,
+    required this.number,
+    required this.recipe,
+    required this.step,
+  });
 
   @HiveField(0)
   @JsonKey(name: 'id')

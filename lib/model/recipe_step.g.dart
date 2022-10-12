@@ -60,7 +60,7 @@ RecipeStep _$RecipeStepFromJson(Map<String, dynamic> json) => RecipeStep(
       recipeStepLinks: (json['recipeStepLinks'] as List<dynamic>)
           .map((e) => RecipeStepLink.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+    )..isSuccess = json['isSuccess'] as bool;
 
 Map<String, dynamic> _$RecipeStepToJson(RecipeStep instance) =>
     <String, dynamic>{
@@ -68,4 +68,5 @@ Map<String, dynamic> _$RecipeStepToJson(RecipeStep instance) =>
       'name': instance.name,
       'duration': instance.duration,
       'recipeStepLinks': instance.recipeStepLinks,
+      'isSuccess': instance.isSuccess,
     };

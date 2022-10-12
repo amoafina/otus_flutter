@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/comment.dart';
+import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/model/recipe.dart';
+import 'package:otusfood/model/recipe_step.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/comments_widget.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
 import 'package:otusfood/widgets/ingredient_widget.dart';
+import 'package:otusfood/widgets/recipe_steps_widget.dart';
 import 'package:otusfood/widgets/start_finish_cooking_button.dart';
 import 'package:otusfood/widgets/step_widget.dart';
+
+import '../repositories/ingredients_repository.dart';
+import '../repositories/recipe_step_repository.dart';
 
 class AboutFoodScreen extends StatefulWidget {
   final Recipe recipe;
   final List<Comment> comments;
+  final IngredientsRepository ingredientRepository;
+  final RecipeStepRepository recipeStepRepository;
 
   AboutFoodScreen({
     required this.recipe,
     required this.comments,
+    required this.ingredientRepository,
+    required this.recipeStepRepository,
   });
 
   @override
@@ -25,6 +35,7 @@ class AboutFoodScreen extends StatefulWidget {
 
 class _AboutFoodScreenState extends State<AboutFoodScreen> {
   bool _isProcessingCooking = false;
+  List<RecipeStep> _steps = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -76,8 +87,9 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
               )
             : null,
         centerTitle: true,
-        backgroundColor:
-            _isProcessingCooking ? AppColors.mainAccent : AppColors.textSecondary,
+        backgroundColor: _isProcessingCooking
+            ? AppColors.mainAccent
+            : AppColors.textSecondary,
         actions: [
           IconButton(
             color: AppColors.textPrimary,
@@ -116,14 +128,12 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                         visible: true,
                         child: IconButton(
                           iconSize: 30.0,
-                          icon: Icon(
-                            Icons.favorite_outlined,
-                            // TODO: isFavorite
-                            // color: widget.recipe.isFavorite
-                            //     ? AppColors.active
-                            //     : AppColors.inactive,
-                            color: AppColors.inactive
-                          ),
+                          icon: Icon(Icons.favorite_outlined,
+                              // TODO: isFavorite
+                              // color: widget.recipe.isFavorite
+                              //     ? AppColors.active
+                              //     : AppColors.inactive,
+                              color: AppColors.inactive),
                           onPressed: () {
                             setState(() {
                               // TODO: isFavorite
@@ -152,97 +162,75 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                         width: MediaQuery.of(context).size.width - 32,
                       ),
                     )),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 22.54,
-                  ),
-                  child: Text(
-                    'Ингредиенты',
-                    style: TextStyle(
-                      color: AppColors.main,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 18.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColors.border,
-                      width: 3.0,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0,
-                        vertical: 15.0,
-                      ),
-                      itemCount: widget.recipe.recipeIngredients.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: index == 0 ? 0.0 : 8.0,
+                FutureBuilder<List<Ingredient>>(
+                  future: widget.ingredientRepository
+                      .getIngredients(widget.recipe.id),
+                  builder: (context, snapshot) {
+                    var list = snapshot.data;
+                    if (list == null || list.isEmpty)
+                      return Container();
+                    else {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 22.54,
+                            ),
+                            child: Text(
+                              'Ингредиенты',
+                              style: TextStyle(
+                                color: AppColors.main,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                          child: IngredientWidget(
-                            recipeIngredient: widget.recipe.recipeIngredients[index],
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(top: 18.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.border,
+                                width: 3.0,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 15.0,
+                              ),
+                              itemCount: list.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    top: index == 0 ? 0.0 : 8.0,
+                                  ),
+                                  child: IngredientWidget(
+                                    ingredient: list[index],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        );
-                      }),
+                        ],
+                      );
+                    }
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 19.0),
-                  child: Text(
-                    'Шаги приготовления',
-                    style: TextStyle(
-                      color: AppColors.main,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  child: new RecipeStepsWidget(
+                    scrollController: _scrollController,
+                    recipeStepId: widget.recipe.id,
+                    recipeStepRepository: widget.recipeStepRepository,
                   ),
                 ),
-                // TODO: widget.recipe.steps => RecipeStepLink
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 19.0),
-                //   child: ListView.builder(
-                //       physics: NeverScrollableScrollPhysics(),
-                //       shrinkWrap: true,
-                //       itemCount: widget.recipe.steps.length,
-                //       itemBuilder: (context, index) {
-                //         return Padding(
-                //           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                //           child: StepWidget(
-                //             step: widget.recipe.steps[index],
-                //             isProcessingCooking: _isProcessingCooking,
-                //           ),
-                //         );
-                //       }),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     top: 27.0,
-                //   ),
-                //   child: Center(
-                //     child: StartFinishCookingButton(
-                //       onPressedButton: () {
-                //         setState(() {
-                //           _scrollController.jumpTo(0);
-                //           if (!_isProcessingCooking) {
-                //             widget.recipe.steps.forEach((element) {
-                //               element.isSuccess = false;
-                //             });
-                //           }
-                //           _isProcessingCooking = !_isProcessingCooking;
-                //         });
-                //       },
-                //       isProcessingCooking: _isProcessingCooking,
-                //     ),
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 4,

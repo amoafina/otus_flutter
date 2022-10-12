@@ -10,7 +10,7 @@ part 'recipe.g.dart';
 
 @HiveType(typeId: HiveTypeId.recipe)
 @JsonSerializable()
-class Recipe extends BaseModel<Recipe> {
+class Recipe extends BaseModel {
   Recipe({
     required this.id,
     required this.name,
@@ -95,17 +95,6 @@ class Recipe extends BaseModel<Recipe> {
 
   @override
   List<Recipe> parseBox<Recipe>(Box<Recipe> box) {
-    return (box.values
-        .map(
-          (item) => new Recipe(
-              id: item.id,
-              name: item.name,
-              duration: item.duration,
-              photo: item.photo,
-              recipeIngredients: item.recipeIngredients,
-              recipeStepLinks: item.recipeStepLinks,
-              favoriteRecipes: item.favoriteRecipes),
-        )
-        .toList() as List<Recipe>);
+    return box.values.toList();
   }
 }
