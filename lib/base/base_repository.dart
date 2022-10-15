@@ -1,5 +1,4 @@
 import 'package:otusfood/api/food_api.dart';
-import 'package:otusfood/data/base_box.dart';
 
 abstract class BaseRepository<B> {
   final FoodApi foodApi;

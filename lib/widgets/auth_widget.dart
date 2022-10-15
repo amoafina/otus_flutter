@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
 class AuthWidget extends StatefulWidget {
+  final UserPresenter userPresenter;
+
+  AuthWidget({required this.userPresenter});
+
   @override
   _AuthWidgetState createState() => _AuthWidgetState();
 }
@@ -10,11 +15,20 @@ class AuthWidget extends StatefulWidget {
 class _AuthWidgetState extends State<AuthWidget> {
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
+  late TextEditingController _passwordRepeatController;
+
+  int opacity = 0;
+  int paddingTop = 40;
+
+  Duration _defaultDuration = Duration(
+    milliseconds: 500,
+  );
 
   @override
   void initState() {
     _loginController = TextEditingController();
     _passwordController = TextEditingController();
+    _passwordRepeatController = TextEditingController();
     super.initState();
   }
 
@@ -48,9 +62,10 @@ class _AuthWidgetState extends State<AuthWidget> {
                               top: 12,
                               bottom: 12,
                             ),
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: AppColors.grayApp,
+                            prefixIcon: ImageIcon(
+                              AssetImage("assets/images/ic_profile.png"),
+                              size: 24.0,
+                              color: Colors.grey,
                             ),
                             hintText: 'Логин',
                             filled: true,
@@ -76,9 +91,10 @@ class _AuthWidgetState extends State<AuthWidget> {
                               top: 12,
                               bottom: 12,
                             ),
-                            prefixIcon: Icon(
-                              Icons.password,
-                              color: AppColors.grayApp,
+                            prefixIcon: ImageIcon(
+                              AssetImage("assets/images/ic_password.png"),
+                              size: 24.0,
+                              color: Colors.grey,
                             ),
                             hintText: 'Пароль',
                             filled: true,
@@ -94,27 +110,57 @@ class _AuthWidgetState extends State<AuthWidget> {
                         top: 16.0,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: SizedBox(
-                        width: 232.0,
-                        child: MaterialButton(
-                          child: Text(
-                            'Войти',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
+                    Stack(
+                      children: [
+                        AnimatedOpacity(
+                          opacity: opacity.toDouble(),
+                          duration: _defaultDuration,
+                          child: Padding(
+                            child: SizedBox(
+                              width: 232.0,
+                              child: TextFormField(
+                                controller: _passwordRepeatController,
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.only(
+                                    top: 12,
+                                    bottom: 12,
+                                  ),
+                                  prefixIcon: ImageIcon(
+                                    AssetImage("assets/images/ic_password.png"),
+                                    size: 24.0,
+                                    color: Colors.grey,
+                                  ),
+                                  hintText: 'Пароль еще раз',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            padding: const EdgeInsets.only(
+                              top: 16.0,
                             ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          color: AppColors.colorLogIn,
-                          onPressed: _logIn,
                         ),
-                      ),
-                    )
+                        AnimatedPadding(
+                          padding: EdgeInsets.only(
+                            top: paddingTop.toDouble(),
+                          ),
+                          duration: _defaultDuration,
+                          child: AnimatedCrossFade(
+                            firstChild: _logInButtonWidget(),
+                            secondChild: _createRegistrationButton(),
+                            crossFadeState: paddingTop == 40
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: _defaultDuration,
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -126,15 +172,20 @@ class _AuthWidgetState extends State<AuthWidget> {
                   bottom: 26.0,
                 ),
                 child: TextButton(
-                  child: Text(
-                    'Зарегистрироваться',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
-                    ),
+                  child: AnimatedCrossFade(
+                    duration: _defaultDuration,
+                    crossFadeState: opacity == 0
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    firstChild: _createTextButton('Зарегистрироваться'),
+                    secondChild: _createTextButton('Войти в приложение'),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      opacity = opacity == 1 ? 0 : 1;
+                      paddingTop = paddingTop == 40 ? 104 : 40;
+                    });
+                  },
                 ),
               ),
             ),
@@ -146,12 +197,71 @@ class _AuthWidgetState extends State<AuthWidget> {
     );
   }
 
+  Widget _createTextButton(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.w400,
+        fontSize: 14.0,
+      ),
+    );
+  }
+
+  Widget _logInButtonWidget() {
+    return SizedBox(
+      width: 232.0,
+      height: 48.0,
+      child: MaterialButton(
+        child: Text(
+          'Войти',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 16.0,
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        color: AppColors.colorLogIn,
+        onPressed: _logIn,
+      ),
+    );
+  }
+
+  Widget _createRegistrationButton() {
+    return SizedBox(
+      width: 232.0,
+      height: 48.0,
+      child: MaterialButton(
+        child: Text(
+          'Регистрация',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 16.0,
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        color: AppColors.colorLogIn,
+        onPressed: _registration,
+      ),
+    );
+  }
+
   void _logIn() {
     var login = _loginController.text;
     var password = _passwordController.text;
-    if (login.isEmpty && password.isEmpty) {
-    } else if (login.isEmpty) {
-    } else if (password.isEmpty) {
-    } else {}
+    widget.userPresenter.login(login, password);
+  }
+
+  void _registration() {
+    String login = _loginController.text;
+    String password = _passwordController.text;
+    String passwordRepeat = _passwordRepeatController.text;
+    widget.userPresenter.registration(login, password, passwordRepeat);
   }
 }

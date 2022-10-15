@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:otusfood/hive/hive_types.dart';
+import 'package:otusfood/model/base_module.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/favorite.dart';
 import 'package:otusfood/model/freezer.dart';
@@ -9,15 +10,16 @@ part 'user.g.dart';
 
 @HiveType(typeId: HiveTypeId.user)
 @JsonSerializable()
-class User {
-  User(
-      {required this.id,
-      required this.login,
-      required this.password,
-      required this.token,
-      required this.userFreezer,
-      required this.favoriteRecipes,
-      required this.comments});
+class User extends BaseModel {
+  User({
+    required this.id,
+    required this.login,
+    required this.password,
+    required this.token,
+    required this.userFreezer,
+    required this.favoriteRecipes,
+    required this.comments,
+  });
 
   @HiveField(0)
   @JsonKey(name: 'id')

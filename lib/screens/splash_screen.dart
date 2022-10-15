@@ -2,6 +2,11 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:otusfood/api/food_api.dart';
+import 'package:otusfood/data/users_box.dart';
+import 'package:otusfood/presenters/messages_presenter.dart';
+import 'package:otusfood/presenters/user_presenter.dart';
+import 'package:otusfood/repositories/user_repository.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
 import 'main_screen.dart';
@@ -16,6 +21,13 @@ class SplashScreenWidget extends StatelessWidget {
           MaterialPageRoute(
             builder: (builder) => MainScreen(
               title: 'Otus Food',
+              userPresenter: new UserPresenter(
+                new UserRepository(
+                  foodApi: FoodApi(),
+                  baseBox: UsersBox(),
+                ),
+                messagePresenter: new MessagePresenter(),
+              ),
             ),
           )),
     );

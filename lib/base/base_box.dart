@@ -4,6 +4,8 @@ import 'package:otusfood/model/base_module.dart';
 class BaseBox<E extends BaseModel> {
   Box<E>? baseBox;
 
+  LazyBox<E>? lazyBox;
+
   Future<List<E>> getListData(String boxName) async {
     if (baseBox == null) {
       baseBox = await Hive.openBox<E>(boxName);
@@ -26,5 +28,9 @@ class BaseBox<E extends BaseModel> {
 
   Future<Box<T>> initBox<T>(String boxName) async {
     return await Hive.openBox<T>(boxName);
+  }
+
+  Future<LazyBox<T>> initLazyBox<T>(String boxName) async {
+    return await Hive.openLazyBox<T>(boxName);
   }
 }

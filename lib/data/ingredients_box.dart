@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:otusfood/data/base_box.dart';
+import 'package:otusfood/base/base_box.dart';
 import 'package:otusfood/hive/hive_boxes.dart';
 import 'package:otusfood/model/ingredient.dart';
 

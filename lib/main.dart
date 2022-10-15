@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/favorite.dart';
+import 'package:otusfood/model/freezer.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
 import 'package:otusfood/model/recipe_step.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
+import 'package:otusfood/model/user.dart';
 import 'package:otusfood/screens/splash_screen.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
@@ -21,6 +24,9 @@ void main() {
   Hive.registerAdapter(RecipeIngredientAdapter());
   Hive.registerAdapter(RecipeStepAdapter());
   Hive.registerAdapter(EntityLinkAdapter());
+  Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(FreezerAdapter());
+  Hive.registerAdapter(CommentAdapter());
   runApp(const MyApp());
 }
 
