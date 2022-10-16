@@ -8,6 +8,7 @@ import 'package:otusfood/utils/utils.dart';
 import 'package:otusfood/widgets/auth_widget.dart';
 import 'package:otusfood/widgets/item_recipe_widget.dart';
 import 'package:otusfood/widgets/list_recipes_widget.dart';
+import 'package:otusfood/widgets/profile_widget.dart';
 
 import '../data/recipe_box.dart';
 import '../presenters/user_presenter.dart';
@@ -180,7 +181,9 @@ class _MainScreenState extends State<MainScreen> {
       case 2:
         return Container();
       default:
-        return Container();
+        return ProfileWidget(
+          userPresenter: widget.userPresenter,
+        );
     }
   }
 }

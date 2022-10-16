@@ -10,7 +10,7 @@ import 'package:otusfood/repositories/user_repository.dart';
 
 class UserPresenter extends BasePresenter {
   final UserRepository _userRepository;
-
+  User? currentUser;
   StreamController<User?> _userStreamController = new StreamController();
 
   UserPresenter(
@@ -41,6 +41,7 @@ class UserPresenter extends BasePresenter {
     } else if (resultOperation is SuccessOperation) {
       User? user = resultOperation.object as User?;
       if (user != null) {
+        currentUser = user;
         _userStreamController.add(user);
       }
     }
@@ -61,4 +62,6 @@ class UserPresenter extends BasePresenter {
   }
 
   exit() => _userStreamController.add(null);
+
+  Future<User?> getCurrentUser() async => currentUser;
 }

@@ -15,4 +15,5 @@ class AppColors {
   static Color greenBg = Color(0XFF2ECC71);
   static Color grayApp = Color(0XFFC2C2C2);
   static Color colorLogIn = Color(0XFF165932);
+  static Color greenColorBorder = Color(0XFF165932);
 }
