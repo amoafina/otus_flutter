@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/entity_link.dart';
+import 'package:otusfood/model/favorite.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
@@ -280,5 +281,9 @@ class FoodApi {
     // ingredients.add(RecipeIngredient(
     //     id: 1, foodId: foodId, description: 'Кунжут', measurement: 'по вкусу'));
     return ingredients;
+  }
+
+  Future<List<Favorite>> getFavorite() async {
+    return List.empty();
   }
 }

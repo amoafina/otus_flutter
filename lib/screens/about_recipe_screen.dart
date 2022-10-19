@@ -2,29 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/model/recipe.dart';
-import 'package:otusfood/model/recipe_step.dart';
+import 'package:otusfood/model/user.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/comments_widget.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
 import 'package:otusfood/widgets/ingredient_widget.dart';
 import 'package:otusfood/widgets/recipe_steps_widget.dart';
-import 'package:otusfood/widgets/start_finish_cooking_button.dart';
-import 'package:otusfood/widgets/step_widget.dart';
 
+import '../presenters/user_presenter.dart';
 import '../repositories/ingredients_repository.dart';
 import '../repositories/recipe_step_repository.dart';
+import '../repositories/recipes_repository.dart';
 
 class AboutFoodScreen extends StatefulWidget {
   final Recipe recipe;
   final List<Comment> comments;
   final IngredientsRepository ingredientRepository;
   final RecipeStepRepository recipeStepRepository;
+  final UserPresenter userPresenter;
+  final RecipeRepository recipeRepository;
 
   AboutFoodScreen({
     required this.recipe,
     required this.comments,
     required this.ingredientRepository,
     required this.recipeStepRepository,
+    required this.userPresenter,
+    required this.recipeRepository,
   });
 
   @override
@@ -35,8 +39,19 @@ class AboutFoodScreen extends StatefulWidget {
 
 class _AboutFoodScreenState extends State<AboutFoodScreen> {
   bool _isProcessingCooking = false;
-  List<RecipeStep> _steps = [];
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    User? user = widget.userPresenter.currentUser;
+    if (user != null) {
+      widget.recipeRepository.refresh(
+        widget.recipe.id,
+        user.id,
+      );
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +67,10 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
         title: Text(
           'Рецепт',
           style: TextStyle(
-              fontSize: 20.0,
-              color: AppColors.main,
-              fontWeight: FontWeight.w400),
+            fontSize: 20.0,
+            color: AppColors.main,
+            fontWeight: FontWeight.w400,
+          ),
         ),
         bottom: _isProcessingCooking
             ? PreferredSize(
@@ -125,20 +141,37 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: true,
-                        child: IconButton(
-                          iconSize: 30.0,
-                          icon: Icon(Icons.favorite_outlined,
-                              // TODO: isFavorite
-                              // color: widget.recipe.isFavorite
-                              //     ? AppColors.active
-                              //     : AppColors.inactive,
-                              color: AppColors.inactive),
-                          onPressed: () {
-                            setState(() {
-                              // TODO: isFavorite
-                              // widget.recipe.isFavorite = !widget.recipe.isFavorite;
-                            });
+                        visible: widget.userPresenter.currentUser != null,
+                        child: StreamBuilder<bool>(
+                          stream:
+                              widget.recipeRepository.getIsFavoriteUserRecipe(),
+                          builder: (builder, snapshot) {
+                            bool isFavorite = snapshot.data ?? false;
+                            return IconButton(
+                              iconSize: 30.0,
+                              icon: Icon(
+                                Icons.favorite_outlined,
+                                color: isFavorite
+                                    ? AppColors.active
+                                    : AppColors.inactive,
+                              ),
+                              onPressed: () {
+                                User? user = widget.userPresenter.currentUser;
+                                if (user != null) {
+                                  if (isFavorite) {
+                                    widget.recipeRepository.removeFavorite(
+                                      widget.recipe.id,
+                                      user.id,
+                                    );
+                                  } else {
+                                    widget.recipeRepository.addFavorite(
+                                      widget.recipe.id,
+                                      user.id,
+                                    );
+                                  }
+                                }
+                              },
+                            );
                           },
                         ),
                       ),

@@ -10,4 +10,9 @@ class RecipePresenter {
   }) : _recipeRepository = recipeRepository;
 
   Future<List<Recipe>> getRecipes() => _recipeRepository.getRecipes();
+
+  Future<List<Recipe>> getFavoriteRecipes(int userId) async =>
+      await _recipeRepository.getFavoriteRecipes(userId);
+
+  RecipeRepository recipeRepository() => _recipeRepository;
 }

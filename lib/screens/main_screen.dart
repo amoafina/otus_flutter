@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/api/food_api.dart';
-import 'package:otusfood/model/recipe.dart';
+import 'package:otusfood/data/favorite_box.dart';
 import 'package:otusfood/presenters/recipes_presenter.dart';
-import 'package:otusfood/screens/about_recipe_screen.dart';
 import 'package:otusfood/utils/app_colors.dart';
-import 'package:otusfood/utils/utils.dart';
 import 'package:otusfood/widgets/auth_widget.dart';
-import 'package:otusfood/widgets/item_recipe_widget.dart';
+import 'package:otusfood/widgets/list_favorites_recipes_widget.dart';
 import 'package:otusfood/widgets/list_recipes_widget.dart';
 import 'package:otusfood/widgets/profile_widget.dart';
 
@@ -16,10 +14,12 @@ import '../repositories/recipes_repository.dart';
 
 class MainScreen extends StatefulWidget {
   final UserPresenter userPresenter;
+  final RecipePresenter recipePresenter;
 
   const MainScreen({
     required this.title,
     required this.userPresenter,
+    required this.recipePresenter,
   });
 
   final String title;
@@ -149,9 +149,11 @@ class _MainScreenState extends State<MainScreen> {
     switch (currentIndex) {
       case 0:
         return ListRecipesWidget(
+          userPresenter: widget.userPresenter,
           recipePresenter: new RecipePresenter(
             recipeRepository: new RecipeRepository(
               foodApi: new FoodApi(),
+              favoriteBox: new FavoriteBox(),
               recipeBox: new RecipeBox(),
             ),
           ),
@@ -169,17 +171,16 @@ class _MainScreenState extends State<MainScreen> {
     switch (currentIndex) {
       case 0:
         return ListRecipesWidget(
-          recipePresenter: new RecipePresenter(
-            recipeRepository: new RecipeRepository(
-              foodApi: new FoodApi(),
-              recipeBox: new RecipeBox(),
-            ),
-          ),
+          userPresenter: widget.userPresenter,
+          recipePresenter: widget.recipePresenter,
         );
       case 1:
         return Container();
       case 2:
-        return Container();
+        return new ListFavoritesRecipesWidget(
+          recipePresenter: widget.recipePresenter,
+          userPresenter: widget.userPresenter,
+        );
       default:
         return ProfileWidget(
           userPresenter: widget.userPresenter,

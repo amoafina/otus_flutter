@@ -9,6 +9,10 @@ import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/repositories/user_repository.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
+import '../data/favorite_box.dart';
+import '../data/recipe_box.dart';
+import '../presenters/recipes_presenter.dart';
+import '../repositories/recipes_repository.dart';
 import 'main_screen.dart';
 
 class SplashScreenWidget extends StatelessWidget {
@@ -21,6 +25,13 @@ class SplashScreenWidget extends StatelessWidget {
           MaterialPageRoute(
             builder: (builder) => MainScreen(
               title: 'Otus Food',
+              recipePresenter: new RecipePresenter(
+                recipeRepository: new RecipeRepository(
+                  foodApi: new FoodApi(),
+                  recipeBox: new RecipeBox(),
+                  favoriteBox: new FavoriteBox(),
+                ),
+              ),
               userPresenter: new UserPresenter(
                 new UserRepository(
                   foodApi: FoodApi(),

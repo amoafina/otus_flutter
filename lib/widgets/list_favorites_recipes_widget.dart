@@ -1,31 +1,32 @@
 import 'package:flutter/cupertino.dart';
-import 'package:otusfood/api/food_api.dart';
-import 'package:otusfood/data/ingredients_box.dart';
-import 'package:otusfood/data/recipe_step_box.dart';
-import 'package:otusfood/repositories/ingredients_repository.dart';
-import 'package:otusfood/repositories/recipe_step_repository.dart';
+import 'package:otusfood/model/user.dart';
 
+import '../api/food_api.dart';
+import '../data/ingredients_box.dart';
+import '../data/recipe_step_box.dart';
 import '../model/recipe.dart';
 import '../presenters/recipes_presenter.dart';
 import '../presenters/user_presenter.dart';
+import '../repositories/ingredients_repository.dart';
+import '../repositories/recipe_step_repository.dart';
 import '../screens/about_recipe_screen.dart';
 import '../utils/utils.dart';
 import 'item_recipe_widget.dart';
 
-class ListRecipesWidget extends StatefulWidget {
+class ListFavoritesRecipesWidget extends StatefulWidget {
   final RecipePresenter recipePresenter;
   final UserPresenter userPresenter;
 
-  ListRecipesWidget({
+  ListFavoritesRecipesWidget({
     required this.recipePresenter,
     required this.userPresenter,
   });
 
   @override
-  State<StatefulWidget> createState() => _ListRecipesState();
+  State<StatefulWidget> createState() => _ListFavoritesRecipesState();
 }
 
-class _ListRecipesState extends State<ListRecipesWidget> {
+class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
   List<Recipe> _recipes = [];
 
   _updateRecipe(List<Recipe> recipes) {
@@ -36,7 +37,12 @@ class _ListRecipesState extends State<ListRecipesWidget> {
 
   @override
   void initState() {
-    widget.recipePresenter.getRecipes().then((value) => _updateRecipe(value));
+    User? user = widget.userPresenter.currentUser;
+    if (user != null) {
+      widget.recipePresenter
+          .getFavoriteRecipes(user.id)
+          .then((value) => _updateRecipe(value));
+    }
     super.initState();
   }
 
