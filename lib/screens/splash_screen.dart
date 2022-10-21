@@ -18,6 +18,7 @@ import 'main_screen.dart';
 class SplashScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('splash screen build');
     Timer(
       Duration(seconds: 2),
       () => Navigator.pushReplacement(

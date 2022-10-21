@@ -31,7 +31,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   bool isHasUser = false;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   void showInSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
@@ -41,6 +40,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    print('main screen init state');
     widget.userPresenter.getUserStream().listen((user) {
       if (user == null) {
         if (isHasUser) {
@@ -150,13 +150,7 @@ class _MainScreenState extends State<MainScreen> {
       case 0:
         return ListRecipesWidget(
           userPresenter: widget.userPresenter,
-          recipePresenter: new RecipePresenter(
-            recipeRepository: new RecipeRepository(
-              foodApi: new FoodApi(),
-              favoriteBox: new FavoriteBox(),
-              recipeBox: new RecipeBox(),
-            ),
-          ),
+          recipePresenter: widget.recipePresenter,
         );
       case 1:
         return AuthWidget(

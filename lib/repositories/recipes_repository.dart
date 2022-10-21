@@ -14,9 +14,11 @@ class RecipeRepository {
   final FoodApi _foodApi;
   final RecipeBox _recipeBox;
   final FavoriteBox _favoriteBox;
-  StreamController<List<Favorite>> _favoriteRecipeController =
+  StreamController<List<Favorite>> _favoritesController =
       new StreamController.broadcast();
   StreamController<bool> _isFavoriteRecipeUser =
+      new StreamController.broadcast();
+  StreamController<List<Recipe>> _favoritesRecipeController =
       new StreamController.broadcast();
 
   RecipeRepository({
@@ -46,12 +48,14 @@ class RecipeRepository {
     return localRecipes;
   }
 
-  Future<List<Recipe>> getFavoriteRecipes(int userId) async {
+  getFavoriteRecipes(int userId) async {
     List<int> favoritesRecipeIds = (await getFavorites())
         .where((element) => element.user.id == userId)
         .map((e) => e.recipe.id)
         .toList();
-    return await _recipeBox.getFavoritesRecipe(favoritesRecipeIds);
+    List<Recipe> recipes =
+        await _recipeBox.getFavoritesRecipe(favoritesRecipeIds);
+    _favoritesRecipeController.add(recipes);
   }
 
   Future<List<Favorite>> getFavorites() async {
@@ -88,7 +92,8 @@ class RecipeRepository {
             element.recipe.id == recipeId && element.user.id == userId)
         .isNotEmpty;
     _isFavoriteRecipeUser.add(isFavoriteUserRecipe);
-    _favoriteRecipeController.add(favoriteForRecipes);
+    _favoritesController.add(favoriteForRecipes);
+    getFavoriteRecipes(userId);
   }
 
   removeFavorite(
@@ -103,10 +108,13 @@ class RecipeRepository {
       await _favoriteBox.getFavoriteForRecipe(recipeId);
 
   Stream<List<Favorite>> getListFavoriteStream() {
-    return _favoriteRecipeController.stream;
+    return _favoritesController.stream;
   }
 
   Stream<bool> getIsFavoriteUserRecipe() {
     return _isFavoriteRecipeUser.stream;
   }
+
+  Stream<List<Recipe>> getFavoritesRecipes() =>
+      _favoritesRecipeController.stream;
 }

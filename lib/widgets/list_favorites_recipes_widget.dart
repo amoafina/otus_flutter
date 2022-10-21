@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:otusfood/model/user.dart';
 
 import '../api/food_api.dart';
@@ -29,67 +30,97 @@ class ListFavoritesRecipesWidget extends StatefulWidget {
 class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
   List<Recipe> _recipes = [];
 
-  _updateRecipe(List<Recipe> recipes) {
-    setState(() {
-      _recipes.addAll(recipes);
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
-  void initState() {
-    User? user = widget.userPresenter.currentUser;
-    if (user != null) {
-      widget.recipePresenter
-          .getFavoriteRecipes(user.id)
-          .then((value) => _updateRecipe(value));
-    }
-    super.initState();
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 12.0,
-        ),
-        child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => const SizedBox(
-            height: 24,
-          ),
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, position) {
-            var recipe = _recipes[position];
-            return GestureDetector(
-              child: ItemRecipeWidget(recipe),
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  getRoute(
-                    AboutFoodScreen(
-                      recipeRepository:
-                          widget.recipePresenter.recipeRepository(),
-                      userPresenter: widget.userPresenter,
-                      recipeStepRepository: new RecipeStepRepository(
-                        foodApi: new FoodApi(),
-                        baseBox: new RecipeStepBox(),
+      child: StreamBuilder<List<Recipe>>(
+        stream: widget.recipePresenter.recipeRepository().getFavoritesRecipes(),
+        builder: (builder, snapshot) {
+          var data = snapshot.data;
+          if (data == null || data.isEmpty) return Container();
+          _recipes.addAll(data);
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
+            child: new ListView.separated(
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(
+                height: 24,
+              ),
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, position) {
+                var recipe = _recipes[position];
+                return GestureDetector(
+                  child: ItemRecipeWidget(recipe),
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      getRoute(
+                        AboutFoodScreen(
+                          recipeRepository:
+                              widget.recipePresenter.recipeRepository(),
+                          userPresenter: widget.userPresenter,
+                          recipeStepRepository: new RecipeStepRepository(
+                            foodApi: new FoodApi(),
+                            baseBox: new RecipeStepBox(),
+                          ),
+                          recipe: recipe,
+                          comments: [],
+                          ingredientRepository: new IngredientsRepository(
+                            foodApi: new FoodApi(),
+                            ingredientsBox: new IngredientsBox(),
+                          ),
+                        ),
                       ),
-                      recipe: recipe,
-                      comments: [],
-                      ingredientRepository: new IngredientsRepository(
-                        foodApi: new FoodApi(),
-                        ingredientsBox: new IngredientsBox(),
-                      ),
-                    ),
-                  ),
-                )
+                    )
+                  },
+                );
               },
-            );
-          },
-          itemCount: _recipes.length,
-        ),
+              itemCount: _recipes.length,
+            ),
+          );
+        },
       ),
     );
+  }
+}
+
+class LifecycleEventHandler extends WidgetsBindingObserver {
+  final AsyncCallback resumeCallBack;
+  final AsyncCallback suspendingCallBack;
+
+  LifecycleEventHandler({
+    required this.resumeCallBack,
+    required this.suspendingCallBack,
+  });
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        if (resumeCallBack != null) {
+          await resumeCallBack();
+        }
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        if (suspendingCallBack != null) {
+          await suspendingCallBack();
+        }
+        break;
+    }
   }
 }

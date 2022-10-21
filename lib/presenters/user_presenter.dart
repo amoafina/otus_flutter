@@ -61,7 +61,10 @@ class UserPresenter extends BasePresenter {
     }
   }
 
-  exit() => _userStreamController.add(null);
+  exit() {
+    currentUser = null;
+    _userStreamController.add(currentUser);
+  }
 
   Future<User?> getCurrentUser() async => currentUser;
 }

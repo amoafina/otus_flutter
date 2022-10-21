@@ -16,13 +16,12 @@ class BaseBox<E extends BaseModel> {
     return list;
   }
 
-
-
   Future<Iterable<int>> saveListData(List<E> list, String boxName) async {
     if (baseBox == null) {
       baseBox = await Hive.openBox<E>(boxName);
       if (baseBox == null) return List.empty();
     }
+    await baseBox?.clear();
     for (E item in list) {
       baseBox!.add(item);
     }
