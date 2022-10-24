@@ -28,10 +28,13 @@ class ListFavoritesRecipesWidget extends StatefulWidget {
 }
 
 class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
-  List<Recipe> _recipes = [];
 
   @override
   void initState() {
+    User? user = widget.userPresenter.currentUser;
+    if (user != null) {
+      widget.recipePresenter.recipeRepository().getFavoriteRecipes(user.id);
+    }
     super.initState();
   }
 
@@ -46,9 +49,8 @@ class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
       child: StreamBuilder<List<Recipe>>(
         stream: widget.recipePresenter.recipeRepository().getFavoritesRecipes(),
         builder: (builder, snapshot) {
-          var data = snapshot.data;
-          if (data == null || data.isEmpty) return Container();
-          _recipes.addAll(data);
+          var _recipes = snapshot.data;
+          if (_recipes == null || _recipes.isEmpty) return Container();
           return Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 16.0,

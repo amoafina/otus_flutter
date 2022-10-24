@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:otusfood/api/food_api.dart';
-import 'package:otusfood/data/favorite_box.dart';
 import 'package:otusfood/presenters/recipes_presenter.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/auth_widget.dart';
@@ -8,9 +6,7 @@ import 'package:otusfood/widgets/list_favorites_recipes_widget.dart';
 import 'package:otusfood/widgets/list_recipes_widget.dart';
 import 'package:otusfood/widgets/profile_widget.dart';
 
-import '../data/recipe_box.dart';
 import '../presenters/user_presenter.dart';
-import '../repositories/recipes_repository.dart';
 
 class MainScreen extends StatefulWidget {
   final UserPresenter userPresenter;
