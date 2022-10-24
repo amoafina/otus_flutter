@@ -16,13 +16,37 @@ class $AssetsImagesGen {
   AssetGenImage get backImg =>
       const AssetGenImage('assets/images/back_img.png');
 
+  /// File path: assets/images/ic_favorite.png
+  AssetGenImage get icFavorite =>
+      const AssetGenImage('assets/images/ic_favorite.png');
+
+  /// File path: assets/images/ic_freezer.png
+  AssetGenImage get icFreezer =>
+      const AssetGenImage('assets/images/ic_freezer.png');
+
   /// File path: assets/images/ic_megafon.png
   AssetGenImage get icMegafon =>
       const AssetGenImage('assets/images/ic_megafon.png');
 
+  /// File path: assets/images/ic_password.png
+  AssetGenImage get icPassword =>
+      const AssetGenImage('assets/images/ic_password.png');
+
+  /// File path: assets/images/ic_profile.png
+  AssetGenImage get icProfile =>
+      const AssetGenImage('assets/images/ic_profile.png');
+
   /// File path: assets/images/icon_pizza.png
   AssetGenImage get iconPizza =>
       const AssetGenImage('assets/images/icon_pizza.png');
+
+  /// File path: assets/images/img_favorite_flag.png
+  AssetGenImage get imgFavoriteFlag =>
+      const AssetGenImage('assets/images/img_favorite_flag.png');
+
+  /// File path: assets/images/img_preview_profile.png
+  AssetGenImage get imgPreviewProfile =>
+      const AssetGenImage('assets/images/img_preview_profile.png');
 
   /// File path: assets/images/photo_first_recipe.png
   AssetGenImage get photoFirstRecipe =>
@@ -55,8 +79,14 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         backImg,
+        icFavorite,
+        icFreezer,
         icMegafon,
+        icPassword,
+        icProfile,
         iconPizza,
+        imgFavoriteFlag,
+        imgPreviewProfile,
         photoFirstRecipe,
         photoFiveRecipe,
         photoFourRecipe,

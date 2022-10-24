@@ -2,9 +2,6 @@ import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:otusfood/hive/hive_types.dart';
 import 'package:otusfood/model/base_module.dart';
-import 'package:otusfood/model/favorite.dart';
-import 'package:otusfood/model/recipe_ingredient.dart';
-import 'package:otusfood/model/recipe_step_link.dart';
 
 part 'recipe.g.dart';
 
@@ -16,9 +13,9 @@ class Recipe extends BaseModel {
     required this.name,
     required this.duration,
     required this.photo,
-    required this.recipeIngredients,
-    required this.recipeStepLinks,
-    required this.favoriteRecipes,
+    // required this.recipeIngredients,
+    // required this.recipeStepLinks,
+    // required this.favoriteRecipes,
   });
 
   @HiveField(0)
@@ -37,17 +34,17 @@ class Recipe extends BaseModel {
   @JsonKey(name: 'photo')
   String photo;
 
-  @HiveField(4)
-  @JsonKey(name: 'recipeIngredients')
-  List<RecipeIngredient> recipeIngredients;
-
-  @HiveField(5)
-  @JsonKey(name: 'recipeStepLinks')
-  List<RecipeStepLink> recipeStepLinks;
-
-  @HiveField(6)
-  @JsonKey(name: 'favoriteRecipes')
-  List<Favorite> favoriteRecipes;
+  // @HiveField(4)
+  // @JsonKey(name: 'recipeIngredients')
+  // List<RecipeIngredient> recipeIngredients;
+  //
+  // @HiveField(5)
+  // @JsonKey(name: 'recipeStepLinks')
+  // List<RecipeStepLink> recipeStepLinks;
+  //
+  // @HiveField(6)
+  // @JsonKey(name: 'favoriteRecipes')
+  // List<Favorite> favoriteRecipes;
 
   factory Recipe.fromJson(Map<String, dynamic> json) => _$RecipeFromJson(json);
 
@@ -71,6 +68,8 @@ class Recipe extends BaseModel {
   }
 
   String getLocalPath() => "assets/images/$photo";
+
+  String getNetworkPath() => photo;
 
   String _formatHours(int hours) {
     if (hours == 1) {

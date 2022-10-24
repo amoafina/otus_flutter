@@ -21,16 +21,13 @@ class RecipeAdapter extends TypeAdapter<Recipe> {
       name: fields[1] as String,
       duration: fields[2] as int,
       photo: fields[3] as String,
-      recipeIngredients: (fields[4] as List).cast<RecipeIngredient>(),
-      recipeStepLinks: (fields[5] as List).cast<RecipeStepLink>(),
-      favoriteRecipes: (fields[6] as List).cast<Favorite>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Recipe obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,13 +35,7 @@ class RecipeAdapter extends TypeAdapter<Recipe> {
       ..writeByte(2)
       ..write(obj.duration)
       ..writeByte(3)
-      ..write(obj.photo)
-      ..writeByte(4)
-      ..write(obj.recipeIngredients)
-      ..writeByte(5)
-      ..write(obj.recipeStepLinks)
-      ..writeByte(6)
-      ..write(obj.favoriteRecipes);
+      ..write(obj.photo);
   }
 
   @override
@@ -67,15 +58,6 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
       name: json['name'] as String,
       duration: json['duration'] as int,
       photo: json['photo'] as String,
-      recipeIngredients: (json['recipeIngredients'] as List<dynamic>)
-          .map((e) => RecipeIngredient.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      recipeStepLinks: (json['recipeStepLinks'] as List<dynamic>)
-          .map((e) => RecipeStepLink.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      favoriteRecipes: (json['favoriteRecipes'] as List<dynamic>)
-          .map((e) => Favorite.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
 Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
@@ -83,7 +65,4 @@ Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
       'name': instance.name,
       'duration': instance.duration,
       'photo': instance.photo,
-      'recipeIngredients': instance.recipeIngredients,
-      'recipeStepLinks': instance.recipeStepLinks,
-      'favoriteRecipes': instance.favoriteRecipes,
     };

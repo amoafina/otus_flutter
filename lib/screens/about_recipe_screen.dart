@@ -188,8 +188,8 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                     padding: const EdgeInsets.only(top: 16.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.asset(
-                        widget.recipe.getLocalPath(),
+                      child: Image.network(
+                        widget.recipe.getNetworkPath(),
                         height: (MediaQuery.of(context).size.width - 32) / 1.79,
                         fit: BoxFit.fill,
                         width: MediaQuery.of(context).size.width - 32,

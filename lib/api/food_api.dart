@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/entity_link.dart';
 import 'package:otusfood/model/favorite.dart';
@@ -8,67 +11,85 @@ import 'package:otusfood/model/recipe_step.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
 
 class FoodApi {
+  final Dio dio = Dio(new BaseOptions(
+    baseUrl: "http://foodapi.dzolotov.tech",
+  ));
+
   Future<List<Recipe>> getRecipes() async {
-    List<Recipe> foods = [];
-    foods.add(
-      Recipe(
-          name: "Лосось в соусе терияки",
-          duration: 45,
-          id: 1,
-          recipeStepLinks: List.empty(),
-          recipeIngredients: List.empty(),
-          photo: "photo_first_recipe.png",
-          favoriteRecipes: []),
-    );
-    foods.add(Recipe(
-        name: "Поке боул с сыром тофу",
-        duration: 30,
-        id: 2,
-        recipeStepLinks: List.empty(),
-        recipeIngredients: List.empty(),
-        photo: "photo_second_recipe.png",
-        favoriteRecipes: []));
-    foods.add(Recipe(
-        name: "Стейк из говядины по-грузински с кукурузой",
-        duration: 75,
-        id: 3,
-        recipeIngredients: List.empty(),
-        recipeStepLinks: List.empty(),
-        photo: "photo_third_recipe.png",
-        favoriteRecipes: []));
-    foods.add(Recipe(
-        name: "Тосты с голубикой и бананом",
-        duration: 45,
-        id: 4,
-        recipeStepLinks: List.empty(),
-        recipeIngredients: List.empty(),
-        photo: "photo_four_recipe.png",
-        favoriteRecipes: []));
-    foods.add(Recipe(
-        name: "Паста с морепродуктами",
-        duration: 25,
-        id: 5,
-        recipeIngredients: List.empty(),
-        recipeStepLinks: List.empty(),
-        photo: "photo_five_recipe.png",
-        favoriteRecipes: []));
-    foods.add(Recipe(
-        name: "Бургер с двумя котлетами",
-        duration: 60,
-        id: 6,
-        recipeIngredients: List.empty(),
-        recipeStepLinks: List.empty(),
-        photo: "photo_six_recipe.png",
-        favoriteRecipes: []));
-    foods.add(Recipe(
-        name: "Пицца Маргарита домашняя",
-        duration: 25,
-        id: 7,
-        recipeIngredients: List.empty(),
-        recipeStepLinks: List.empty(),
-        photo: "photo_seven_recipe.png",
-        favoriteRecipes: []));
-    return foods;
+    final response = await dio.get('/recipe');
+    if (response.statusCode != null) {
+      if (response.statusCode! >= 400)
+        return List.empty();
+      else {
+        var json = response.data;
+        print('json: $json');
+        List<Recipe> recipes = (response.data as List).map((e) => Recipe.fromJson(e)).toList();
+        print("recipes: ${recipes.length}");
+        return recipes;
+      }
+    }
+    return List.empty();
+
+    // List<Recipe> foods = [];
+    // foods.add(
+    //   Recipe(
+    //       name: "Лосось в соусе терияки",
+    //       duration: 45,
+    //       id: 1,
+    //       recipeStepLinks: List.empty(),
+    //       recipeIngredients: List.empty(),
+    //       photo: "photo_first_recipe.png",
+    //       favoriteRecipes: []),
+    // );
+    // foods.add(Recipe(
+    //     name: "Поке боул с сыром тофу",
+    //     duration: 30,
+    //     id: 2,
+    //     recipeStepLinks: List.empty(),
+    //     recipeIngredients: List.empty(),
+    //     photo: "photo_second_recipe.png",
+    //     favoriteRecipes: []));
+    // foods.add(Recipe(
+    //     name: "Стейк из говядины по-грузински с кукурузой",
+    //     duration: 75,
+    //     id: 3,
+    //     recipeIngredients: List.empty(),
+    //     recipeStepLinks: List.empty(),
+    //     photo: "photo_third_recipe.png",
+    //     favoriteRecipes: []));
+    // foods.add(Recipe(
+    //     name: "Тосты с голубикой и бананом",
+    //     duration: 45,
+    //     id: 4,
+    //     recipeStepLinks: List.empty(),
+    //     recipeIngredients: List.empty(),
+    //     photo: "photo_four_recipe.png",
+    //     favoriteRecipes: []));
+    // foods.add(Recipe(
+    //     name: "Паста с морепродуктами",
+    //     duration: 25,
+    //     id: 5,
+    //     recipeIngredients: List.empty(),
+    //     recipeStepLinks: List.empty(),
+    //     photo: "photo_five_recipe.png",
+    //     favoriteRecipes: []));
+    // foods.add(Recipe(
+    //     name: "Бургер с двумя котлетами",
+    //     duration: 60,
+    //     id: 6,
+    //     recipeIngredients: List.empty(),
+    //     recipeStepLinks: List.empty(),
+    //     photo: "photo_six_recipe.png",
+    //     favoriteRecipes: []));
+    // foods.add(Recipe(
+    //     name: "Пицца Маргарита домашняя",
+    //     duration: 25,
+    //     id: 7,
+    //     recipeIngredients: List.empty(),
+    //     recipeStepLinks: List.empty(),
+    //     photo: "photo_seven_recipe.png",
+    //     favoriteRecipes: []));
+    // return foods;
   }
 
   List<RecipeStep> getSteps(int recipeId) {

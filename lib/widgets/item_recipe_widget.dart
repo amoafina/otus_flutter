@@ -19,8 +19,8 @@ class ItemRecipeWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Image.asset(
-              recipe.getLocalPath(),
+            Image.network(
+              recipe.getNetworkPath(),
               width: 149,
             ),
             Flexible(

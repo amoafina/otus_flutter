@@ -42,7 +42,7 @@ class RecipeRepository {
       var recipeId = recipe.id;
       List<Favorite> tmp =
           favorites.where((element) => element.recipe.id == recipeId).toList();
-      recipe.favoriteRecipes.addAll(tmp);
+      // recipe.favoriteRecipes.addAll(tmp);
     });
 
     return localRecipes;
