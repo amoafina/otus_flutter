@@ -9,10 +9,7 @@ class ItemRecipeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 136.0,
-      child: Card(
+    return Card(
         margin: EdgeInsets.zero,
         color: AppColors.textSecondary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -22,6 +19,8 @@ class ItemRecipeWidget extends StatelessWidget {
             Image.network(
               recipe.getNetworkPath(),
               width: 149,
+              height: 136,
+              fit: BoxFit.cover
             ),
             Flexible(
               flex: 1,
@@ -72,7 +71,6 @@ class ItemRecipeWidget extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
+      );
   }
 }

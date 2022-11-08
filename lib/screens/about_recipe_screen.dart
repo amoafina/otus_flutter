@@ -191,7 +191,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                       child: Image.network(
                         widget.recipe.getNetworkPath(),
                         height: (MediaQuery.of(context).size.width - 32) / 1.79,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         width: MediaQuery.of(context).size.width - 32,
                       ),
                     )),
