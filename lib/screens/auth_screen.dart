@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/utils/app_colors.dart';

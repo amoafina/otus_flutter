@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/entity_link.dart';
-import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
 class CommentsWidget extends StatefulWidget {

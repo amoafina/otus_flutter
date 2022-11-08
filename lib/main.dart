@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/favorite.dart';

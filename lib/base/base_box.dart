@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:otusfood/model/base_module.dart';
-import 'package:otusfood/model/recipe.dart';
 
 class BaseBox<E extends BaseModel> {
   Box<E>? baseBox;
