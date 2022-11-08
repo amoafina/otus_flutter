@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/model/ingredient.dart';
@@ -188,11 +189,13 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                     padding: const EdgeInsets.only(top: 16.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        widget.recipe.getNetworkPath(),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.recipe.getNetworkPath(),
                         height: (MediaQuery.of(context).size.width - 32) / 1.79,
-                        fit: BoxFit.cover,
                         width: MediaQuery.of(context).size.width - 32,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                     )),
                 FutureBuilder<List<Ingredient>>(

@@ -29,6 +29,7 @@ dependencies:
   hive:
   hive_flutter:
   dio: ^4.0.6
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:
