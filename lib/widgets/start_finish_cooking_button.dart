@@ -43,7 +43,8 @@ class StartFinishCookingButton extends StatelessWidget {
           side: BorderSide(
             color: AppColors.main,
             width: 2.0,
-          ))
+          ),
+        )
       : RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25.0),
         );

@@ -17,11 +17,10 @@ class IngredientsRepository {
     var localIngredients =
         await _ingredientsBox.getIngredientsForRecipe(recipeId);
     if (localIngredients.isEmpty) {
-      var remoteList = await _foodApi.getIngredients(recipeId);
-      if (remoteList.isEmpty) {
-        return List.empty();
+      var remoteList = await _foodApi.getIngredients();
+      if (remoteList.isNotEmpty) {
+        await _ingredientsBox.saveListData(remoteList, HiveBoxes.ingredientsBox);
       }
-      await _ingredientsBox.saveListData(remoteList, HiveBoxes.ingredientsBox);
       return await _ingredientsBox.getIngredientsForRecipe(recipeId);
     }
 

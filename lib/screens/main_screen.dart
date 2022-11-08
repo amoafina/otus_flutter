@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:otusfood/presenters/recipes_presenter.dart';
+import 'package:otusfood/screens/freezer_screen.dart';
 import 'package:otusfood/utils/app_colors.dart';
-import 'package:otusfood/widgets/auth_widget.dart';
+import 'package:otusfood/screens/auth_screen.dart';
 import 'package:otusfood/widgets/list_favorites_recipes_widget.dart';
 import 'package:otusfood/widgets/list_recipes_widget.dart';
-import 'package:otusfood/widgets/profile_widget.dart';
+import 'package:otusfood/screens/profile_screen.dart';
 
 import '../presenters/user_presenter.dart';
 
@@ -149,7 +150,7 @@ class _MainScreenState extends State<MainScreen> {
           recipePresenter: widget.recipePresenter,
         );
       case 1:
-        return AuthWidget(
+        return AuthScreen(
           userPresenter: widget.userPresenter,
         );
       default:
@@ -165,14 +166,14 @@ class _MainScreenState extends State<MainScreen> {
           recipePresenter: widget.recipePresenter,
         );
       case 1:
-        return Container();
+        return new FreezerScreen();
       case 2:
         return new ListFavoritesRecipesWidget(
           recipePresenter: widget.recipePresenter,
           userPresenter: widget.userPresenter,
         );
       default:
-        return ProfileWidget(
+        return ProfileScreen(
           userPresenter: widget.userPresenter,
         );
     }

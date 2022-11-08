@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
-class AuthWidget extends StatefulWidget {
+class AuthScreen extends StatefulWidget {
   final UserPresenter userPresenter;
 
-  AuthWidget({required this.userPresenter});
+  AuthScreen({required this.userPresenter});
 
   @override
-  _AuthWidgetState createState() => _AuthWidgetState();
+  _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _AuthWidgetState extends State<AuthWidget> {
+class _AuthScreenState extends State<AuthScreen> {
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
   late TextEditingController _passwordRepeatController;
@@ -199,7 +199,7 @@ class _AuthWidgetState extends State<AuthWidget> {
           ),
         ),
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height- 58.0,
+          maxHeight: MediaQuery.of(context).size.height - 58.0,
         ),
       ),
     );
