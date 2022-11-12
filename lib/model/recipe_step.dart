@@ -46,4 +46,9 @@ class RecipeStep extends BaseModel {
     String txtSec = sec < 10 ? "0$sec" : sec.toString();
     return "$txtMinute:$txtSec";
   }
+
+  @override
+  int? getItemId() {
+    return id;
+  }
 }

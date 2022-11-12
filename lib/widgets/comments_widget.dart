@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:otusfood/bloc/comments_bloc.dart';
+import 'package:otusfood/event/comments_event.dart';
 import 'package:otusfood/model/comment.dart';
-import 'package:otusfood/model/entity_link.dart';
+import 'package:otusfood/state/comments_state.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
 class CommentsWidget extends StatefulWidget {
-  final List<Comment> comments;
+  final int recipeId;
 
   CommentsWidget({
-    required this.comments,
+    required this.recipeId,
   });
 
   @override
@@ -15,7 +21,16 @@ class CommentsWidget extends StatefulWidget {
 }
 
 class _CommentsWidgetState extends State<CommentsWidget> {
-  TextEditingController _controller = TextEditingController();
+  late CommentsBloc commentsBloc;
+
+  @override
+  void initState() {
+    commentsBloc = context.read<CommentsBloc>();
+    commentsBloc.add(GetCommentsForRecipe(
+      recipeId: widget.recipeId,
+    ));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +42,86 @@ class _CommentsWidgetState extends State<CommentsWidget> {
         ),
         Padding(
           padding: const EdgeInsets.only(top: 4.0),
-          child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: widget.comments.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: _ItemCommentWidget(
-                    comment: widget.comments[index],
-                  ),
-                );
-              }),
+          child: Container(
+            child: BlocBuilder<CommentsBloc, CommentsState>(
+              builder: (builder, state) {
+                if (state is ShowCommentsList) {
+                  return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.comments.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                          child: _ItemCommentWidget(
+                            comment: state.comments[index],
+                          ),
+                        );
+                      });
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(
             top: 48.0,
           ),
+          child: _AddingCommentWidget(
+              commentBloc: commentsBloc,
+              addingComment: (text, photoPath) => _addComment(text, photoPath),
+
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _addComment(String text, String photoPath) {
+    commentsBloc.add(AddCommentToRecipe(
+      text: text,
+      photoPath: photoPath,
+      recipeId: widget.recipeId,
+    ));
+  }
+}
+
+class _AddingCommentWidget extends StatefulWidget {
+  final Function addingComment;
+  final CommentsBloc commentBloc;
+
+  _AddingCommentWidget({
+    required this.addingComment,
+    required this.commentBloc,
+  });
+
+  @override
+  _AddingCommentWidgetState createState() => _AddingCommentWidgetState();
+}
+
+class _AddingCommentWidgetState extends State<_AddingCommentWidget> {
+  String? photoPath = null;
+  TextEditingController _controller = TextEditingController();
+  final ImagePicker _imagePicker = ImagePicker();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Visibility(
+          child: photoPath != null
+              ? Image.file(
+            File(photoPath!),
+            width: double.infinity,
+            height: 160.0,
+          )
+              : Container(),
+          visible: photoPath != null,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
           child: Stack(
             children: [
               TextFormField(
@@ -51,7 +129,8 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                 controller: _controller,
                 onFieldSubmitted: (txt) {
                   setState(() {
-                    _addComment(txt);
+                    widget.addingComment(txt, photoPath ?? "");
+                    photoPath = null;
                     _controller.clear();
                   });
                 },
@@ -74,7 +153,73 @@ class _CommentsWidgetState extends State<CommentsWidget> {
               ),
               Align(
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (builder) =>
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextButton(
+                                onPressed: () => _pickImage(ImageSource.camera),
+                                child: Container(
+                                  width: double.infinity,
+                                  child: Center(
+                                    child: Text(
+                                      'Сфотографировать',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Divider(
+                                height: 1.0,
+                                color: Colors.grey[350],
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    _pickImage(ImageSource.gallery),
+                                child: Container(
+                                  width: double.infinity,
+                                  child: Center(
+                                    child: Text(
+                                      'Выбрать из альбома',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Divider(
+                                height: 1.0,
+                                color: Colors.grey[350],
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  child: Center(
+                                    child: Text(
+                                      'Отмена',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                    );
+                  },
                   icon: Icon(
                     Icons.image_rounded,
                     color: AppColors.main,
@@ -89,16 +234,13 @@ class _CommentsWidgetState extends State<CommentsWidget> {
     );
   }
 
-  String _getCurrentDate() => DateTime.now().toIso8601String();
-
-  void _addComment(String text) {
-    Comment comment = Comment(
-        id: 1,
-        datetime: _getCurrentDate(),
-        text: text,
-        photo: "",
-        user: EntityLink(id: 1));
-    widget.comments.add(comment);
+  _pickImage(ImageSource imageSource) async {
+    final XFile? image = await _imagePicker.pickImage(source: imageSource);
+    Navigator.pop(context);
+    print('image: ${image?.path}');
+    setState(() {
+      photoPath = image?.path;
+    });
   }
 }
 
@@ -162,9 +304,9 @@ class _ItemCommentWidget extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0),
-                    child: Image.network(
-                      'https://freepngimg.com/thumb/face/97737-grumpy-face-cat-free-png-hq.png',
-                    ),
+                    child: comment.photo.isEmpty
+                        ? Container()
+                        : Image.file(File(comment.photo)),
                   )
                 ],
               ),

@@ -11,7 +11,7 @@ import 'package:otusfood/repositories/user_repository.dart';
 class UserPresenter extends BasePresenter {
   final UserRepository _userRepository;
   User? currentUser;
-  StreamController<User?> _userStreamController = new StreamController();
+  StreamController<User?> _userStreamController = new StreamController.broadcast();
 
   UserPresenter(
     this._userRepository, {

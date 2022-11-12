@@ -29,6 +29,22 @@ class FoodApi {
     return List.empty();
   }
 
+  Future<Recipe?> getRecipeById(int recipeId) async {
+    final response = await dio.get('/recipe/$recipeId');
+    if (response.statusCode != null) {
+      if (response.statusCode! >= 400) {
+        return null;
+      } else {
+        var json = response.data;
+        print('json: $json');
+        Recipe recipe =
+            Recipe.fromJson((response.data as Map<String, dynamic>));
+        return recipe;
+      }
+    }
+    return null;
+  }
+
   List<Ingredient> getIngredientsTmp() {
     List<Ingredient> ingredients = [];
     ingredients.add(new Ingredient(

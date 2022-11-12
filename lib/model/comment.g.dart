@@ -22,13 +22,14 @@ class CommentAdapter extends TypeAdapter<Comment> {
       photo: fields[2] as String,
       datetime: fields[3] as String,
       user: fields[4] as EntityLink,
+      recipe: fields[5] as EntityLink,
     );
   }
 
   @override
   void write(BinaryWriter writer, Comment obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class CommentAdapter extends TypeAdapter<Comment> {
       ..writeByte(3)
       ..write(obj.datetime)
       ..writeByte(4)
-      ..write(obj.user);
+      ..write(obj.user)
+      ..writeByte(5)
+      ..write(obj.recipe);
   }
 
   @override
@@ -62,6 +65,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       photo: json['photo'] as String,
       datetime: json['datetime'] as String,
       user: EntityLink.fromJson(json['user'] as Map<String, dynamic>),
+      recipe: EntityLink.fromJson(json['recipe'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
@@ -70,4 +74,5 @@ Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'photo': instance.photo,
       'datetime': instance.datetime,
       'user': instance.user,
+      'recipe': instance.recipe,
     };

@@ -30,6 +30,9 @@ dependencies:
   hive_flutter:
   dio: ^4.0.6
   cached_network_image:
+  flutter_bloc: ^8.0.0
+  image_picker: ^0.8.6
+
 
 dev_dependencies:
   flutter_test:

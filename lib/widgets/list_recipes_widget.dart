@@ -1,15 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:otusfood/api/food_api.dart';
-import 'package:otusfood/data/ingredients_box.dart';
-import 'package:otusfood/data/recipe_step_box.dart';
-import 'package:otusfood/repositories/ingredients_repository.dart';
-import 'package:otusfood/repositories/recipe_step_repository.dart';
+import 'package:otusfood/arguments/about_recipe_arguments.dart';
 
 import '../model/recipe.dart';
 import '../presenters/recipes_presenter.dart';
 import '../presenters/user_presenter.dart';
 import '../screens/about_recipe_screen.dart';
-import '../utils/utils.dart';
 import 'item_recipe_widget.dart';
 
 class ListRecipesWidget extends StatefulWidget {
@@ -57,28 +52,11 @@ class _ListRecipesState extends State<ListRecipesWidget> {
             var recipe = _recipes[position];
             return GestureDetector(
               child: ItemRecipeWidget(recipe),
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  getRoute(
-                    AboutFoodScreen(
-                      recipeRepository:
-                          widget.recipePresenter.recipeRepository(),
-                      userPresenter: widget.userPresenter,
-                      recipeStepRepository: new RecipeStepRepository(
-                        foodApi: new FoodApi(),
-                        baseBox: new RecipeStepBox(),
-                      ),
-                      recipe: recipe,
-                      comments: [],
-                      ingredientRepository: new IngredientsRepository(
-                        foodApi: new FoodApi(),
-                        ingredientsBox: new IngredientsBox(),
-                      ),
-                    ),
-                  ),
-                )
-              },
+              onTap: () => Navigator.pushNamed(
+                context,
+                AboutFoodScreen.aboutFoodScreenName,
+                arguments: new AboutRecipeArguments(recipe.id),
+              ),
             );
           },
           itemCount: _recipes.length,

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:otusfood/bloc/user_bloc.dart';
 import 'package:otusfood/presenters/recipes_presenter.dart';
-import 'package:otusfood/screens/freezer_screen.dart';
-import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/screens/auth_screen.dart';
+import 'package:otusfood/screens/freezer_screen.dart';
+import 'package:otusfood/screens/profile_screen.dart';
+import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/list_favorites_recipes_widget.dart';
 import 'package:otusfood/widgets/list_recipes_widget.dart';
-import 'package:otusfood/screens/profile_screen.dart';
-
-import '../presenters/user_presenter.dart';
 
 class MainScreen extends StatefulWidget {
-  final UserPresenter userPresenter;
+  static String mainScreenName = "/mainScreenName";
   final RecipePresenter recipePresenter;
 
   const MainScreen({
     required this.title,
-    required this.userPresenter,
     required this.recipePresenter,
   });
 
@@ -29,6 +28,8 @@ class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   bool isHasUser = false;
 
+  UserBloc? userBloc;
+
   void showInSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
       content: Text(message),
@@ -37,8 +38,13 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    print('main screen init state');
-    widget.userPresenter.getUserStream().listen((user) {
+    userBloc = context.read<UserBloc>();
+    userBloc?.userPresenter.getStreamMessage().listen((message) {
+      if (message.isNotEmpty) {
+        showInSnackBar(message);
+      }
+    });
+    userBloc?.userPresenter.getUserStream().listen((user) {
       if (user == null) {
         if (isHasUser) {
           setState(() {
@@ -51,11 +57,6 @@ class _MainScreenState extends State<MainScreen> {
           currentIndex = 0;
           isHasUser = true;
         });
-      }
-    });
-    widget.userPresenter.getStreamMessage().listen((message) {
-      if (message.isNotEmpty) {
-        showInSnackBar(message);
       }
     });
     super.initState();
@@ -146,12 +147,12 @@ class _MainScreenState extends State<MainScreen> {
     switch (currentIndex) {
       case 0:
         return ListRecipesWidget(
-          userPresenter: widget.userPresenter,
+          userPresenter: userBloc!.userPresenter,
           recipePresenter: widget.recipePresenter,
         );
       case 1:
         return AuthScreen(
-          userPresenter: widget.userPresenter,
+          userPresenter: userBloc!.userPresenter,
         );
       default:
         return Container();
@@ -162,7 +163,7 @@ class _MainScreenState extends State<MainScreen> {
     switch (currentIndex) {
       case 0:
         return ListRecipesWidget(
-          userPresenter: widget.userPresenter,
+          userPresenter: userBloc!.userPresenter,
           recipePresenter: widget.recipePresenter,
         );
       case 1:
@@ -170,11 +171,11 @@ class _MainScreenState extends State<MainScreen> {
       case 2:
         return new ListFavoritesRecipesWidget(
           recipePresenter: widget.recipePresenter,
-          userPresenter: widget.userPresenter,
+          userPresenter: userBloc!.userPresenter,
         );
       default:
         return ProfileScreen(
-          userPresenter: widget.userPresenter,
+          userPresenter: userBloc!.userPresenter,
         );
     }
   }

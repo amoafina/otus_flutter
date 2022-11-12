@@ -2,16 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:otusfood/model/user.dart';
 
-import '../api/food_api.dart';
-import '../data/ingredients_box.dart';
-import '../data/recipe_step_box.dart';
+import '../arguments/about_recipe_arguments.dart';
 import '../model/recipe.dart';
 import '../presenters/recipes_presenter.dart';
 import '../presenters/user_presenter.dart';
-import '../repositories/ingredients_repository.dart';
-import '../repositories/recipe_step_repository.dart';
 import '../screens/about_recipe_screen.dart';
-import '../utils/utils.dart';
 import 'item_recipe_widget.dart';
 
 class ListFavoritesRecipesWidget extends StatefulWidget {
@@ -28,7 +23,6 @@ class ListFavoritesRecipesWidget extends StatefulWidget {
 }
 
 class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
-
   @override
   void initState() {
     User? user = widget.userPresenter.currentUser;
@@ -66,28 +60,11 @@ class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
                 var recipe = _recipes[position];
                 return GestureDetector(
                   child: ItemRecipeWidget(recipe),
-                  onTap: () => {
-                    Navigator.push(
-                      context,
-                      getRoute(
-                        AboutFoodScreen(
-                          recipeRepository:
-                              widget.recipePresenter.recipeRepository(),
-                          userPresenter: widget.userPresenter,
-                          recipeStepRepository: new RecipeStepRepository(
-                            foodApi: new FoodApi(),
-                            baseBox: new RecipeStepBox(),
-                          ),
-                          recipe: recipe,
-                          comments: [],
-                          ingredientRepository: new IngredientsRepository(
-                            foodApi: new FoodApi(),
-                            ingredientsBox: new IngredientsBox(),
-                          ),
-                        ),
-                      ),
-                    )
-                  },
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AboutFoodScreen.aboutFoodScreenName,
+                    arguments: new AboutRecipeArguments(recipe.id),
+                  ),
                 );
               },
               itemCount: _recipes.length,
@@ -112,9 +89,7 @@ class LifecycleEventHandler extends WidgetsBindingObserver {
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.resumed:
-        if (resumeCallBack != null) {
-          await resumeCallBack();
-        }
+        await resumeCallBack();
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.paused:

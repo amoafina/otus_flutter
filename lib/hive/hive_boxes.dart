@@ -4,4 +4,5 @@ class HiveBoxes {
   static String recipeStepBox = "recipe_step_box";
   static String usersBox = "user_box";
   static String favoriteBox = "favorite_box";
+  static String commentsBox = "comments_box";
 }

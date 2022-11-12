@@ -96,4 +96,9 @@ class Recipe extends BaseModel {
   List<Recipe> parseBox<Recipe>(Box<Recipe> box) {
     return box.values.toList();
   }
+
+  @override
+  int? getItemId() {
+    return id;
+  }
 }

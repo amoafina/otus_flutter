@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:otusfood/api/food_api.dart';
 import 'package:otusfood/data/users_box.dart';
 import 'package:otusfood/presenters/messages_presenter.dart';
@@ -16,32 +17,13 @@ import '../repositories/recipes_repository.dart';
 import 'main_screen.dart';
 
 class SplashScreenWidget extends StatelessWidget {
+  static String splashScreenName = "/splashScreenName";
+
   @override
   Widget build(BuildContext context) {
-    print('splash screen build');
     Timer(
       Duration(seconds: 2),
-      () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (builder) => MainScreen(
-              title: 'Otus Food',
-              recipePresenter: new RecipePresenter(
-                recipeRepository: new RecipeRepository(
-                  foodApi: new FoodApi(),
-                  recipeBox: new RecipeBox(),
-                  favoriteBox: new FavoriteBox(),
-                ),
-              ),
-              userPresenter: new UserPresenter(
-                new UserRepository(
-                  foodApi: FoodApi(),
-                  baseBox: UsersBox(),
-                ),
-                messagePresenter: new MessagePresenter(),
-              ),
-            ),
-          )),
+      () => Navigator.popAndPushNamed(context, MainScreen.mainScreenName),
     );
 
     return Scaffold(

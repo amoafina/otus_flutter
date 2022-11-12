@@ -7,7 +7,9 @@ import 'package:otusfood/model/user.dart';
 
 class UsersBox extends BaseBox<User> {
   Future<ResultOperation> registrationUser(
-      String login, String password) async {
+    String login,
+    String password,
+  ) async {
     if (lazyBox == null) {
       lazyBox = await initLazyBox(HiveBoxes.usersBox);
     }

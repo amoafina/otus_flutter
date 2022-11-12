@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:otusfood/api/food_api.dart';
 import 'package:otusfood/data/recipe_box.dart';
+import 'package:otusfood/model/error_operation.dart';
 import 'package:otusfood/model/favorite.dart';
 import 'package:otusfood/model/success_operation.dart';
 
@@ -46,6 +47,17 @@ class RecipeRepository {
     });
 
     return localRecipes;
+  }
+
+  Future<ResultOperation> getRecipeById(int recipeId) async {
+    Recipe? recipe = await _recipeBox.getById(recipeId, HiveBoxes.recipeBox);
+    if (recipe == null) {
+      recipe = await _foodApi.getRecipeById(recipeId);
+      if (recipe == null) return ErrorOperation(message: 'Рецепт не найден');
+    }
+    return SuccessOperation(
+      object: recipe,
+    );
   }
 
   getFavoriteRecipes(int userId) async {

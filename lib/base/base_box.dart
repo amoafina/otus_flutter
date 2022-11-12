@@ -15,6 +15,15 @@ class BaseBox<E extends BaseModel> {
     return list;
   }
 
+  Future<E?> getById(int id, String boxName) async {
+    if (baseBox == null) {
+      baseBox = await Hive.openBox<E>(boxName);
+      if (baseBox == null) return null;
+    }
+    E item = baseBox!.values.firstWhere((element) =>  ((element).getItemId() ?? -1) == id);
+    return item;
+  }
+
   Future<Iterable<int>> saveListData(List<E> list, String boxName) async {
     if (baseBox == null) {
       baseBox = await Hive.openBox<E>(boxName);
