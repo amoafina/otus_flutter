@@ -8,6 +8,7 @@ import 'package:otusfood/event/comments_event.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/state/comments_state.dart';
 import 'package:otusfood/utils/app_colors.dart';
+import 'package:otusfood/utils/utils.dart';
 
 class CommentsWidget extends StatefulWidget {
   final int recipeId;
@@ -285,7 +286,7 @@ class _ItemCommentWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        comment.datetime,
+                        dateTimeFormatForRead(comment.datetime),
                         style: TextStyle(
                           color: AppColors.inactive,
                           fontWeight: FontWeight.w400,

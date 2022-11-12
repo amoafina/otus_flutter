@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 getRoute(Widget widget) {
   return PageRouteBuilder(
@@ -16,4 +17,12 @@ getRoute(Widget widget) {
       );
     },
   );
+}
+
+String dateFormatForRead(dateTimeString) {
+  return DateFormat('dd.MM.yyyy').format(DateTime.parse(dateTimeString)).trim();
+}
+
+String dateTimeFormatForRead(dateTimeString) {
+  return DateFormat('dd.MM.yyyy H:m').format(DateTime.parse(dateTimeString)).trim();
 }
