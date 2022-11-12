@@ -70,6 +70,17 @@ class RecipeRepository {
     _favoritesRecipeController.add(recipes);
   }
 
+  Future<bool> isFavoriteRecipe(int userId, int recipeId) async {
+    List<int> favoritesRecipeIds = (await getFavorites())
+        .where((element) => element.user.id == userId)
+        .map((e) => e.recipe.id)
+        .toList();
+    for (int id in favoritesRecipeIds) {
+      if (id == recipeId) return true;
+    }
+    return false;
+  }
+
   Future<List<Favorite>> getFavorites() async {
     var localFavorites = await _favoriteBox.getListData(HiveBoxes.favoriteBox);
     if (localFavorites.isEmpty) {

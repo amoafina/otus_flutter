@@ -5,10 +5,12 @@ import 'package:otusfood/event/about_recipe_screen_events.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/state/about_recipe_screen_states.dart';
 import 'package:otusfood/utils/app_colors.dart';
+import 'package:otusfood/widgets/add_to_favorite_widget.dart';
 import 'package:otusfood/widgets/comments_widget.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
 import 'package:otusfood/widgets/ingredient_widget.dart';
 import 'package:otusfood/widgets/recipe_steps_widget.dart';
+import 'package:rive/rive.dart';
 
 import '../bloc/about_recipe_screen_bloc.dart';
 
@@ -154,27 +156,13 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
                               ),
                             ),
                             Visibility(
-                              visible: _recipeScreenBloc.isHasCurrentUser(),
-                              child: StreamBuilder<bool>(
-                                stream: _recipeScreenBloc
-                                    .getIsFavoriteRecipeStream(),
-                                builder: (builder, snapshot) {
-                                  bool isFavorite = snapshot.data ?? false;
-                                  return IconButton(
-                                    iconSize: 30.0,
-                                    icon: Icon(
-                                      Icons.favorite_outlined,
-                                      color: isFavorite
-                                          ? AppColors.active
-                                          : AppColors.inactive,
-                                    ),
-                                    onPressed: () =>
-                                        _recipeScreenBloc.removeFavorite(
-                                      state.recipe.id,
-                                      isFavorite,
-                                    ),
-                                  );
-                                },
+                              visible:
+                                  _recipeScreenBloc.userPresenter.currentUser !=
+                                      null,
+                              child: AddToFavoriteWidget(
+                                user:
+                                    _recipeScreenBloc.userPresenter.currentUser,
+                                recipeId: widget.recipeId,
                               ),
                             ),
                           ],

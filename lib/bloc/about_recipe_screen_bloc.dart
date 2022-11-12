@@ -74,5 +74,7 @@ class AboutRecipeScreenBloc
     }
   }
 
+
+
   bool isHasCurrentUser() => userPresenter.currentUser != null;
 }
