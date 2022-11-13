@@ -11,6 +11,7 @@ import '../model/user.dart';
 class AddToFavoriteWidget extends StatelessWidget {
   final int recipeId;
   final User? user;
+  AddToFavoriteBloc? addToFavoriteBloc;
 
   AddToFavoriteWidget({
     required this.recipeId,
@@ -20,43 +21,49 @@ class AddToFavoriteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AddToFavoriteBloc>(
-      create: (context) => AddToFavoriteBloc(
-        recipeId: recipeId,
-        user: user,
-        recipeRepository: context.read<RecipeRepository>(),
-      )..add(CheckFavorite()),
+      create: (context) {
+        addToFavoriteBloc = AddToFavoriteBloc(
+          recipeId: recipeId,
+          user: user,
+          recipeRepository: context.read<RecipeRepository>(),
+        );
+        addToFavoriteBloc?.add(CheckFavorite());
+        return addToFavoriteBloc!;
+      },
       child: BlocBuilder<AddToFavoriteBloc, AddToFavoriteState>(
+        bloc: addToFavoriteBloc,
         builder: (builder, state) {
-          if (state is ShowNoFavorite)
-            return GestureDetector(
-              child: SizedBox(
-                child: RiveAnimation.asset(
+          if (state is ShowNoFavorite) {
+            return SizedBox(
+              key: UniqueKey(),
+              width: 24.0,
+              height: 24.0,
+              child: GestureDetector(
+                child: new RiveAnimation.asset(
                   'assets/riv/heartAnimationGray.riv',
-                  controllers: [SimpleAnimation('heartAnimation')],
+                  artboard: 'heartAnimationGray',
                   fit: BoxFit.fill,
                 ),
-                width: 48.0,
-                height: 48.0,
+                onTap: () => addToFavoriteBloc?.add(AddToFavorite()),
               ),
-              onTap: () => BlocProvider.of<AddToFavoriteBloc>(context)
-                  .add(AddToFavorite()),
             );
-          else if (state is ShowFavorite)
-            return GestureDetector(
-              child: SizedBox(
-                child: RiveAnimation.asset(
+          } else if (state is ShowFavorite) {
+            return SizedBox(
+              key: UniqueKey(),
+              width: 24.0,
+              height: 24.0,
+              child: GestureDetector(
+                child: new RiveAnimation.asset(
                   'assets/riv/heartAnimationRed.riv',
-                  controllers: [SimpleAnimation('heartAnimationRed')],
+                  artboard: 'heartAnimationRed',
                   fit: BoxFit.fill,
                 ),
-                width: 48.0,
-                height: 48.0,
+                onTap: () => addToFavoriteBloc?.add(RemoveFromFavorite()),
               ),
-              onTap: () => BlocProvider.of<AddToFavoriteBloc>(context)
-                  .add(RemoveFromFavorite()),
             );
-          else
+          } else {
             return Container();
+          }
         },
       ),
     );

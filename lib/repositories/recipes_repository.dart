@@ -93,13 +93,11 @@ class RecipeRepository {
     return localFavorites;
   }
 
-  addFavorite(
+  Future<ResultOperation> addFavorite(
     int recipeId,
     int userId,
-  ) async {
-    var resultOperation = await _favoriteBox.addFavorite(recipeId, userId);
-    _refreshFavorites(resultOperation, recipeId, userId);
-  }
+  ) async =>
+      await _favoriteBox.addFavorite(recipeId, userId);
 
   _refreshFavorites(
       ResultOperation resultOperation, int recipeId, int userId) async {
@@ -125,6 +123,13 @@ class RecipeRepository {
   ) async {
     var resultOperation = await _favoriteBox.removeFavorite(recipeId, userId);
     _refreshFavorites(resultOperation, recipeId, userId);
+  }
+
+  Future<ResultOperation> removeFavoriteNew(
+    int recipeId,
+    int userId,
+  ) async {
+    return await _favoriteBox.removeFavorite(recipeId, userId);
   }
 
   Future<List<Favorite>> getFavoriteForRecipe(int recipeId) async =>

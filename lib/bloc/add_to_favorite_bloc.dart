@@ -14,8 +14,7 @@ class AddToFavoriteBloc extends Bloc<AddToFavoriteEvent, AddToFavoriteState> {
   }) : super(Init()) {
     on<AddToFavorite>((event, emit) async {
       if (user != null) {
-        ResultOperation result =
-            await recipeRepository.addFavorite(recipeId, user!.id)(
+        ResultOperation result = await recipeRepository.addFavorite(
           recipeId,
           user!.id,
         );
@@ -28,8 +27,10 @@ class AddToFavoriteBloc extends Bloc<AddToFavoriteEvent, AddToFavoriteState> {
     on<RemoveFromFavorite>((event, emit) async {
       if (user != null) {
         ResultOperation resultOperation =
-            await recipeRepository.removeFavorite(recipeId, user!.id);
-        if (resultOperation is SuccessOperation) emit(ShowNoFavorite());
+            await recipeRepository.removeFavoriteNew(recipeId, user!.id);
+        if (resultOperation is SuccessOperation) {
+          emit(ShowNoFavorite());
+        }
       }
     });
 
