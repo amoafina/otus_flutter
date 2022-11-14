@@ -31,7 +31,7 @@ class _AuthScreenState extends State<AuthScreen> {
     _passwordController = TextEditingController();
     _passwordRepeatController = TextEditingController();
     context.read<UserBloc>().add(
-          ShowLogin(
+          LoginIsShown(
             opacity: 0,
             paddingTop: 40,
           ),
@@ -210,10 +210,10 @@ class _AuthScreenState extends State<AuthScreen> {
                       opacity = opacity == 1 ? 0 : 1;
                       paddingTop = paddingTop == 40 ? 104 : 40;
                       if (userState is LoginPage) {
-                        context.read<UserBloc>().add(ShowRegistration(
+                        context.read<UserBloc>().add(RegistrationIsShown(
                             paddingTop: paddingTop, opacity: opacity));
                       } else if (userState is RegistrationPage) {
-                        context.read<UserBloc>().add(ShowLogin(
+                        context.read<UserBloc>().add(LoginIsShown(
                             paddingTop: paddingTop, opacity: opacity));
                       }
                     },
@@ -297,7 +297,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String login = _loginController.text;
     String password = _passwordController.text;
     String passwordRepeat = _passwordRepeatController.text;
-    context.read<UserBloc>().add(Registration(
+    context.read<UserBloc>().add(Registered(
         login: login, password: password, repeatPassword: passwordRepeat));
   }
 }

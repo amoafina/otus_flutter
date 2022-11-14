@@ -1,6 +1,6 @@
 abstract class AddToFavoriteState {}
 
-class Init extends AddToFavoriteState {}
+class FavoriteInitial extends AddToFavoriteState {}
 
 class ShowFavorite extends AddToFavoriteState {}
 

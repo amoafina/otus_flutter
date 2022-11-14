@@ -15,7 +15,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     required this.userPresenter,
     required this.commentsRepository,
   }) : super(Init()) {
-    on<GetCommentsForRecipe>((event, emit) async {
+    on<RecipeCommentsRequested>((event, emit) async {
       List<Comment> comments =
           await commentsRepository.getCommentForRecipe(event.recipeId);
       emit(
@@ -26,7 +26,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
               ),
       );
     });
-    on<AddCommentToRecipe>((event, emit) async {
+    on<AddedCommentToRecipe>((event, emit) async {
       User? user = userPresenter.currentUser;
       Comment comment = new Comment(
           id: 0,

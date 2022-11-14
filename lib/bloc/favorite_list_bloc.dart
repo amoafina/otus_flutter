@@ -9,7 +9,7 @@ class FavoriteListBloc extends Bloc<FavoriteListEvents,FavoriteListStates>{
   FavoriteListBloc({
     required this.recipeRepository,
 }) : super(Init()){
-    on<GetFavoriteList>((event,emit)async{
+    on<RequestedFavorites>((event,emit)async{
       List<Recipe> favoriteList = await recipeRepository.getUserFavoriteRecipes(event.userId);
       if(favoriteList.isEmpty){
         emit(ShowEmptyList());

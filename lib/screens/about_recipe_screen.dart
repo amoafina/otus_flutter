@@ -55,7 +55,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
   @override
   void initState() {
     _recipeScreenBloc = context.read<AboutRecipeScreenBloc>();
-    _recipeScreenBloc.add(GetInfoAboutRecipeEvent(widget.recipeId));
+    _recipeScreenBloc.add(RecipeInformationRequested(widget.recipeId));
     super.initState();
   }
 
@@ -124,11 +124,11 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
       body: BlocBuilder<AboutRecipeScreenBloc, AboutRecipeScreenState>(
         bloc: _recipeScreenBloc,
         builder: (builder, state) {
-          if (state is LoadingAboutRecipe) {
+          if (state is LoadingRecipeInformation) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is ShowAboutRecipe) {
+          } else if (state is ShowInformationRecipe) {
             return new SafeArea(
               child: SingleChildScrollView(
                 controller: _scrollController,

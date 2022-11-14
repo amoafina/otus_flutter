@@ -2,18 +2,8 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:otusfood/api/food_api.dart';
-import 'package:otusfood/data/users_box.dart';
-import 'package:otusfood/presenters/messages_presenter.dart';
-import 'package:otusfood/presenters/user_presenter.dart';
-import 'package:otusfood/repositories/user_repository.dart';
 import 'package:otusfood/utils/app_colors.dart';
 
-import '../data/favorite_box.dart';
-import '../data/recipe_box.dart';
-import '../presenters/recipes_presenter.dart';
-import '../repositories/recipes_repository.dart';
 import 'main_screen.dart';
 
 class SplashScreenWidget extends StatelessWidget {

@@ -14,18 +14,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         event.password,
       ),
     );
-    on<Registration>(
+    on<Registered>(
       (event, emit) => userPresenter.registration(
         event.login,
         event.password,
         event.repeatPassword,
       ),
     );
-    on<ShowLogin>((event, emit) => emit(LoginPage(
+    on<LoginIsShown>((event, emit) => emit(LoginPage(
           opacity: event.opacity,
           paddingTop: event.paddingTop,
         )));
-    on<ShowRegistration>((event, emit) => emit(RegistrationPage(
+    on<RegistrationIsShown>((event, emit) => emit(RegistrationPage(
           opacity: event.opacity,
           paddingTop: event.paddingTop,
         )));

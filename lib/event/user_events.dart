@@ -1,11 +1,11 @@
 abstract class UserEvent {}
 
-class Registration extends UserEvent {
+class Registered extends UserEvent {
   final String login;
   final String password;
   final String repeatPassword;
 
-  Registration({
+  Registered({
     required this.login,
     required this.password,
     required this.repeatPassword,
@@ -22,23 +22,23 @@ class Login extends UserEvent {
   });
 }
 
-class Exit extends UserEvent {}
+class CameOut extends UserEvent {}
 
-class ShowRegistration extends UserEvent {
+class RegistrationIsShown extends UserEvent {
   final int opacity;
   final int paddingTop;
 
-  ShowRegistration({
+  RegistrationIsShown({
     required this.paddingTop,
     required this.opacity,
   });
 }
 
-class ShowLogin extends UserEvent {
+class LoginIsShown extends UserEvent {
   final int opacity;
   final int paddingTop;
 
-  ShowLogin({
+  LoginIsShown({
     required this.paddingTop,
     required this.opacity,
   });

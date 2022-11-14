@@ -27,7 +27,7 @@ class AddToFavoriteWidget extends StatelessWidget {
           user: user,
           recipeRepository: context.read<RecipeRepository>(),
         );
-        addToFavoriteBloc?.add(CheckFavorite());
+        addToFavoriteBloc?.add(CheckedInFavorites());
         return addToFavoriteBloc!;
       },
       child: BlocBuilder<AddToFavoriteBloc, AddToFavoriteState>(
@@ -44,7 +44,7 @@ class AddToFavoriteWidget extends StatelessWidget {
                   artboard: 'heartAnimationGray',
                   fit: BoxFit.fill,
                 ),
-                onTap: () => addToFavoriteBloc?.add(AddToFavorite()),
+                onTap: () => addToFavoriteBloc?.add(AddedToFavorites()),
               ),
             );
           } else if (state is ShowFavorite) {
@@ -58,7 +58,7 @@ class AddToFavoriteWidget extends StatelessWidget {
                   artboard: 'heartAnimationRed',
                   fit: BoxFit.fill,
                 ),
-                onTap: () => addToFavoriteBloc?.add(RemoveFromFavorite()),
+                onTap: () => addToFavoriteBloc?.add(RemovedFromFavorites()),
               ),
             );
           } else {

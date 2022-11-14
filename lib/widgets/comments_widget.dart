@@ -28,7 +28,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
   @override
   void initState() {
     commentsBloc = context.read<CommentsBloc>();
-    commentsBloc.add(GetCommentsForRecipe(
+    commentsBloc.add(RecipeCommentsRequested(
       recipeId: widget.recipeId,
     ));
     super.initState();
@@ -82,7 +82,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
   }
 
   void _addComment(String text, String photoPath) {
-    commentsBloc.add(AddCommentToRecipe(
+    commentsBloc.add(AddedCommentToRecipe(
       text: text,
       photoPath: photoPath,
       recipeId: widget.recipeId,

@@ -1,7 +1,7 @@
 abstract class AddToFavoriteEvent {}
 
-class AddToFavorite extends AddToFavoriteEvent {}
+class AddedToFavorites extends AddToFavoriteEvent {}
 
-class RemoveFromFavorite extends AddToFavoriteEvent {}
+class RemovedFromFavorites extends AddToFavoriteEvent {}
 
-class CheckFavorite extends AddToFavoriteEvent {}
+class CheckedInFavorites extends AddToFavoriteEvent {}

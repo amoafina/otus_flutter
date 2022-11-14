@@ -32,7 +32,7 @@ class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
       create: (builder) {
         _favoriteListBloc = FavoriteListBloc(
             recipeRepository: builder.read<RecipeRepository>());
-        _favoriteListBloc?.add(GetFavoriteList(
+        _favoriteListBloc?.add(RequestedFavorites(
             userId: widget.userPresenter.currentUser?.id ?? -1));
         return _favoriteListBloc!;
       },
@@ -70,7 +70,7 @@ class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
               context,
               AboutFoodScreen.aboutFoodScreenName,
               arguments: new AboutRecipeArguments(recipe.id),
-            ).then((value) => _favoriteListBloc?.add(GetFavoriteList(userId: widget.userPresenter.currentUser?.id??-1)),),
+            ).then((value) => _favoriteListBloc?.add(RequestedFavorites(userId: widget.userPresenter.currentUser?.id??-1)),),
           );
         },
         itemCount: favorites.length,
