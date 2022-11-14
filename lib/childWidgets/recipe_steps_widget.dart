@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:otusfood/widgets/start_finish_cooking_button.dart';
-import 'package:otusfood/widgets/step_widget.dart';
+import 'package:otusfood/childWidgets/start_finish_cooking_button.dart';
+import 'package:otusfood/childWidgets/step_widget.dart';
 
 import '../model/recipe_step.dart';
-import '../repositories/recipe_step_repository.dart';
 import '../utils/app_colors.dart';
 
 class RecipeStepsWidget extends StatefulWidget {

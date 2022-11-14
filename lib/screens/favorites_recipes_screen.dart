@@ -7,23 +7,23 @@ import 'package:otusfood/repositories/recipes_repository.dart';
 import 'package:otusfood/state/favorite_list_states.dart';
 
 import '../arguments/about_recipe_arguments.dart';
+import '../childWidgets/item_recipe_widget.dart';
 import '../model/recipe.dart';
 import '../presenters/user_presenter.dart';
-import '../screens/about_recipe_screen.dart';
-import 'item_recipe_widget.dart';
+import 'about_recipe_screen.dart';
 
-class ListFavoritesRecipesWidget extends StatefulWidget {
+class FavoritesRecipesScreen extends StatefulWidget {
   final UserPresenter userPresenter;
 
-  ListFavoritesRecipesWidget({
+  FavoritesRecipesScreen({
     required this.userPresenter,
   });
 
   @override
-  State<StatefulWidget> createState() => _ListFavoritesRecipesState();
+  State<StatefulWidget> createState() => _FavoritesRecipesScreenState();
 }
 
-class _ListFavoritesRecipesState extends State<ListFavoritesRecipesWidget> {
+class _FavoritesRecipesScreenState extends State<FavoritesRecipesScreen> {
   FavoriteListBloc? _favoriteListBloc;
 
   @override

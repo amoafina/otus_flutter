@@ -7,19 +7,19 @@ import 'package:otusfood/event/recipe_list_events.dart';
 import 'package:otusfood/repositories/recipes_repository.dart';
 import 'package:otusfood/state/recipe_list_states.dart';
 
+import '../childWidgets/item_recipe_widget.dart';
 import '../model/recipe.dart';
-import '../screens/about_recipe_screen.dart';
-import 'item_recipe_widget.dart';
+import 'about_recipe_screen.dart';
 
-class ListRecipesWidget extends StatefulWidget {
+class RecipesScreen extends StatefulWidget {
 
-  ListRecipesWidget();
+  RecipesScreen();
 
   @override
-  State<StatefulWidget> createState() => _ListRecipesState();
+  State<StatefulWidget> createState() => _RecipesScreenState();
 }
 
-class _ListRecipesState extends State<ListRecipesWidget> {
+class _RecipesScreenState extends State<RecipesScreen> {
 
   RecipeListBloc? recipeListBloc;
 

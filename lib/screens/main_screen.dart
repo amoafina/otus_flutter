@@ -4,9 +4,10 @@ import 'package:otusfood/bloc/user_bloc.dart';
 import 'package:otusfood/screens/auth_screen.dart';
 import 'package:otusfood/screens/freezer_screen.dart';
 import 'package:otusfood/screens/profile_screen.dart';
+import 'package:otusfood/screens/recipes_screen.dart';
 import 'package:otusfood/utils/app_colors.dart';
-import 'package:otusfood/widgets/list_favorites_recipes_widget.dart';
-import 'package:otusfood/widgets/list_recipes_widget.dart';
+
+import 'favorites_recipes_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static String mainScreenName = "/mainScreenName";
@@ -160,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget _getNotProfileBodyWidget() {
     switch (currentIndex) {
       case 0:
-        return ListRecipesWidget();
+        return RecipesScreen();
       case 1:
         return AuthScreen(
           userPresenter: userBloc!.userPresenter,
@@ -173,11 +174,11 @@ class _MainScreenState extends State<MainScreen> {
   Widget _getHasProfileBodyWidget() {
     switch (currentIndex) {
       case 0:
-        return ListRecipesWidget();
+        return RecipesScreen();
       case 1:
         return new FreezerScreen();
       case 2:
-        return new ListFavoritesRecipesWidget(
+        return new FavoritesRecipesScreen(
           userPresenter: userBloc!.userPresenter,
         );
       default:
