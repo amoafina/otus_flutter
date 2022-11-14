@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otusfood/bloc/comments_bloc.dart';
-import 'package:otusfood/event/comments_event.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/state/comments_state.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/utils/utils.dart';
+
+import '../event/comments_events.dart';
 
 class CommentsWidget extends StatefulWidget {
   final int recipeId;

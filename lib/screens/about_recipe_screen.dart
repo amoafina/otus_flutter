@@ -10,7 +10,6 @@ import 'package:otusfood/widgets/comments_widget.dart';
 import 'package:otusfood/widgets/cooking_time_info_widget.dart';
 import 'package:otusfood/widgets/ingredient_widget.dart';
 import 'package:otusfood/widgets/recipe_steps_widget.dart';
-import 'package:rive/rive.dart';
 
 import '../bloc/about_recipe_screen_bloc.dart';
 

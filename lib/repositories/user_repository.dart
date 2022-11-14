@@ -13,9 +13,15 @@ class UserRepository extends BaseRepository<UsersBox> {
   }
 
   Future<ResultOperation> registrationUser(
-          String login, String password) async =>
-      await baseBox.registrationUser(login, password);
+    String login,
+    String password,
+  ) async {
+    return await baseBox.registrationUser(login, password);
+  }
 
-  Future<ResultOperation> logIn(String login, String password) async =>
+  Future<ResultOperation> logIn(
+    String login,
+    String password,
+  ) async =>
       await baseBox.logIn(login, password);
 }

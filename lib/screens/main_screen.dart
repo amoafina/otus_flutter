@@ -9,9 +9,35 @@ import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/widgets/list_favorites_recipes_widget.dart';
 import 'package:otusfood/widgets/list_recipes_widget.dart';
 
+import '../repositories/recipes_repository.dart';
+
 class MainScreen extends StatefulWidget {
   static String mainScreenName = "/mainScreenName";
   final RecipePresenter recipePresenter;
+
+  static Route createRouteMainScreen(String title) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => MainScreen(
+        title: title,
+        recipePresenter:  RecipePresenter(
+          recipeRepository: context.read<RecipeRepository>(),
+        ),
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
 
   const MainScreen({
     required this.title,
@@ -170,7 +196,6 @@ class _MainScreenState extends State<MainScreen> {
         return new FreezerScreen();
       case 2:
         return new ListFavoritesRecipesWidget(
-          recipePresenter: widget.recipePresenter,
           userPresenter: userBloc!.userPresenter,
         );
       default:

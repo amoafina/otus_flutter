@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otusfood/event/add_to_favorite_event.dart';
 import 'package:otusfood/model/result_operation.dart';
 import 'package:otusfood/model/success_operation.dart';
 import 'package:otusfood/model/user.dart';
 import 'package:otusfood/repositories/recipes_repository.dart';
 import 'package:otusfood/state/add_to_favorite_state.dart';
+
+import '../event/add_to_favorite_events.dart';
 
 class AddToFavoriteBloc extends Bloc<AddToFavoriteEvent, AddToFavoriteState> {
   AddToFavoriteBloc({

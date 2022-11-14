@@ -21,7 +21,6 @@ import 'package:otusfood/model/recipe_step.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
 import 'package:otusfood/model/user.dart';
 import 'package:otusfood/presenters/messages_presenter.dart';
-import 'package:otusfood/presenters/recipes_presenter.dart';
 import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/repositories/comments_repository.dart';
 import 'package:otusfood/repositories/ingredients_repository.dart';
@@ -141,16 +140,7 @@ class _MyAppState extends State<MyApp> {
                     SplashScreenWidget(),
               );
             } else if (settings.name == MainScreen.mainScreenName) {
-              return PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                final mainScreen = new MainScreen(
-                  title: appName,
-                  recipePresenter: RecipePresenter(
-                    recipeRepository: context.read<RecipeRepository>(),
-                  ),
-                );
-                return mainScreen;
-              });
+              return  MainScreen.createRouteMainScreen(appName);
             }
             return null;
           },
