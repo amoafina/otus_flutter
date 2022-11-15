@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otusfood/bloc/favorite_list_bloc.dart';
 import 'package:otusfood/event/favorite_list_events.dart';
