@@ -1,18 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otusfood/event/add_to_favorite_event.dart';
 import 'package:otusfood/model/result_operation.dart';
 import 'package:otusfood/model/success_operation.dart';
 import 'package:otusfood/model/user.dart';
 import 'package:otusfood/repositories/recipes_repository.dart';
 import 'package:otusfood/state/add_to_favorite_state.dart';
 
+import '../event/add_to_favorite_events.dart';
+
 class AddToFavoriteBloc extends Bloc<AddToFavoriteEvent, AddToFavoriteState> {
   AddToFavoriteBloc({
     required this.recipeId,
     required this.user,
     required this.recipeRepository,
-  }) : super(Init()) {
-    on<AddToFavorite>((event, emit) async {
+  }) : super(FavoriteInitial()) {
+    on<AddedToFavorites>((event, emit) async {
       if (user != null) {
         ResultOperation result = await recipeRepository.addFavorite(
           recipeId,
@@ -24,7 +25,7 @@ class AddToFavoriteBloc extends Bloc<AddToFavoriteEvent, AddToFavoriteState> {
       }
     });
 
-    on<RemoveFromFavorite>((event, emit) async {
+    on<RemovedFromFavorites>((event, emit) async {
       if (user != null) {
         ResultOperation resultOperation =
             await recipeRepository.removeFavoriteNew(recipeId, user!.id);
@@ -34,7 +35,7 @@ class AddToFavoriteBloc extends Bloc<AddToFavoriteEvent, AddToFavoriteState> {
       }
     });
 
-    on<CheckFavorite>((event, emit) async {
+    on<CheckedInFavorites>((event, emit) async {
       if (user != null) {
         bool isFavorite =
             await recipeRepository.isFavoriteRecipe(user!.id, recipeId);

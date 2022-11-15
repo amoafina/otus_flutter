@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otusfood/bloc/user_bloc.dart';
-import 'package:otusfood/presenters/recipes_presenter.dart';
 import 'package:otusfood/screens/auth_screen.dart';
 import 'package:otusfood/screens/freezer_screen.dart';
 import 'package:otusfood/screens/profile_screen.dart';
+import 'package:otusfood/screens/recipes_screen.dart';
 import 'package:otusfood/utils/app_colors.dart';
-import 'package:otusfood/widgets/list_favorites_recipes_widget.dart';
-import 'package:otusfood/widgets/list_recipes_widget.dart';
+
+import 'favorites_recipes_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static String mainScreenName = "/mainScreenName";
-  final RecipePresenter recipePresenter;
 
-  const MainScreen({
-    required this.title,
-    required this.recipePresenter,
-  });
+  static Route createRouteMainScreen(String title) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          MainScreen(title: title),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
+  const MainScreen({required this.title});
 
   final String title;
 
@@ -146,10 +161,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget _getNotProfileBodyWidget() {
     switch (currentIndex) {
       case 0:
-        return ListRecipesWidget(
-          userPresenter: userBloc!.userPresenter,
-          recipePresenter: widget.recipePresenter,
-        );
+        return RecipesScreen();
       case 1:
         return AuthScreen(
           userPresenter: userBloc!.userPresenter,
@@ -162,15 +174,11 @@ class _MainScreenState extends State<MainScreen> {
   Widget _getHasProfileBodyWidget() {
     switch (currentIndex) {
       case 0:
-        return ListRecipesWidget(
-          userPresenter: userBloc!.userPresenter,
-          recipePresenter: widget.recipePresenter,
-        );
+        return RecipesScreen();
       case 1:
         return new FreezerScreen();
       case 2:
-        return new ListFavoritesRecipesWidget(
-          recipePresenter: widget.recipePresenter,
+        return new FavoritesRecipesScreen(
           userPresenter: userBloc!.userPresenter,
         );
       default:

@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:otusfood/bloc/comments_bloc.dart';
-import 'package:otusfood/event/comments_event.dart';
 import 'package:otusfood/model/comment.dart';
 import 'package:otusfood/state/comments_state.dart';
 import 'package:otusfood/utils/app_colors.dart';
 import 'package:otusfood/utils/utils.dart';
+
+import '../event/comments_events.dart';
 
 class CommentsWidget extends StatefulWidget {
   final int recipeId;
@@ -27,7 +28,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
   @override
   void initState() {
     commentsBloc = context.read<CommentsBloc>();
-    commentsBloc.add(GetCommentsForRecipe(
+    commentsBloc.add(RecipeCommentsRequested(
       recipeId: widget.recipeId,
     ));
     super.initState();
@@ -81,7 +82,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
   }
 
   void _addComment(String text, String photoPath) {
-    commentsBloc.add(AddCommentToRecipe(
+    commentsBloc.add(AddedCommentToRecipe(
       text: text,
       photoPath: photoPath,
       recipeId: widget.recipeId,

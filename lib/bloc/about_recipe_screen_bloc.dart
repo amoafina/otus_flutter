@@ -26,9 +26,9 @@ class AboutRecipeScreenBloc
     required this.recipeStepRepository,
     required this.recipeRepository,
     required this.userPresenter,
-  }) : super(InitAboutRecipe()) {
-    on<GetInfoAboutRecipeEvent>((event, emit) async {
-      emit(LoadingAboutRecipe());
+  }) : super(RecipeInformationInitial()) {
+    on<RecipeInformationRequested>((event, emit) async {
+      emit(LoadingRecipeInformation());
       int recipeId = event.recipeId;
       ResultOperation resultOperation = await recipeRepository.getRecipeById(recipeId);
       if (resultOperation is ErrorOperation) {
@@ -44,7 +44,7 @@ class AboutRecipeScreenBloc
         if (user != null) {
           recipeRepository.refresh(recipe.id, user.id);
         }
-        emit(ShowAboutRecipe(
+        emit(ShowInformationRecipe(
           recipe,
           ingredients,
           recipeStep,

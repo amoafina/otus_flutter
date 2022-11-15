@@ -6,15 +6,15 @@ import '../model/recipe_step.dart';
 
 abstract class AboutRecipeScreenState {}
 
-class LoadingAboutRecipe extends AboutRecipeScreenState {}
+class LoadingRecipeInformation extends AboutRecipeScreenState {}
 
-class ShowAboutRecipe extends AboutRecipeScreenState {
+class ShowInformationRecipe extends AboutRecipeScreenState {
   final Recipe recipe;
   final List<RecipeStep> recipeSteps;
   final List<Ingredient> ingredients;
   final List<Comment> comments;
 
-  ShowAboutRecipe(
+  ShowInformationRecipe(
     this.recipe,
     this.ingredients,
     this.recipeSteps,
@@ -22,4 +22,4 @@ class ShowAboutRecipe extends AboutRecipeScreenState {
   );
 }
 
-class InitAboutRecipe extends AboutRecipeScreenState {}
+class RecipeInformationInitial extends AboutRecipeScreenState {}

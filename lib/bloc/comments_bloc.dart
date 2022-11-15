@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otusfood/event/comments_event.dart';
 import 'package:otusfood/model/entity_link.dart';
 import 'package:otusfood/model/result_operation.dart';
 import 'package:otusfood/model/success_operation.dart';
@@ -7,6 +6,7 @@ import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/repositories/comments_repository.dart';
 import 'package:otusfood/state/comments_state.dart';
 
+import '../event/comments_events.dart';
 import '../model/comment.dart';
 
 class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
@@ -14,7 +14,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     required this.userPresenter,
     required this.commentsRepository,
   }) : super(Init()) {
-    on<GetCommentsForRecipe>((event, emit) async {
+    on<RecipeCommentsRequested>((event, emit) async {
       List<Comment> comments =
           await commentsRepository.getCommentForRecipe(event.recipeId);
       emit(
@@ -25,7 +25,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
               ),
       );
     });
-    on<AddCommentToRecipe>((event, emit) async {
+    on<AddedCommentToRecipe>((event, emit) async {
       Comment comment = new Comment(
           id: 0,
           text: event.text,

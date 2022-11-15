@@ -5,13 +5,13 @@ import 'package:otusfood/event/about_recipe_screen_events.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/state/about_recipe_screen_states.dart';
 import 'package:otusfood/utils/app_colors.dart';
-import 'package:otusfood/widgets/add_to_favorite_widget.dart';
-import 'package:otusfood/widgets/comments_widget.dart';
-import 'package:otusfood/widgets/cooking_time_info_widget.dart';
-import 'package:otusfood/widgets/ingredient_widget.dart';
-import 'package:otusfood/widgets/recipe_steps_widget.dart';
 
 import '../bloc/about_recipe_screen_bloc.dart';
+import '../childWidgets/add_to_favorite_widget.dart';
+import '../childWidgets/comments_widget.dart';
+import '../childWidgets/cooking_time_info_widget.dart';
+import '../childWidgets/ingredient_widget.dart';
+import '../childWidgets/recipe_steps_widget.dart';
 
 class AboutFoodScreen extends StatefulWidget {
   static String aboutFoodScreenName = "/aboutFoodScreenName";
@@ -55,7 +55,7 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
   @override
   void initState() {
     _recipeScreenBloc = context.read<AboutRecipeScreenBloc>();
-    _recipeScreenBloc.add(GetInfoAboutRecipeEvent(widget.recipeId));
+    _recipeScreenBloc.add(RecipeInformationRequested(widget.recipeId));
     super.initState();
   }
 
@@ -124,11 +124,11 @@ class _AboutFoodScreenState extends State<AboutFoodScreen> {
       body: BlocBuilder<AboutRecipeScreenBloc, AboutRecipeScreenState>(
         bloc: _recipeScreenBloc,
         builder: (builder, state) {
-          if (state is LoadingAboutRecipe) {
+          if (state is LoadingRecipeInformation) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is ShowAboutRecipe) {
+          } else if (state is ShowInformationRecipe) {
             return new SafeArea(
               child: SingleChildScrollView(
                 controller: _scrollController,

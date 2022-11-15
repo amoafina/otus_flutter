@@ -1,17 +1,17 @@
 abstract class CommentsEvent {}
 
-class GetCommentsForRecipe extends CommentsEvent {
+class RecipeCommentsRequested extends CommentsEvent {
   final int recipeId;
 
-  GetCommentsForRecipe({required this.recipeId});
+  RecipeCommentsRequested({required this.recipeId});
 }
 
-class AddCommentToRecipe extends CommentsEvent {
+class AddedCommentToRecipe extends CommentsEvent {
   final String text;
   final String? photoPath;
   final int recipeId;
 
-  AddCommentToRecipe({
+  AddedCommentToRecipe({
     required this.text,
     required this.photoPath,
     required this.recipeId,

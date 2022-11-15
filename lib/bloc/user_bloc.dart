@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:otusfood/event/user_event.dart';
 import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/state/user_state.dart';
+
+import '../event/user_events.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc({
@@ -13,18 +14,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         event.password,
       ),
     );
-    on<Registration>(
+    on<Registered>(
       (event, emit) => userPresenter.registration(
         event.login,
         event.password,
         event.repeatPassword,
       ),
     );
-    on<ShowLogin>((event, emit) => emit(LoginPage(
+    on<LoginIsShown>((event, emit) => emit(LoginPage(
           opacity: event.opacity,
           paddingTop: event.paddingTop,
         )));
-    on<ShowRegistration>((event, emit) => emit(RegistrationPage(
+    on<RegistrationIsShown>((event, emit) => emit(RegistrationPage(
           opacity: event.opacity,
           paddingTop: event.paddingTop,
         )));

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:otusfood/api/food_api.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/utils/app_colors.dart';
-import 'package:otusfood/widgets/ingredient_widget.dart';
+
+import '../childWidgets/ingredient_widget.dart';
 
 class FreezerScreen extends StatefulWidget {
   @override

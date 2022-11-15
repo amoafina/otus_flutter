@@ -1,8 +1,8 @@
 abstract class AboutRecipeScreenEvent {}
 
-class GetInfoAboutRecipeEvent extends AboutRecipeScreenEvent {
+class RecipeInformationRequested extends AboutRecipeScreenEvent {
   final int recipeId;
 
 
-  GetInfoAboutRecipeEvent(this.recipeId);
+  RecipeInformationRequested(this.recipeId);
 }
