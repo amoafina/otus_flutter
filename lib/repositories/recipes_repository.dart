@@ -38,13 +38,13 @@ class RecipeRepository {
       await _recipeBox.saveListData(remoteRecipes, HiveBoxes.recipeBox);
       localRecipes.addAll(await _recipeBox.getListData(HiveBoxes.recipeBox));
     }
-    List<Favorite> favorites = await getFavorites();
-    localRecipes.forEach((recipe) {
-      var recipeId = recipe.id;
-      List<Favorite> tmp =
-          favorites.where((element) => element.recipe.id == recipeId).toList();
+    // List<Favorite> favorites = await getFavorites();
+    // localRecipes.forEach((recipe) {
+    //   var recipeId = recipe.id;
+      // List<Favorite> tmp =
+      //     favorites.where((element) => element.recipe.id == recipeId).toList();
       // recipe.favoriteRecipes.addAll(tmp);
-    });
+    // });
 
     return localRecipes;
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otusfood/bloc/user_bloc.dart';
 import 'package:otusfood/event/user_event.dart';
-import 'package:otusfood/model/user.dart';
 import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/state/user_state.dart';
 import 'package:otusfood/utils/app_colors.dart';

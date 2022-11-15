@@ -103,7 +103,7 @@ class _AddingCommentWidget extends StatefulWidget {
 }
 
 class _AddingCommentWidgetState extends State<_AddingCommentWidget> {
-  String? photoPath = null;
+  String? photoPath;
   TextEditingController _controller = TextEditingController();
   final ImagePicker _imagePicker = ImagePicker();
 

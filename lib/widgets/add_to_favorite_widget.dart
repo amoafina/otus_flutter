@@ -11,7 +11,6 @@ import '../model/user.dart';
 class AddToFavoriteWidget extends StatelessWidget {
   final int recipeId;
   final User? user;
-  AddToFavoriteBloc? addToFavoriteBloc;
 
   AddToFavoriteWidget({
     required this.recipeId,
@@ -20,6 +19,7 @@ class AddToFavoriteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AddToFavoriteBloc? addToFavoriteBloc;
     return BlocProvider<AddToFavoriteBloc>(
       create: (context) {
         addToFavoriteBloc = AddToFavoriteBloc(

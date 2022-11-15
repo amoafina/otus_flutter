@@ -3,7 +3,6 @@ import 'package:otusfood/event/comments_event.dart';
 import 'package:otusfood/model/entity_link.dart';
 import 'package:otusfood/model/result_operation.dart';
 import 'package:otusfood/model/success_operation.dart';
-import 'package:otusfood/model/user.dart';
 import 'package:otusfood/presenters/user_presenter.dart';
 import 'package:otusfood/repositories/comments_repository.dart';
 import 'package:otusfood/state/comments_state.dart';
@@ -27,7 +26,6 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
       );
     });
     on<AddCommentToRecipe>((event, emit) async {
-      User? user = userPresenter.currentUser;
       Comment comment = new Comment(
           id: 0,
           text: event.text,
