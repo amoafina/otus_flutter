@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otusfood/bloc/add_to_favorite_bloc.dart';
+import 'package:otusfood/childWidgets/FavoriteButtonWidget.dart';
 import 'package:otusfood/repositories/recipes_repository.dart';
 import 'package:otusfood/state/add_to_favorite_state.dart';
-import 'package:rive/rive.dart';
 
 import '../event/add_to_favorite_events.dart';
 import '../model/user.dart';
@@ -33,33 +33,14 @@ class AddToFavoriteWidget extends StatelessWidget {
       child: BlocBuilder<AddToFavoriteBloc, AddToFavoriteState>(
         bloc: addToFavoriteBloc,
         builder: (builder, state) {
-          if (state is ShowNoFavorite) {
-            return SizedBox(
-              key: UniqueKey(),
-              width: 24.0,
-              height: 24.0,
-              child: GestureDetector(
-                child: new RiveAnimation.asset(
-                  'assets/riv/heartAnimationGray.riv',
-                  artboard: 'heartAnimationGray',
-                  fit: BoxFit.fill,
-                ),
-                onTap: () => addToFavoriteBloc?.add(AddedToFavorites()),
-              ),
-            );
-          } else if (state is ShowFavorite) {
-            return SizedBox(
-              key: UniqueKey(),
-              width: 24.0,
-              height: 24.0,
-              child: GestureDetector(
-                child: new RiveAnimation.asset(
-                  'assets/riv/heartAnimationRed.riv',
-                  artboard: 'heartAnimationRed',
-                  fit: BoxFit.fill,
-                ),
-                onTap: () => addToFavoriteBloc?.add(RemovedFromFavorites()),
-              ),
+          if (state is ShowNoFavorite || state is ShowFavorite) {
+            var isFavorite = state is ShowFavorite;
+            return FavoriteButtonWidget(
+              onTap: () {
+                addToFavoriteBloc?.add(
+                    isFavorite ? RemovedFromFavorites() : AddedToFavorites());
+              },
+              isFavorite: isFavorite,
             );
           } else {
             return Container();

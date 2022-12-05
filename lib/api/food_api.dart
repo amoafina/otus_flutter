@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:otusfood/model/entity_link.dart';
+import 'package:otusfood/model/error_operation.dart';
 import 'package:otusfood/model/favorite.dart';
 import 'package:otusfood/model/ingredient.dart';
 import 'package:otusfood/model/recipe.dart';
 import 'package:otusfood/model/recipe_ingredient.dart';
 import 'package:otusfood/model/recipe_step.dart';
 import 'package:otusfood/model/recipe_step_link.dart';
+import 'package:otusfood/model/success_operation.dart';
+
+import '../model/result_operation.dart';
 
 class FoodApi {
   final Dio dio = Dio(new BaseOptions(
@@ -372,5 +376,23 @@ class FoodApi {
 
   Future<List<Favorite>> getFavorite() async {
     return List.empty();
+  }
+
+  Future<ResultOperation> registerUser(String login, String password) async {
+    String data = "{"
+        "\"id\": 0, "
+        "\"token\": \"\", "
+        "\"login\": \"$login\", "
+        "\"password\": \"$password\", "
+        "}";
+    final response = await dio.post(
+      '/user',
+      data: data,
+    );
+    if (response.statusCode == null || response.statusCode! >= 400) {
+      return ErrorOperation(message: response.data);
+    } else {
+      return SuccessOperation(object: response.data);
+    }
   }
 }
