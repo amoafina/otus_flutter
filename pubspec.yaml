@@ -33,6 +33,7 @@ dependencies:
   flutter_bloc: ^8.0.0
   image_picker: ^0.8.6
   rive: ^0.9.0
+  flutter_blue: ^0.8.0
 
 
 dev_dependencies:
