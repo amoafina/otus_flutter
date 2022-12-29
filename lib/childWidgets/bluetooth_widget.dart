@@ -1,29 +1,23 @@
-// Copyright 2017, Paul DeMarco.
-// All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:otusfood/utils/app_colors.dart';
 
-class BluetoothScreen extends StatelessWidget {
+class BluetoothWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      color: Colors.lightBlue,
-      home: StreamBuilder<BluetoothState>(
-          stream: FlutterBlue.instance.state,
-          initialData: BluetoothState.unknown,
-          builder: (c, snapshot) {
-            final state = snapshot.data;
-            if (state == BluetoothState.on) {
-              return FindDevicesScreen();
-            }
-            return BluetoothOffScreen(state: state);
-          }),
-    );
+    return StreamBuilder<BluetoothState>(
+        stream: FlutterBlue.instance.state,
+        initialData: BluetoothState.unknown,
+        builder: (c, snapshot) {
+          final state = snapshot.data;
+          if (state == BluetoothState.on) {
+            return FindDevicesWidget();
+          }
+          return BluetoothOffScreen(state: state);
+        });
   }
 }
 
@@ -34,45 +28,57 @@ class BluetoothOffScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.lightBlue,
-      body: Center(
+    return SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              Icons.bluetooth_disabled,
-              size: 200.0,
-              color: Colors.white54,
-            ),
-            Text(
-              'Bluetooth Adapter is ${state != null ? state.toString().substring(15) : 'not available'}.',
-              style: Theme.of(context)
-                  .primaryTextTheme
-                  .subhead
-                  ?.copyWith(color: Colors.white),
-            ),
-          ],
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Icon(
+          Icons.bluetooth_disabled,
+          size: 200.0,
+          color: Colors.white54,
         ),
-      ),
-    );
+        Text(
+          'Bluetooth Adapter is ${state != null ? state.toString().substring(15) : 'not available'}.',
+        ),
+      ],
+    ));
   }
 }
 
-class FindDevicesScreen extends StatelessWidget {
+class FindDevicesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Find Devices'),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () =>
-            FlutterBlue.instance.startScan(timeout: Duration(seconds: 4)),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              StreamBuilder<List<BluetoothDevice>>(
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          StreamBuilder<bool>(
+            stream: FlutterBlue.instance.isScanning,
+            initialData: false,
+            builder: (c, snapshot) {
+              if (snapshot.data!) {
+                return ElevatedButton(
+                  child: Text('Остановить поиск'),
+                  onPressed: () => FlutterBlue.instance.stopScan(),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(AppColors.active)),
+                );
+              } else {
+                return ElevatedButton(
+                    child: Text('Поиск устройств поблизости'),
+                    onPressed: () => FlutterBlue.instance
+                        .startScan(timeout: Duration(seconds: 4)),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(AppColors.mainAccent)));
+              }
+            },
+          ),
+          Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: StreamBuilder<List<BluetoothDevice>>(
                 stream: Stream.periodic(Duration(seconds: 2))
                     .asyncMap((_) => FlutterBlue.instance.connectedDevices),
                 initialData: [],
@@ -88,7 +94,7 @@ class FindDevicesScreen extends StatelessWidget {
                                 if (snapshot.data ==
                                     BluetoothDeviceState.connected) {
                                   return ElevatedButton(
-                                    child: Text('OPEN'),
+                                    child: Icon(Icons.bluetooth_connected),
                                     onPressed: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -101,8 +107,12 @@ class FindDevicesScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
+              )),
+          Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
               ),
-              StreamBuilder<List<ScanResult>>(
+              child: StreamBuilder<List<ScanResult>>(
                 stream: FlutterBlue.instance.scanResults,
                 initialData: [],
                 builder: (c, snapshot) => Column(
@@ -119,28 +129,8 @@ class FindDevicesScreen extends StatelessWidget {
                       )
                       .toList(),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: StreamBuilder<bool>(
-        stream: FlutterBlue.instance.isScanning,
-        initialData: false,
-        builder: (c, snapshot) {
-          if (snapshot.data!) {
-            return FloatingActionButton(
-              child: Icon(Icons.stop),
-              onPressed: () => FlutterBlue.instance.stopScan(),
-              backgroundColor: Colors.red,
-            );
-          } else {
-            return FloatingActionButton(
-                child: Icon(Icons.search),
-                onPressed: () => FlutterBlue.instance
-                    .startScan(timeout: Duration(seconds: 4)));
-          }
-        },
+              )),
+        ],
       ),
     );
   }
@@ -201,6 +191,7 @@ class DeviceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(device.name),
+        backgroundColor: AppColors.mainAccent,
         actions: <Widget>[
           StreamBuilder<BluetoothDeviceState>(
             stream: device.state,
@@ -211,18 +202,18 @@ class DeviceScreen extends StatelessWidget {
               switch (snapshot.data) {
                 case BluetoothDeviceState.connected:
                   onPressed = () => device.disconnect();
-                  text = 'DISCONNECT';
+                  text = 'ОТКЛЮЧИТЬСЯ';
                   break;
                 case BluetoothDeviceState.disconnected:
                   onPressed = () => device.connect();
-                  text = 'CONNECT';
+                  text = 'ПОДКЛЮЧИТЬСЯ';
                   break;
                 default:
                   onPressed = null;
                   text = snapshot.data.toString().substring(21).toUpperCase();
                   break;
               }
-              return FlatButton(
+              return TextButton(
                   onPressed: onPressed,
                   child: Text(
                     text,
@@ -387,10 +378,8 @@ class ScanResultTile extends StatelessWidget {
     return ExpansionTile(
       title: _buildTitle(context),
       leading: Text(result.rssi.toString()),
-      trailing: RaisedButton(
-        child: Text('CONNECT'),
-        color: Colors.black,
-        textColor: Colors.white,
+      trailing: ElevatedButton(
+        child: Icon(Icons.bluetooth),
         onPressed: (result.advertisementData.connectable) ? onTap : null,
       ),
       children: <Widget>[
@@ -430,9 +419,9 @@ class ServiceTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Service'),
-            Text('0x${service.uuid.toString().toUpperCase().substring(4, 8)}',
-                style: Theme.of(context).textTheme.body1?.copyWith(
-                    color: Theme.of(context).textTheme.caption?.color))
+            Text(
+              '0x${service.uuid.toString().toUpperCase().substring(4, 8)}',
+            )
           ],
         ),
         children: characteristicTiles,
@@ -478,9 +467,8 @@ class CharacteristicTile extends StatelessWidget {
               children: <Widget>[
                 Text('Characteristic'),
                 Text(
-                    '0x${characteristic.uuid.toString().toUpperCase().substring(4, 8)}',
-                    style: Theme.of(context).textTheme.body1?.copyWith(
-                        color: Theme.of(context).textTheme.caption?.color))
+                  '0x${characteristic.uuid.toString().toUpperCase().substring(4, 8)}',
+                )
               ],
             ),
             subtitle: Text(value.toString()),
@@ -538,11 +526,9 @@ class DescriptorTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text('Descriptor'),
-          Text('0x${descriptor.uuid.toString().toUpperCase().substring(4, 8)}',
-              style: Theme.of(context)
-                  .textTheme
-                  .body1
-                  ?.copyWith(color: Theme.of(context).textTheme.caption?.color))
+          Text(
+            '0x${descriptor.uuid.toString().toUpperCase().substring(4, 8)}',
+          )
         ],
       ),
       subtitle: StreamBuilder<List<int>>(
@@ -585,11 +571,9 @@ class AdapterStateTile extends StatelessWidget {
       child: ListTile(
         title: Text(
           'Bluetooth adapter is ${state.toString().substring(15)}',
-          style: Theme.of(context).primaryTextTheme.subhead,
         ),
         trailing: Icon(
           Icons.error,
-          color: Theme.of(context).primaryTextTheme.subhead?.color,
         ),
       ),
     );
